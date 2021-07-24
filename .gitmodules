@@ -1,0 +1,3 @@
+[submodule "themes/CANIS"]
+	path = themes/CANIS
+	url = https://github.com/SuperKieran/TKL.git
