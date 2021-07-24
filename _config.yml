@@ -3,11 +3,11 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: TestName
+title: CANISNote
 subtitle: ''
 description: ''
 keywords:
-author: John Doe
+author: Eklipsorz
 language: en
 timezone: ''
 
@@ -97,11 +97,32 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: CANIS
 
+# math
+
+math:
+  katex:
+    css: 'https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css'
+    options:
+      throwOnError: false
+  mathjax:
+    css: 'https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css'
+    options:
+      conversion:
+        display: false
+      tex:
+      svg:
+
+
+
+theme: TKL
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
   repo: https://github.com/Eklipsorz/Eklipsorz.github.io
   branch: master
+
+
+
+
