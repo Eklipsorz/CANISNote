@@ -54,4 +54,8 @@ d's Cycle Detection Algorithm， 據說是由Robert W. Floyd所發明的演算�
 
 1. 兔子得走完一圈才有辦法跟烏龜會合(p.s 他們倆不動也能會合XD，但這不是在該方法的討論範圍內)
 2. 兔子{% mathjax %}H{% endmathjax %}的步數會是烏龜{% mathjax %}T{% endmathjax %}的步數之一倍，換言之，{% mathjax %}H=2T{% endmathjax %}。
-3.當兔子{% mathjax %}H{% endmathjax %}和烏龜{% mathjax %}T{% endmathjax %}都走到循環內部時，我們可以對{% mathjax %}H{% endmathjax %}和烏龜{% mathjax %}T{% endmathjax %}使用同餘({% mathjax %}mod\ \lambda{% endmathjax %})
+3.當兔子{% mathjax %}H{% endmathjax %}和烏龜{% mathjax %}T{% endmathjax %}都走到循環內部時，我們可以對{% mathjax %}H{% endmathjax %}和烏龜{% mathjax %}T{% endmathjax %}使用同餘({% mathjax %}mod\ \lambda{% endmathjax %})的概念(如下式)來 確定是否存在循環，若兩者的餘數都一樣那就表示存在著循環；反之，就是不存在。
+
+{% mathjax %} H ≡ T\ (mod\ \lambda) {% endmathjax %}
+
+將第二個觀察結果納入至{% mathjax %} H ≡ T\ (mod\ \lambda) {% endmathjax %}便會是如下式：
