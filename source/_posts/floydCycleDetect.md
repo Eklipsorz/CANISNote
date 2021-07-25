@@ -22,8 +22,7 @@ mathjax: true
 當我們轉換成如此的結構時，我們可以更容易以肉眼看出哪些模型存在著循環，在這裏我們可以知道List A是存在著循環，而List B由於尾巴部分並未跟前幾個節點相接，所以不構成循環。在這裡你或許會選擇以肉眼來辨識，但現實是當面對大量或者複雜的模型時，肉眼看會顯得效率太差，所以最好由電腦進行這樣的重複辨識工作。
 
 
-可換作是電腦，它要如何辨識呢？畢竟他本身就不存在像人眼那樣的辨識模型，在這裏提供一個方法來幫助電腦辨識：Floy
-d's Cycle Detection Algorithm， 據說是由Robert W. Floyd所發明的演算法，所以以他的名字來命名，普遍上會以演算法的特色來稱呼：龜兔賽跑算法。顧名思義，這個演算法會假設一隻烏龜和 一隻兔子在這個許多節點構成的List結構進行賽跑，烏龜每次只能走一個節點，而兔子只能走二個節點，如果List結構存在著循環，他們只要跑下去肯定能到循環裡，並
+可換作是電腦，它要如何辨識呢？畢竟他本身就不存在像人眼那樣的辨識模型，在這裏提供一個方法來幫助電腦辨識：Floyd's Cycle Detection Algorithm， 據說是由Robert W. Floyd所發明的演算法，所以以他的名字來命名，普遍上會以演算法的特色來稱呼：龜兔賽跑算法。顧名思義，這個演算法會假設一隻烏龜和 一隻兔子在這個許多節點構成的List結構進行賽跑，烏龜每次只能走一個節點，而兔子只能走二個節點，如果List結構存在著循環，他們只要跑下去肯定能到循環裡，並
 且他們肯定能在循環中碰面或者在同一點會合的話。
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627124232/CycleExample_ja3ssy.png)
@@ -33,8 +32,7 @@ d's Cycle Detection Algorithm， 據說是由Robert W. Floyd所發明的演算�
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627153539/NoCycleExample_um93hr.png)
 
 
-乍看之下這方法很簡單，但問題是這方法真能判別循環問題嗎？如果你對此也感到懷疑，歡
-迎到Proof章節來進行討論，但如果沒有的話，我可以告訴你 這方法確實能判別循環問題，而非是運氣，另外也建議讀者您參考Implementation以及Performance這兩個章節來看其代碼以及成本。
+乍看之下這方法很簡單，但問題是這方法真能判別循環問題嗎？如果你對此也感到懷疑，歡迎到Proof章節來進行討論，但如果沒有的話，我可以告訴你 這方法確實能判別循環問題，而非是運氣，另外也建議讀者您參考Implementation以及Performance這兩個章節來看其代碼以及成本。
 
 
 
@@ -59,3 +57,7 @@ d's Cycle Detection Algorithm， 據說是由Robert W. Floyd所發明的演算�
 {% mathjax %} H ≡ T\ (mod\ \lambda) {% endmathjax %}
 
 將第二個觀察結果納入至{% mathjax %} H ≡ T\ (mod\ \lambda) {% endmathjax %}便會是如下式：
+
+{% mathjax %}2T ≡ T\ (mod\ \lambda){% endmathjax %}
+
+統整這三個觀察結果，我們會發現只要{% mathjax %}T=\lambda{% endmathjax %} 代入上式，兔子和烏龜會在第{% mathjax %}0{% endmathjax %}個節點會合。接下來我們思考另一種情況，如果{% mathjax %}N=1{% endmathjax %}時，這種代入結果會不會有所不同？
