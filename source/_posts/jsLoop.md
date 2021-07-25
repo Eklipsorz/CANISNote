@@ -27,14 +27,14 @@ statement 2
 以流程圖來說，會像是這樣：
     
 
-![](https://i.imgur.com/kJsfZsL.png)
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627232410/forFlowChart_fttui9.png)
 
 其中設定變數x為assignment之內容，然後條件式就是“判定x是否滿足條件式”，若不滿足則會跳出去，若滿足則會處理內部的statement，接著處理後續的statement 0，並重回條件式繼續判定是否true或者false。
 
 ## while 語法
 與for語法相比，只會搭配布林條件式，並且少了處理設定初始值和statement 0這兩個步驟，語法上會是
     
-```
+```javascript
 while (condition) {
     
    statement 1
@@ -48,12 +48,12 @@ statement 2
     
 過程會是：
     
-![](https://i.imgur.com/Yj5sdak.png)
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627232524/whileFlowChart_plzhsb.png)
 
 
 
 
-## 中斷loop所產生的重複性處理
+## Break - 中斷loop所產生的重複性處理
 
 當我們想在loop中剛好滿足一個條件並且想中斷後續的重複性處理，那麼我們可以利用break來達到目的，其語法上只需要放入想要臨時中斷的loop結構中，比如像是以下的for和while這兩個語法：
 
@@ -89,7 +89,7 @@ break會中斷最內部的loop結構。
 
 
 
-## 直接跳到下一個迭代
+## Continue - 直接跳到下一個迭代
 
 當我們想直接跳到下一個判斷式＋重複處理且不想處理當前loop的後續觸法時，我們可以使用continue，比如說：
 
@@ -111,12 +111,12 @@ break會中斷最內部的loop結構。
 
 
 未存在continue時，會像是這樣的流程：
-![](https://i.imgur.com/5mBeLUB.png)
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627237123/noContinueFlowChart_andlpy.png)
 
 
 存在continue時，就會像是這樣的流程：
 
-![](https://i.imgur.com/VW33MOO.png)
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627237123/continueFlowChart_uyqtei.png)
 
 
 
