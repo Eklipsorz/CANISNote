@@ -27,7 +27,7 @@ statement 2
 以流程圖來說，會像是這樣：
     
 
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627232410/forFlowChart_fttui9.png)
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627237717/Javascript/jsLoop/forFlowChart_k5svnj.png)
 
 其中設定變數x為assignment之內容，然後條件式就是“判定x是否滿足條件式”，若不滿足則會跳出去，若滿足則會處理內部的statement，接著處理後續的statement 0，並重回條件式繼續判定是否true或者false。
 
@@ -48,7 +48,7 @@ statement 2
     
 過程會是：
     
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627232524/whileFlowChart_plzhsb.png)
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627237717/Javascript/jsLoop/whileFlowChart_qra3lb.png)
 
 
 
@@ -111,13 +111,12 @@ break會中斷最內部的loop結構。
 
 
 未存在continue時，會像是這樣的流程：
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627237123/noContinueFlowChart_andlpy.png)
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627237717/Javascript/jsLoop/noContinueFlowChart_wrww67.png)
 
 
 存在continue時，就會像是這樣的流程：
 
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627237123/continueFlowChart_uyqtei.png)
-
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627237717/Javascript/jsLoop/continueFlowChart_m9p7ss.png)
 
 
 

@@ -25,11 +25,11 @@ mathjax: true
 可換作是電腦，它要如何辨識呢？畢竟他本身就不存在像人眼那樣的辨識模型，在這裏提供一個方法來幫助電腦辨識：Floyd's Cycle Detection Algorithm， 據說是由Robert W. Floyd所發明的演算法，所以以他的名字來命名，普遍上會以演算法的特色來稱呼：龜兔賽跑算法。顧名思義，這個演算法會假設一隻烏龜和 一隻兔子在這個許多節點構成的List結構進行賽跑，烏龜每次只能走一個節點，而兔子只能走二個節點，如果List結構存在著循環，他們只要跑下去肯定能到循環裡，並
 且他們肯定能在循環中碰面或者在同一點會合的話。
 
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627124232/CycleExample_ja3ssy.png)
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627238046/Algorithm/FloydCycleDetect/CycleExample_thhrj4.png)
 
 然而，如果兔子走到結構中的終點卻沒跟烏龜會合的話，那就表示著結構不存著循環。(如下圖)
 
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627153539/NoCycleExample_um93hr.png)
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627238048/Algorithm/FloydCycleDetect/NoCycleExample_vnsu18.png)
 
 
 乍看之下這方法很簡單，但問題是這方法真能判別循環問題嗎？如果你對此也感到懷疑，歡迎到Proof章節來進行討論，但如果沒有的話，我可以告訴你 這方法確實能判別循環問題，而非是運氣，另外也建議讀者您參考Implementation以及Performance這兩個章節來看其代碼以及成本。
@@ -40,11 +40,11 @@ mathjax: true
 
 首先我們先來考慮擁有循環的結構(如下圖)，在循環之前可能會有{% mathjax %}N{% endmathjax %}個點或者沒存在任何節點，而這{% mathjax %}N{% endmathjax %}的值會影響著烏龜和兔子在循環中的初始位置，再來為了很好地地瞭解影響，設定了數字來表示循環中的第幾個節點，以{% mathjax %}0{% endmathjax %}到{% mathjax %}\lambda-1{% endmathjax %}來命名，而{% mathjax %}\lambda{% endmathjax %}則是定義成循環中的長度，在這裡{% mathjax %}\lambda=10{% endmathjax %}。
 
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627154870/NandCycle_lkweom.png)
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627238048/Algorithm/FloydCycleDetect/NandCycle_jisqwr.png)
 
-首先我們先考慮著$N=0$時，兔子和烏龜會在循環的起點會合，並從那裡開始進行他們的賽跑。
+首先我們先考慮著{% mathjax %}N=0{% endmathjax %}時，兔子和烏龜會在循環的起點會合，並從那裡開始進行他們的賽跑。
 
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627155018/N0andCycle_wr2hov.png)
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627238046/Algorithm/FloydCycleDetect/N0andCycle_hn1hcj.png)
 
 根據兔子走兩步和烏龜走一步的前提，當兔子走完一圈時，烏龜才走半圈，而兔子再走完下一個完整的圈時，這時烏龜才走完一圈，此時他們倆就在一開始的點會合。
 
