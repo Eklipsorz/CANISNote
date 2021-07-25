@@ -1,7 +1,7 @@
 ---
 title: JavaScript - Switch 使用方式
 date: 2021-07-25 23:18:24
-tags:
+tags: JavaScript
 mathjax: true
 ---
 
@@ -88,7 +88,6 @@ switch (expression 1) {
 1. 每個case都會用break來阻止系統往下執行。若沒有break，當執行完某個case所指定的處理後，會直接往下執行其他case的處理內容，直到遇到break或者執行完。
 2. 當出現多個相同result的case時，會挑最前面的case來執行。
 3. 若把default放在所有case之前的話，並不會讓系統在滿足某case的情況下而跳轉default，而是優先跳入對應該case的處理。
-
 
 
 
