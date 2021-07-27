@@ -69,3 +69,16 @@ mathjax: true
 當烏龜進入循環的起點時，兔子在循環中的位置會變成({% mathjax %}H'{% endmathjax %}為循環中的新位置，{% mathjax %}H{% endmathjax %}為循環中的舊位置)：
 
 {% mathjax %}H' = H + 1{% endmathjax %}
+
+接著第三個觀察結果會因循環外的節點增加而改變成下式：
+
+{% mathjax %}H + 1 ≡ T\ (mod\ \lambda){% endmathjax %}
+
+在兩者移動的過程中，仍然依照烏龜每走一步，兔子就會走兩步這前提，只是現在兔子比起原本多走了一步，所以我們可以將上式更改成：
+
+{% mathjax %}2T + 1 ≡ T\ (mod\ \lambda$){% endmathjax %}
+
+你會發現這與{% mathjax %}N=0{% endmathjax %}所發現的第二、三個觀察結果有些出入，在這裡第二個觀察結果會變成{% mathjax %}H'=2T+1{% endmathjax %}，而第三個觀察結果就是上式。
+
+那麼式子的改變會不會影響與烏龜會合的情況呢？其實只要我們按照圖上位置來模擬他們移動，最後會發現他們的確會在同
+一點會合，只是位置變成第{% mathjax %}\lambda-1{% endmathjax %}個位置，在這裡會是循環中編號9的位置，也就是說上式要達到同餘的效果就只有兩者都走到第九個位置(在這裡我們先假定式子的同餘結果會是{% mathjax %}9{% endmathjax %}，後續推理到{% mathjax %}N=M{% endmathjax %}時來驗證)
