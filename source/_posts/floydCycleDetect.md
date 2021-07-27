@@ -61,3 +61,11 @@ mathjax: true
 {% mathjax %}2T ≡ T\ (mod\ \lambda){% endmathjax %}
 
 統整這三個觀察結果，我們會發現只要{% mathjax %}T=\lambda{% endmathjax %} 代入上式，兔子和烏龜會在第{% mathjax %}0{% endmathjax %}個節點會合。接下來我們思考另一種情況，如果{% mathjax %}N=1{% endmathjax %}時，這種代入結果會不會有所不同？
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627238047/Algorithm/FloydCycleDetect/N1andCycle_ttrcay.png)
+
+從上圖可以觀察出當烏龜進入循環時的位置跟兔子所在的位置是不同的：兩者相差一個節點，這對於{% mathjax %}N=0{% endmathjax %}所得出的觀察結果而言，我們可以確定兔子還是得走完一圈才有辦法和烏龜在同一點，而第二、三個觀察結果可能會因為這樣而改變。
+
+當烏龜進入循環的起點時，兔子在循環中的位置會變成({% mathjax %}H'{% endmathjax %}為循環中的新位置，{% mathjax %}H{% endmathjax %}為循環中的舊位置)：
+
+{% mathjax %}H' = H + 1{% endmathjax %}
