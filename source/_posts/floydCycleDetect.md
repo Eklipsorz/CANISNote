@@ -22,8 +22,7 @@ mathjax: true
 當我們轉換成如此的結構時，我們可以更容易以肉眼看出哪些模型存在著循環，在這裏我們可以知道List A是存在著循環，而List B由於尾巴部分並未跟前幾個節點相接，所以不構成循環。在這裡你或許會選擇以肉眼來辨識，但現實是當面對大量或者複雜的模型時，肉眼看會顯得效率太差，所以最好由電腦進行這樣的重複辨識工作。
 
 
-可換作是電腦，它要如何辨識呢？畢竟他本身就不存在像人眼那樣的辨識模型，在這裏提供一個方法來幫助電腦辨識：Floyd's Cycle Detection Algorithm， 據說是由Robert W. Floyd所發明的演算法，所以以他的名字來命名，普遍上會以演算法的特色來稱呼：龜兔賽跑算法。顧名思義，這個演算法會假設一隻烏龜和 一隻兔子在這個許多節點構成的List結構進行賽跑，烏龜每次只能走一個節點，而兔子只能走二個節點，如果List結構存在著循環，他們只要跑下去肯定能到循環裡，並
-且他們肯定能在循環中碰面或者在同一點會合的話。
+可換作是電腦，它要如何辨識呢？畢竟他本身就不存在像人眼那樣的辨識模型，在這裏提供一個方法來幫助電腦辨識：Floyd's Cycle Detection Algorithm， 據說是由Robert W. Floyd所發明的演算法，所以以他的名字來命名，普遍上會以演算法的特色來稱呼：龜兔賽跑算法。顧名思義，這個演算法會假設一隻烏龜和 一隻兔子在這個許多節點構成的List結構進行賽跑，烏龜每次只能走一個節點，而兔子只能走二個節點，如果List結構存在著循環，他們只要跑下去肯定能到循環裡，並且他們肯定能在循環中碰面或者在同一點會合的話。
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627238046/Algorithm/FloydCycleDetect/CycleExample_thhrj4.png)
 
@@ -76,7 +75,7 @@ mathjax: true
 
 在兩者移動的過程中，仍然依照烏龜每走一步，兔子就會走兩步這前提，只是現在兔子比起原本多走了一步，所以我們可以將上式更改成：
 
-{% mathjax %}2T + 1 ≡ T\ (mod\ \lambda$){% endmathjax %}
+{% mathjax %}2T + 1 ≡ T\ (mod\ \lambda){% endmathjax %}
 
 你會發現這與{% mathjax %}N=0{% endmathjax %}所發現的第二、三個觀察結果有些出入，在這裡第二個觀察結果會變成{% mathjax %}H'=2T+1{% endmathjax %}，而第三個觀察結果就是上式。
 
@@ -94,5 +93,24 @@ mathjax: true
 
 接著我們只要按照圖上位置來模擬他們移動就會發現他們的確也是會在同一點上會合，但這次是第{% mathjax %}\lambda-2{% endmathjax %}個節點或者第8個節點上會合，如果考慮成{% mathjax %}N=3{% endmathjax %}時，會發現會在第{% mathjax %}\lambda-3{% endmathjax %}個節點或者第{% mathjax %}7{% endmathjax %}個節點上會合，而{% mathjax %}N=4{% endmathjax %}時，會發現在第{% mathjax %}\lambda-4{% endmathjax %}個節點或者第{% mathjax %}6{% endmathjax %}個節點上會合。那麼最後我們來試著考慮著{% mathjax %}N=M{% endmathjax %}的情況，而{% mathjax %}M{% endmathjax %}的數值範圍為{% mathjax %}[1,∞){% endmathjax %}
 
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627238047/Algorithm/FloydCycleDetect/NMandCycle_dmotfd.png)
+
+當烏龜進入循環時，兔子的預期位置變成：
+
+{% mathjax %}H'=H+M{% endmathjax %}
+
+在這裡我們還不確定這種情況是否同樣地使烏龜和兔子會在同一點會合，所以我們先假設他們肯定能在某一點會合來驗證其正確性。
+
+我們考慮著以下式子：
+
+{% mathjax %}H+M ≡ T\ (mod\ \lambda){% endmathjax %}
+
+根據前面所述的第ㄧ、二觀察結果，兔子必須至少得繞ㄧ圈才有機會與烏龜會合，但這樣單純繞幾圈也只是與烏龜保持{% mathjax %}M\ (mod\ \lambda)-(\lambda-2M) (mod\ \lambda){% endmathjax %}個節點的差距，所以兔子和烏龜還必須在繞幾圈之後再多>走個幾步才有機會會合，所以烏龜式子會變成如下：
+
+{% mathjax %}T=N_1\lambda+N_2{% endmathjax %} (烏龜繞了{% mathjax %}N_1{% endmathjax %}圈又{% mathjax %}N_2{% endmathjax %}步)
+
+
+接著將上式代入{% mathjax %}2T + M ≡T\ (mod\ \lambda){% endmathjax %}就會是：
 
 
