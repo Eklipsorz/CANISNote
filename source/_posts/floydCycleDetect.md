@@ -80,5 +80,19 @@ mathjax: true
 
 你會發現這與{% mathjax %}N=0{% endmathjax %}所發現的第二、三個觀察結果有些出入，在這裡第二個觀察結果會變成{% mathjax %}H'=2T+1{% endmathjax %}，而第三個觀察結果就是上式。
 
-那麼式子的改變會不會影響與烏龜會合的情況呢？其實只要我們按照圖上位置來模擬他們移動，最後會發現他們的確會在同
-一點會合，只是位置變成第{% mathjax %}\lambda-1{% endmathjax %}個位置，在這裡會是循環中編號9的位置，也就是說上式要達到同餘的效果就只有兩者都走到第九個位置(在這裡我們先假定式子的同餘結果會是{% mathjax %}9{% endmathjax %}，後續推理到{% mathjax %}N=M{% endmathjax %}時來驗證)
+那麼式子的改變會不會影響與烏龜會合的情況呢？其實只要我們按照圖上位置來模擬他們移動，最後會發現他們的確會在同一點會合，只是位置變成第{% mathjax %}\lambda-1{% endmathjax %}個位置，在這裡會是循環中編號9的位置，也就是說上式要達到同餘的效果就只有兩者都走到第九個位置(在這裡我們先假定式子的同餘結果會是{% mathjax %}9{% endmathjax %}，後續推理到{% mathjax %}N=M{% endmathjax %}時來驗證)，接著我們再來思考一下{% mathjax %}N=2{% endmathjax %}時，會有什麼樣的變化
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627238047/Algorithm/FloydCycleDetect/N2andCycle_lnxwod.png)
+
+同樣的，由於只是單純增加循環外面的節點，同樣地，由於位置因爲循環外的節點增加而改變第二、三個觀察結果，此時兔子的新位置會是：
+
+{% mathjax %}H'=H+2{% endmathjax %}
+
+而第二個觀察結果會變成是{% mathjax %}H'=2T+2{% endmathjax %}，第三個觀察結果就變成是
+
+{% mathjax %}2T+2 ≡ T\ (mod\ \lambda){% endmathjax %}
+
+接著我們只要按照圖上位置來模擬他們移動就會發現他們的確也是會在同一點上會合，但這次是第{% mathjax %}\lambda-2{% endmathjax %}個節點或者第8個節點上會合，如果考慮成{% mathjax %}N=3{% endmathjax %}時，會發現會在第{% mathjax %}\lambda-3{% endmathjax %}個節點或者第{% mathjax %}7{% endmathjax %}個節點上會合，而{% mathjax %}N=4{% endmathjax %}時，會發現在第{% mathjax %}\lambda-4{% endmathjax %}個節點或者第{% mathjax %}6{% endmathjax %}個節點上會合。那麼最後我們來試著考慮著{% mathjax %}N=M{% endmathjax %}的情況，而{% mathjax %}M{% endmathjax %}的數值範圍為{% mathjax %}[1,∞){% endmathjax %}
+
+
+
