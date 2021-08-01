@@ -113,4 +113,26 @@ mathjax: true
 
 接著將上式代入{% mathjax %}2T + M ≡T\ (mod\ \lambda){% endmathjax %}就會是：
 
+{% mathjax %}2(N_1\lambda+N_2) + M ≡ N_1\lambda+N_2\ (mod\ \lambda) {% endmathjax %}
 
+根據{% mathjax %}mod\ \lambda{% endmathjax %}，我們可以化簡成：
+
+{% mathjax %}2N_2 + M ≡ N_2\ (mod\ \lambda){% endmathjax %}
+
+根據先前{% mathjax %}N=2-4{% endmathjax %}情況得到的觀察結果，會發現都會在第{% mathjax %}\lambda-N{% endmathjax %}個節點會合，那麼同樣地將其結果套用在上式時，
+
+{% mathjax %}N_2=\lambda-M{% endmathjax %}
+
+會發現式子會變成如下:
+
+{% mathjax %}2(\lambda-M) + M ≡ (\lambda-M)\ (mod\ \lambda){% endmathjax %}
+
+再稍微用{% mathjax %}mod\ \lambda{% endmathjax %}來化簡，則會是：
+
+{% mathjax %}-M≡-M\ (mod\ \lambda){% endmathjax %}
+
+而這相當於在第{% mathjax %}\lambda-M{% endmathjax %}個節點或者第{% mathjax %}\lambda-N{% endmathjax %}個節點會合
+
+{% mathjax %}\lambda - M ≡ \lambda-M\ (mod\ \lambda){% endmathjax %}
+
+從這樣推論驗證了{% mathjax %}N{% endmathjax %}在{% mathjax %}[1,∞){% endmathjax %}範圍內的節點這相當於在第{% mathjax %}\lambda-M{% endmathjax %}個節點或者第{% mathjax %}\lambda-N{% endmathjax %}數所構成循環時可以使兔子和烏龜在第{% mathjax %}\lambda-N{% endmathjax %}個節點會合，其中{% mathjax %}N=M{% endmathjax %}。

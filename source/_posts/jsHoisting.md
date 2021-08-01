@@ -9,7 +9,7 @@ tags: JavaScript
 
 比如以下程式碼看似有宣告先後的問題:
 
-```javascript
+``` javascript 
 console.log (test)
 var test = 10
 ```
