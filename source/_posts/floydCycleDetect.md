@@ -153,3 +153,36 @@ mathjax: true
 還有如果我們限制烏龜只能在循環內走不到一圈來和兔子會合，會得到一個有趣的觀察結果，其中烏龜走不到半圈時會使兔子永遠會合不了，因此烏龜的步數要滿足走不到一圈以及會合的條件必須是半圈以上至一圈的範圍，所以原本的式子會改變成如下：
 
 {% mathjax %}T=\frac{\lambda}{2}+M_1{% endmathjax %}
+
+代入式子{% mathjax %}2T + M ≡ T{% endmathjax %}會形成：
+
+{% mathjax %}2(\frac{\lambda}{2}+M_1) + M ≡ \frac{\lambda}{2}+M_1\ (mod\ \lambda){% endmathjax %}
+
+同時我們可以用先前得到的驗證結果來反證這樣子是否出現矛盾，首先右邊的式子在這前提下，必須等於{% mathjax %}-M{% endmathjax %}或者{% mathjax %}\lambda-M{% endmathjax %}，那麼
+
+{% mathjax %}M_1=\frac{\lambda}{2}-M{% endmathjax %}
+
+將這個假設結果代入式子{% mathjax %}2M_1 + M ≡ \frac{\lambda}{2}+M_1\ (mod\ \lambda){% endmathjax %}就變成：
+
+{% mathjax %}-M≡-M\ (mod\ \lambda){% endmathjax %}
+
+這樣子的結果等同於先前驗證結果，換言之，烏龜只需要繞半圈以上至一圈的距離就能和兔子會合。
+
+補充：先前我們假設烏龜和兔子會花好幾圈又幾個節點才能使他們會合，在這好幾圈又幾個節點的範圍內包含了無數個排列組合，比如2圈又5個節點，現在我們利用限制發現了其實烏龜走不到半圈就能會合。但這過程中，兔子還是得至少走一圈才能會合。
+
+基於這幾個推論結果，我們可以更改{% mathjax %}N=0{% endmathjax %}的觀察結果：
+
+1. 兔子得走完一圈才有辦法跟烏龜會合(p.s 他們倆不動也能會合XD，但這不是在該方法的討論範圍內)。
+2. 考慮著循環內外節點數時，兔子{% mathjax %}H{% endmathjax %}和烏龜{% mathjax %}T{% endmathjax %}在循環內的位置關係會是{% mathjax %}H'=2T+N{% endmathjax %}，而{% mathjax %}N{% endmathjax %}是節點外的節點數。
+3. 當兔子{% mathjax %}H{% endmathjax %}和烏龜{% mathjax %}T{% endmathjax %}都從循環外部走到循環內部時，我們可以對{% mathjax %}H{% endmathjax %}和烏龜{% mathjax %}T{% endmathjax %}使用同餘{% mathjax %}(mod\ \lambda){% endmathjax %}的概念(如下式)來確定是否存在循環，若兩者的餘數都一樣那就表示存在著循環；反之，就是不存在。(其中{% mathjax %}N{% endmathjax %}為循環外的節點數)
+
+{% mathjax %}H + N ≡ T\ (mod\ \lambda){% endmathjax %}
+
+4. 延伸第三個觀察結果，會發現兔子和烏龜的會合點會是第{% mathjax %}\lambda-N{% endmathjax %}個節點或者第{% mathjax %}\lambda-M{% endmathjax %}個節點。
+5. 循環起點到會合點的節點數可以和循環外的節點數構成循環長度，換言之，{% mathjax %}\lambda = {% endmathjax %}循環起點到會合點的距離+ 循環外的節點數。
+6. 烏龜只需要繞半圈以上至一圈的距離就能和兔子會合。
+
+第{% mathjax %}1{% endmathjax %}個觀察結果因爲本身不受循環以外的節點數影響，所以不會進行變動，但原本第{% mathjax %}2-3{% endmathjax %}個結果會隨之影響，使之擴展成考慮成{% mathjax %}M{% endmathjax %}個循環以外的節點，而第{% mathjax %}4-5{% endmathjax %}個結果則是因爲第三個結果的推論過程而新增過來的。
+
+
+## Pseudo Code
