@@ -136,3 +136,20 @@ mathjax: true
 {% mathjax %}\lambda - M ≡ \lambda-M\ (mod\ \lambda){% endmathjax %}
 
 從這樣推論驗證了{% mathjax %}N{% endmathjax %}在{% mathjax %}[1,∞){% endmathjax %}範圍內的節點這相當於在第{% mathjax %}\lambda-M{% endmathjax %}個節點或者第{% mathjax %}\lambda-N{% endmathjax %}數所構成循環時可以使兔子和烏龜在第{% mathjax %}\lambda-N{% endmathjax %}個節點會合，其中{% mathjax %}N=M{% endmathjax %}。
+
+
+補充：其中{% mathjax %}\lambda-M{% endmathjax %}中的{% mathjax %}\lambda{% endmathjax %}其實原本是考慮成{% mathjax %}N’\lambda{% endmathjax %}，但由於最後還是會>因爲{% mathjax %}mod\ \lambda{% endmathjax %}而跟{% mathjax %}\lambda-M{% endmathjax %}的最後結果一樣，且如果寫{% mathjax %}N’\lambda-M{% endmathjax %}的話，會不容易理解，在這裏簡化成最後解。
+
+
+
+此外，如果讀者願意花更多時間觀察的話，只要畫個圖並標示起點、會合點、距離的話(如>下圖），會發現只要{% mathjax %}N{% endmathjax %}與{% mathjax %}\lambda-N{% endmathjax %}相加就能構成循環長度，換言之，從起點1到會合點之間的節點數剛好是循環的長度。
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627238046/Algorithm/FloydCycleDetect/2length_s3nzob.png)
+
+另外剩下沒包含到的節點(用橘線來表示的節點)數量剛好會是循環外的節點數{% mathjax %}N{% endmathjax %}。
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627238047/Algorithm/FloydCycleDetect/3length_zigdvm.png)
+
+還有如果我們限制烏龜只能在循環內走不到一圈來和兔子會合，會得到一個有趣的觀察結果，其中烏龜走不到半圈時會使兔子永遠會合不了，因此烏龜的步數要滿足走不到一圈以及會合的條件必須是半圈以上至一圈的範圍，所以原本的式子會改變成如下：
+
+{% mathjax %}T=\frac{\lambda}{2}+M_1{% endmathjax %}
