@@ -65,8 +65,16 @@ ReferenceError: testval is not defined
 ## 特例
  
 
-如果在一個未宣告的變數進行assignment，那麼在執行assignment之前會額外宣告其變數為global variable
+如果在一個未宣告的變數進行指派(assignment)，那麼在執行指派之前會額外宣告其變數為全域變數，比如：
 
+```
+{
+  test = 10
+}
+console.log(test)
+```
+
+輸出結果會顯示test是個儲存10的全域變數。
 
 參考資料：
 1. https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Statements/var
