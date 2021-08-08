@@ -186,3 +186,6 @@ mathjax: true
 
 
 ## Pseudo Code
+
+根據Floyd's Cycle Detection所描述的演算法而寫出的Pseudo Code，其中使用{% mathjax %}next[i]{% endmathjax %}>和{% mathjax %}head[i]{% endmathjax %}來分別代表變數{% mathjax %}i{% endmathjax %}的下一個節點以及其頭部節點，而NIL在這裡代表不存在任何節點。
+
