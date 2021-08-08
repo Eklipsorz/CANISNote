@@ -189,7 +189,25 @@ mathjax: true
 
 根據Floyd's Cycle Detection所描述的演算法而寫出的Pseudo Code，其中使用{% mathjax %}next[i]{% endmathjax %}>和{% mathjax %}head[i]{% endmathjax %}來分別代表變數{% mathjax %}i{% endmathjax %}的下一個節點以及其頭部節點，而NIL在這裡代表不存在任何節點。
 
-!()[https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627238048/Algorithm/FloydCycleDetect/PseudoCode_hascycle_asngap.png]
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627238048/Algorithm/FloydCycleDetect/PseudoCode_hascycle_asngap.png)
 
 該演算法以List為輸入參數，當List輸入進去時，會先設定其頭部的位置給兔子和烏龜這兩個變數，接著為了他們兩個變數能夠在不影響系統的情況下跑遍整個List結構，所以設定了While以及其條件{% mathjax %}Hare\ \neq\ NIL{% endmathjax %} and {% mathjax %}next[Hare] \neq NIL{% endmathjax %}，其條件主要會檢測目前兔子所走的位置是否能繼續走，最後兔子和烏龜會依照規則來走指定步數，當他們所在的位置是一樣時，就代表著此List結構確實存在循環而回傳True，反之兔子走到盡頭都沒遇到烏龜而回傳代表不存在循環的False。
 
+
+## Implementation
+
+程式碼連結：[bit.ly/2FKotVP](http://bit.ly/2FKotVP)
+
+使用EAFP程式碼風格來取代過度的if-else檢查，並從中提升速度，另外先讓在try區塊中的兔子多走一步以避免while迴圈判斷到錯誤的情況，同時這樣子的移動方式並不會改變兔子和烏龜的會合結果，只不過變成{% mathjax %}M+1{% endmathjax %}個循環節>點的情況來移動。
+
+## Performance
+
+時間複雜度：考慮該方法應用在不存在循環以及存在循環的場景中，時間複雜度範圍會是{% mathjax %}O(N_1+N_2){% endmathjax %}-{% mathjax %}O(\lambda+N){% endmathjax %}，其中的{% mathjax %}N_1{% endmathjax %}是循環外的起點1至循環內的起點2的節點數，而{% mathjax %}N_2{% endmathjax %}是循環內的起點2至烏龜與兔子預計會合點之間的節點數(如下圖)，而{% mathjax %}\lambda{% endmathjax %}是循環的長度以及N為循環外的節點數，{% mathjax %}N_1{% endmathjax %}、{% mathjax %}N_2{% endmathjax %}、{% mathjax %}\lambda{% endmathjax %}和{% mathjax %}N{% endmathjax %}這四個大小關係會因>爲第六個觀察結果而會是{% mathjax %}\lambda+N≥N_1+N_2{% endmathjax %}。
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627238047/Algorithm/FloydCycleDetect/N1N2length_iaxbil.png)
+
+空間複雜度：該方法本身不需要向系統索求額外記憶體空間或者內存來進行判斷，所以空間複雜度會是原本一般執行程式碼所需要用到的記憶體大小，也就是{% mathjax %}O(1){% endmathjax %}。
+
+
+## Conclusion
+我們利用一些場景來說明循環問題，接著將這些場景轉化成電腦可以判斷是否有循環的List結構，最後我們提出知名的龜兔賽跑算法來幫助電腦判斷該List結構是否有循環。除此之外，我們也額外提供讀者一些章節來描述該方法是如何成功地判斷、如何實現以及其算法的執行成本。
