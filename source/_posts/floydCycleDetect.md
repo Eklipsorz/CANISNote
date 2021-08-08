@@ -189,3 +189,7 @@ mathjax: true
 
 根據Floyd's Cycle Detection所描述的演算法而寫出的Pseudo Code，其中使用{% mathjax %}next[i]{% endmathjax %}>和{% mathjax %}head[i]{% endmathjax %}來分別代表變數{% mathjax %}i{% endmathjax %}的下一個節點以及其頭部節點，而NIL在這裡代表不存在任何節點。
 
+!()[https://res.cloudinary.com/dqfxgtyoi/image/upload/v1627238048/Algorithm/FloydCycleDetect/PseudoCode_hascycle_asngap.png]
+
+該演算法以List為輸入參數，當List輸入進去時，會先設定其頭部的位置給兔子和烏龜這兩個變數，接著為了他們兩個變數能夠在不影響系統的情況下跑遍整個List結構，所以設定了While以及其條件{% mathjax %}Hare\ \neq\ NIL{% endmathjax %} and {% mathjax %}next[Hare] \neq NIL{% endmathjax %}，其條件主要會檢測目前兔子所走的位置是否能繼續走，最後兔子和烏龜會依照規則來走指定步數，當他們所在的位置是一樣時，就代表著此List結構確實存在循環而回傳True，反之兔子走到盡頭都沒遇到烏龜而回傳代表不存在循環的False。
+
