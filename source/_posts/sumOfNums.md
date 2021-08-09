@@ -1,7 +1,9 @@
 ---
 title: CodeWars Learning - Sum of Numbers
 date: 2021-08-10 00:31:55
-tags: JavaScript Math
+tags: 
+ - JavaScript 
+ - Math
 categories: CodeWars
 ---
 
