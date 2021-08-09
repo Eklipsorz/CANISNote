@@ -48,15 +48,16 @@ function countSheeps(arrayOfSheep) {
 
 ## Clever Solution
 
-與上個解法不同，利用陣列內建的方法filter[1]來從arrayOfSheeps篩選出只有true的內容，其中filter中的Boolean是callback function，系統會從arrayOfSheeps取出每個元素並一個又一個丟入至Boolean function，若該某個元素丟入至function的結果是true的話，那麼就會另外放入新的陣列中，最後當舊陣列的元素都遍歷完之後就會停止，此時filter會回傳一個每個元素都滿足callback function的新陣列-元素全是true的新陣列[2]，最後只需要利用length這個內建屬性來獲取新陣列的長度就能獲取羊的實際數量。
+與上個解法不同，利用陣列內建的方法filter\[1\]來從arrayOfSheeps篩選出只有true的內容，其中filter中的Boolean是callback function，系統會從arrayOfSheeps取出每個元素並一個又一個丟入至Boolean function，若該某個元素丟入至function的結果是true的話，那麼就會另外放入新的陣列中，最後當舊陣列的元素都遍歷完之後就會停止，此時filter會回傳一個每個元素都滿足callback function的新陣列-元素全是true的新陣列\[2\]，最後只需要利用length這個內建屬性來獲取新陣列的長度就能獲取羊的實際數量。
 
 ```
 function countSheeps(arrayOfSheeps) {
   return arrayOfSheeps.filter(Boolean).length;
 }
 ```
-[1]:filter的使用參數通常會用到callback function，這個function是filter方法篩選的核心條件。
 
-[2]:元素全是true的原因：這是由於Boolean這個函式是檢測參數是否為true，一般來說若丟入的參數不是false、null、空字串以及判定false的表達式的話，就會回傳true，否則就為false。
+\[1\]:filter的使用參數通常會用到callback function，這個function是filter方法篩選的核心條件。
+
+\[2\]:元素全是true的原因：這是由於Boolean這個函式是檢測參數是否為true，一般來說若丟入的參數不是false、null、空字串以及判定false的表達式的話，就會回傳true，否則就為false。
 
 
