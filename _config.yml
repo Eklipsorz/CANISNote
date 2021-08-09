@@ -115,7 +115,7 @@ math:
 
 
 
-theme: TKL
+theme: next
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
