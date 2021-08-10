@@ -1,5 +1,5 @@
 ---
-title: takeATenMinWalk
+title: CodeWars Learning - Take a Ten Minute Walk
 date: 2021-08-10 22:09:46
 tags:
  - JavaScript
@@ -15,8 +15,23 @@ Note: you will always receive a valid array containing a random assortment of di
 
 ## Solution
 
+將東南西北(e、s、w、n)當作x-y座標軸的正負方向，北方和南方是y軸，而東方和西方為x軸，而自己的出發點轉換成(0,0)的座標軸，每當自己往北方走時，y軸的座標就+1；當自己往南方走時，y軸的座標就-1。而自己往東方走時，x軸的座標就+1；反之，自己往西方走時，x軸的座標就-1。當自己走完指定的方向和步數後，其座標還仍為(0,0)就代表著散完步回到出發地。
 
 
+
+根據這樣子的規則，我們可以先宣告axis這陣列來定義x-y這兩個座標軸，並且利用陣列內建的foreach以及switch來遍歷自己所走過的方向以及計算當前的座標軸。最後遍歷完之後在檢查看看x-y這兩個座標軸是否皆為0，若為0的話，就是回到出發點或者true，否則就是false。
+
+
+另外就是題目還指定自己走的步數得是10步，不得少於10步或者多於10步，因此會設定以下的條件式來防止這件事：
+```
+if (walk.length != 10) {
+	return false
+} else {
+	do something
+}
+```
+
+整體程式碼為：
 
 ```
 function isValidWalk(walk) {
@@ -51,3 +66,20 @@ function isValidWalk(walk) {
   
 }
 ```
+
+另一種解法：
+
+
+
+```
+```
+function isValidWalk(walk) {
+  function count(val) {
+    return walk.filter(function(a){return a==val;}).length;
+  }
+  return walk.length==10 && count('n')==count('s') && count('w')==count('e');
+}
+
+```
+```
+
