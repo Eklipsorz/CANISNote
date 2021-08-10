@@ -1,5 +1,5 @@
 ---
-title: abbrevATwoWords
+title: CodeWars Learning - Abbreviate a Two Word Name
 date: 2021-08-10 21:12:53
 tags:
  - JavaScript
