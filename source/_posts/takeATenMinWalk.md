@@ -69,17 +69,21 @@ function isValidWalk(walk) {
 
 另一種解法：
 
-
-
+當相對應的方向數都一致時，也可以表明自己已經回到原本的出發地，也就是說自己走了n步向北的方向以及n步向南的方向，這在y軸相當於回到了原點(0,0)中的y軸部分，同樣地若自己走了m步向西的方向以及m向東的方向，在x軸相當於原點(0,0)的x軸部分，兩者情況綜合起來的話，就代表著自己已經回到出發點。所以根據這個方向，我們可以建構一個函式count，該函式會獲取特定符號在字串中出現的數量，接著最後判斷下列兩者情況下是否為true，若true就代表回到出發點了。
 ```
+向北的方向數跟向南的方向數是否一樣？
+向西的方向數跟向東的方向數是否一樣？
+```
+
+整體的程式碼會是：
 ```
 function isValidWalk(walk) {
   function count(val) {
-    return walk.filter(function(a){return a==val;}).length;
+    return walk.filter(function(a){return a === val;}).length;
   }
   return walk.length==10 && count('n')==count('s') && count('w')==count('e');
 }
 
 ```
-```
 
+但這種解法的效能會比第一種解法的效能還差，第一種只需要一個for結構就能完成，而第二種解法相當於用了四個for結構來完成，相當於花了4倍的時間去達成目標。
