@@ -45,7 +45,7 @@ var isSquare = function(n){
 }
 ```
 
-另外由於sqrt碰上負值皆會直接回傳NaN且NaN不跟任何數字(含自己)相等，所以以我們還可以進一步減少 (n >= 0) 和其附帶的false來換取更好的效率，
+另外由於sqrt碰上負值皆會直接回傳NaN且NaN不跟任何數字(含自己)相等，所以以我們還可以進一步減少 (n >= 0) 和其附帶的false來換取更好的效率。
 
 ```
 var isSquare = function(n){
