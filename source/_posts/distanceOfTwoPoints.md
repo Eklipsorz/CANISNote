@@ -28,5 +28,13 @@ function distanceBetweenPoints(a, b) {
 
 }
 ```
+另一個版本的答案則是使用Math物件的內建方法hypot，以a點和b點來構成三角形並求得這三角形的斜邊長度(hypotenuse)，而這個長度剛好是這兩點的距離。
+
+```
+function distanceBetweenPoints(a, b) {
+  return Math.hypot(a.x - b.x, a.y - b.y)
+}
+
+```
 
 
