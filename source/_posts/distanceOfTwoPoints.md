@@ -1,5 +1,5 @@
 ---
-title: CodeWars Learning - Geometry Basics: Distance between points in 2D
+title: CodeWars Learning - Geometry Basics &#58; Distance between points in 2D
 date: 2021-08-11 16:20:31
 tags:
  - JavaScript
