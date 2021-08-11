@@ -12,7 +12,7 @@ Your job is simple, if (x) squared is more than 1000, return 'It's hotter than t
 
 考慮著輸入參數x是由字串所構成的數字，類似這兩種'-1'或者'2'，所以得在做判定之前，先透過+這個符號將輸入參數x強制轉換成數字型態，而+x相等於以下：
 ```
-Number(x)
+Number(x) * 1 // * 1 是表示強制轉型後的符號，若是-x，則為 * (-1)
 ```
 轉換為數字之後就能計算平方後是否大於1000來做之後的判斷。
 
