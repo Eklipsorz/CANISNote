@@ -18,6 +18,18 @@ display: flex;
 
 該元素會變成flex-container，而原本被這個元素包含的子元素會變成flex-item，而flex-container和flex-item的樣式若沒特別設定的話，會依照系統給定的flex預設樣式來做變動。
 
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629213605/blog/cssTag/flexElement_hei4op.png)
 
+舉例來說：當設定以下的HTML結構時，並且對flex-container表示flex元素時，class為flex-container的元素會變成flex-container，而內部名為flex-item的元素就變成flex-item元素。
 
+```
+<div class="flex-container">
+  <div class="flex-item">1</div>
+  <div class="flex-item">2</div>
+  <div class="flex-item">3</div>
+  <div class="flex-item">4</div>
+</div>
 
+```
+
+設定完flex-container和flex-item之後，flex-item會按照flex系統所預設(預設設定flex-direction: row)的main-axis和cross-axis之座標軸來排列，其座標軸在預設的情況下，會是如以下圖，在這裡所有的flex-item會以main-axis來進行來進行從左至右的排列。
