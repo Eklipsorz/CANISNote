@@ -20,7 +20,7 @@ display: flex;
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629213605/blog/cssTag/flexElement_hei4op.png)
 
-舉例來說：當設定以下的HTML結構時，並且對flex-container表示flex元素時，class為flex-container的元素會變成flex-container，而內部名為flex-item的元素就變成flex-item元素。
+舉例來說：當設定以下的HTML結構時，並且對flex-container表示flex元素時，class為flex-container的元素會變成flex-container，而內部名為flex-item的元素就變成放置容器的flex-item元素。
 
 ```
 <div class="flex-container">
@@ -33,3 +33,29 @@ display: flex;
 ```
 
 設定完flex-container和flex-item之後，flex-item會按照flex系統所預設(預設設定flex-direction: row)的main-axis和cross-axis之座標軸來排列，其座標軸在預設的情況下，會是如以下圖，在這裡所有的flex-item會以main-axis來進行來進行從左至右的排列。
+
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629300747/blog/cssTag/AxisOfRowVersion_ibcxt9.png)
+
+圖中所有的藍色代表著跟main-axis座標軸相關的事物，而所有黃色代表著跟cross-axis座標軸相關的事物，圓點代表著該座標軸的起點，而箭頭跟線呈現放置的方向，比如藍箭頭向右代表著若item以main-axis為主來放置的話，會從左至右來排列，黃線依此類推。
+
+另外就是每個座標軸都有各自的起點和終點，main-axis座標軸的起點在最左邊，而他的終點為最右邊；cross-axis座標軸的起點在最上邊，而他的終點為最下面
+
+
+另外當flex-container存不下接下來的item時，會先試著壓縮其他item的大小來放入新的item，然而若壓縮到無法再放時，便會超出container的範疇。
+
+## main-axis更動
+
+我們可以透過flex-direction屬性來更動main-axis的方向是橫向或者直向，它的屬性值：
+
+```
+flex-direction: row | row-reverse | column | column-reverse
+```
+
+預設上會以row為主，也就是main-axis和cross-axis這兩個定義會是上面章節所提到的，可若是flex-direction是row-reverse的話，main-axis座標軸會被反轉，而cross-axis座標軸則維持原本的方向：
+
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629300746/blog/cssTag/AxisOfRowReverseVersion_s5lqgj.png)
+
+
+
