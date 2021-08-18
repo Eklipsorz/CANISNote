@@ -72,3 +72,38 @@ flex-direction更改為column-reverse的話，除了main-axis座標軸會變成�
 
 align-items: stretch | flex-start | flex-end | center
 
+#### 參數說明：
+stretch：會強制所有元素以cross-axis方向來展開該元素的大小，比如cross-axis是y軸，那麼其元素的高度會被拉長至container的邊界。
+
+flex-start：強制將所有元素往cross-axis座標軸上的flex-start所在對齊。
+flex-end：強制將所有元素往cross-axis座標軸上的flex-end所在對齊。
+center：強制將所有元素cross-axis座標軸上的中間對齊
+
+## 向main-axis座標軸進行對齊
+透過justify-content語法來讓元素依照依照flex-direction所指定的main-axis來控制元素，預設上會以flex-start為主。其語法主要分為兩種：位移、藉由空白間隔來分散對齊。
+
+### 位移
+
+主要是將元素以main-axis的方向來將所有元素往特定點對齊或者集合，flex本身設定上不會讓每個元素有間隔，有三種參數值：
+
+```
+justify-content： flex-start | flex-end | center 
+```
+
+#### 參數說明
+
+flex-start：強制將所有元素往main-axis座標軸上的flex-start所在對齊。
+flex-end：強制將所有元素往main-axis座標軸上的flex-end所在對齊。
+center：強制將所有元素main-axis座標軸上的中間對齊
+
+### 分散對齊
+
+主要是針對每個元素之間的間隔來做處理，同樣地，會是以main-axis座標為主，有三種參數值：
+
+```
+justify-content： space-between | space-around | space-evenly
+```
+space-between：則是先把最靠近左右邊界的元素貼齊左右邊界，其餘元素則是在他們之間彼此間保持相同的間距。比如三個元素的排版：
+
+紫色部分為元素之間的間距，而綠色部分則是邊界與內容的padding，可以看到靠近邊界的元件會貼齊邊界(考慮到padding)，而沒靠近的元件就盡可能與其他元件保持相等的間距。
+
