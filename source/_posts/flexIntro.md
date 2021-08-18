@@ -57,5 +57,18 @@ flex-direction: row | row-reverse | column | column-reverse
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629300746/blog/cssTag/AxisOfRowReverseVersion_s5lqgj.png)
 
+flex-direction更改為column的話，main-axis座標軸會變成從上至下，也就是main-axis就會是原本的cross-axis，而cross-axis會變成原本的main-axis：
 
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629300747/blog/cssTag/AxisOfColumnVersion_ne5hlr.png)
+
+flex-direction更改為column-reverse的話，除了main-axis座標軸會變成從下至上以外，其餘皆和column的情況相同：
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629300746/blog/cssTag/AxisOfColumnReverseVersion_q09vug.png)
+
+
+## 向cross-axis座標軸進行對齊：
+
+透過align-item語法來讓元素依照flex-direction所指定的cross-axis來位移元素，且flex本身並不會讓每個元素上有間隔，預設上會以stretch為主，若元素有指定大小的話，會依照其指定大小為優先，而不執行stretch。
+
+align-items: stretch | flex-start | flex-end | center
 
