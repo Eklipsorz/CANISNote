@@ -10,6 +10,173 @@ tags: JavaScript
 據Scope的區分，我們可以區分為Root Scope、Parent Scope、Child Scope，預設上我們會在Root Scope進行宣告以及定義變數，在這裡所宣告的變數所擁有的作用域會是Root Scope或 Global Scope，而此變數會被稱之為全域變數，若跳脫Scope的範圍或者執行完畢時，其變數所佔用的記憶體會被釋放，若是在Root Scope內部產生另一個Scope並進行變數宣告的話，其額外產生的Scope對於Global Scope而言會是Local Scope，在那裡宣告的變數所擁有的Scope會只有那區塊，而不是Root Scope，而且該變數只要跳脫那Scope，它所佔用的記憶體空間會被釋放掉。
 
 
+比如首先我們先替Root Scope取名為Scope A，其內部再產生一個名為Scope B的Scope，括號內部又宣告了一個變數b，其變數b的Scope只有括號內部而已。
+
+```
+// Scope A: Root Scope
+let a = 10
+
+{ // Scope B: Child Scope of Root Scope
+
+    let b = 20
+
+}
+
+```
+
+在這情況下的變數會被稱作為區域變數，且該Scope A對於由括號構成的Scope B而言，Scope A會是他的Parent Scope，而Scope B會是Scope A的Child Scope。若我們繼續沿用上面例子中的Scope B內產生另一個名為Scope C的Scope的話，也就是如下所示：
+
+```
+// Scope A: Root Scope
+let a = 10
+
+{ // Scope B: Child Scope of Root Scope
+    let b = 20 
+    { // Scope C: Child Scope of Scope B
+        let c = 30
+    }
+    
+
+}
+
+```
+
+其Scope C會是Scope B的Parent Scope，而Scope C則會是Scope B的Child Scope。
+
+
+
+
+## Root、Parent、Child的變數存取關係
+這三者下變數之間的存取關係是依照下列條件：
+1. 變數宣告的先後順序
+2. 變數所在Scope是哪一種
+
+```
+// Scope A: Root Scope
+let a = 10
+
+{ // Scope B: Child Scope of Root Scope
+    let b = 20 
+    { // Scope C: Child Scope of Scope B
+        let c = 30
+    }
+    
+
+}
+
+```
+
+
+繼續沿用上個例子，當想在Root Scope去印出Scope C下的變數或者 Scope B的變數時，我們有兩種選擇方式：a. 在Scope B前寫印變數的程式、b. 在Scope B後寫出印變數的程式
+
+a. 在Scope B前寫印變數的程式
+
+```
+// Scope A: Root Scope
+let a = 10
+
+console.log(b)
+console.log(c)
+{ // Scope B: Child Scope of Root Scope
+    let b = 20 
+    { // Scope C: Child Scope of Scope B
+        let c = 30
+    }
+    
+
+}
+
+```
+
+b. 在Scope B後寫出印變數的程式
+
+
+```
+// Scope A: Root Scope
+let a = 10
+
+
+{ // Scope B: Child Scope of Root Scope
+    let b = 20 
+    { // Scope C: Child Scope of Scope B
+        let c = 30
+    }
+    
+
+}
+console.log(b)
+console.log(c)
+```
+
+但這兩種方式皆無法正常印出變數b和變數c，a方式是因爲Scope根本還沒被產生，所以本來就印不出來，而b方式則是因爲Scope內的所有變數皆被釋放，所以也就跟著印不出來，同樣的概念也可以放在只考慮Scope B和 Scope C這兩者上，換言之，沒辦法再Parent Scope沒存取Child Scope以及其Scope內部的Scope下的變數。
+
+
+同等的，若我們想要在Scope B印出Parent Scope的變數 a，我們會因為Parent Scope的變數a還存在而能夠印出來。
+
+```
+// Scope A: Root Scope
+let a = 10
+
+
+{ // Scope B: Child Scope of Root Scope
+    let b = 20 
+    
+    console.log(a)
+    { // Scope C: Child Scope of Scope B
+        let c = 30
+    }
+    
+
+}
+
+```
+
+但變數a的宣告定義是放在Scope B後頭的話，也就是像這樣，
+```
+// Scope A: Root Scope
+
+
+
+{ // Scope B: Child Scope of Root Scope
+    let b = 20 
+    
+    console.log(a)
+    { // Scope C: Child Scope of Scope B
+        let c = 30
+    }
+    
+
+}
+let a = 10
+```
+
+在這裡，對於Scope B而言，變數a的宣告定義會被系統定義為還未定義而無法被正常印出，這也代表宣告定義的先後順序會影響存取。
+但若是在Child Scope就定義的話，
+
+
+
+## Root Scope
+Scope範圍為整個程式或者整份文件。
+
+## Parent Scope && Child Scope
+當某個Scope A內部擁有另一個Scope B時，其Scope A會被Scope B稱作為Parent Scope，而Scope B會被Scope A稱作為Child Scop。
+
+## 如何構成額外的Scope
+
+藉由括號來定義其Scope之範疇
+```
+{
+let a = 20
+
+}
+
+{
+let b = 10
+
+}
+````
+
+
 
 
 
