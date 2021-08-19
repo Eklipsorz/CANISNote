@@ -7,7 +7,7 @@ tags: JavaScript
 在程式語言中，作用域(Scope)是指對應某種實體(entity)的名字(name)所能夠被合法辨識以及使用的範圍，其中實體是指的是某種記憶體區塊，而名字就是變數(variable)名稱，換言之，只要我們透過變數名稱就能操控代表記憶體區塊的實體。在這個簡介中，我們會談到作用域分為哪些以及如何宣告變數的作用域。
 
 
-據Scope的區分，我們可以區分為Root Scope、Parent Scope、Child Scope，預設上我們會在Root Scope進行宣告以及定義變數，在這裡所宣告的變數所擁有的作用域會是Root Scope或 Global Scope，而此變數會被稱之為全域變數，若跳脫Scope的範圍或者執行完畢時，其變數所佔用的記憶體會被釋放，若是在Root Scope內部產生另一個Scope並進行變數宣告的話，其額外產生的Scope對於Global Scope而言會是Local Scope，在那裡宣告的變數所擁有的Scope會只有那區塊，而不是Root Scope，而且該變數只要跳脫那Scope，它所佔用的記憶體空間會被釋放掉。
+根據Scope的區分，我們可以區分為Root Scope、Parent Scope、Child Scope，預設上我們會在Root Scope進行宣告以及定義變數，在這裡所宣告的變數所擁有的作用域會是Root Scope或 Global Scope，而此變數會被稱之為全域變數，若跳脫Scope的範圍或者執行完畢時，其變數所佔用的記憶體會被釋放，若是在Root Scope內部產生另一個Scope並進行變數宣告的話，其額外產生的Scope對於Global Scope而言會是Local Scope，在那裡宣告的變數所擁有的Scope會只有那區塊，而不是Root Scope，而且該變數只要跳脫那Scope，它所佔用的記憶體空間會被釋放掉。
 
 
 比如首先我們先替Root Scope取名為Scope A，其內部再產生一個名為Scope B的Scope，括號內部又宣告了一個變數b，其變數b的Scope只有括號內部而已。
@@ -207,12 +207,38 @@ let b = 10
 ````
 
 
+## var vs. let and const
+由於ES6才開始重視Scope而新增了let和const這兩者宣告方式，透過任一個方式來宣告變數時，系統會嚴格定義他們的Scope是位於哪裏，而var是在ES6之前就出現的，對於他的Scope定義會比較寬鬆，若用var來宣告變數的話，往往該變數容易出現預期外的結果。
+
+比如說以下這兩個例子，按照先前提到Scope和宣告方式，理論上，第一個程式碼會跑出錯誤，第二個則是得到10，但實際上結果皆為11，這證明var宣告下的變數會出現預期外的效果。
+
+```
+var a = 10
+
+{
+  a = 11
+  
+
+}
+
+console.log(a)
+```
+
+```
+var a = 10
+
+{
+  var a = 11
+  
+
+}
+
+console.log(a)
+```
 
 
 
-
-
-
+/* old content */
 
 
 
@@ -305,4 +331,8 @@ console.log(test)
 參考資料：
 1. https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Statements/var
 
+2. https://blog.bitsrc.io/understand-scope-in-javascript-e150f889ba72
 
+
+
+3. https://8thlight.com/blog/jarkyn-soltobaeva/2017/06/13/scope-and-closures-in-javascript.html
