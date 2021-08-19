@@ -189,7 +189,7 @@ let a = 10
 Scope範圍為整個程式或者整份文件。
 
 ## Parent Scope && Child Scope
-當某個Scope A內部擁有另一個Scope B時，其Scope A會被Scope B稱作為Parent Scope，而Scope B會被Scope A稱作為Child Scop。
+當某個Scope A內部擁有另一個Scope B時，其Scope A會被Scope B稱作為Parent Scope，而Scope B會被Scope A稱作為Child Scope。
 
 ## 如何構成額外的Scope
 
@@ -210,7 +210,7 @@ let b = 10
 ## var vs. let and const
 由於ES6才開始重視Scope而新增了let和const這兩者宣告方式，透過任一個方式來宣告變數時，系統會嚴格定義他們的Scope是位於哪裏，而var是在ES6之前就出現的，對於他的Scope定義會比較寬鬆，若用var來宣告變數的話，往往該變數容易出現預期外的結果。
 
-比如說以下這兩個例子，按照先前提到Scope和宣告方式，理論上，第一個程式碼會跑出錯誤，第二個則是得到10，但實際上結果皆為11，這證明var宣告下的變數會出現預期外的效果。
+比如說以下這兩個例子，按照先前提到Scope和宣告方式，理論上，第一個程式碼會跑出錯誤，第二個則是得到10，但實際上結果皆為11，這證明var宣告下的變數會出現預期外的效果，而且還會連帶變動外頭相同名稱的變數。
 
 ```
 var a = 10
