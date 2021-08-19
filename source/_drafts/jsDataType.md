@@ -6,12 +6,25 @@ tags:
 
 
 
+/* primitive data type的變數由於所佔的大小會固定所以可以存在只能存放連續空間且固定大小的stack，而object的變數由於所佔的大小不確定，只能先存在可動態變動記憶體大小的heap區塊 */
+
+
+primitive data type 的變數存在stack，而object則是存在heap。
+
+https://ithelp.ithome.com.tw/articles/10241346
+
+
+
+
+
+
+/* old content */
+
 
 JS是一種Dynamically typed languages，變數的資料型別將會根據指派內容而跟著變動，比如說有時會因爲指派數值給某變數而把該變數變成數值型別，也有時將字串指派給該變數，系統就會把這變數的資料型別轉換為string。
 
 
 其資料型別中，主要分為primitive data type和object，前者的primitive data type是程式語言原本就有(內建)的型別且對應的內容皆會是one to one，而object則是可以由這些primitive data type而構成一個資料型別集合，比方說，可以用數值、字串、布林合為一個新的型別，而這個型別通常會被賦予有意義的object name。
-
 ## 資料型別(Data Type)
 
 在JavaScript的ES6標準中，一共定義了以下6個primitive data type和object：
@@ -172,7 +185,4 @@ question:
     參考資料：
     1. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
     2. https://stackoverflow.com/questions/242813/when-should-i-use-double-or-single-quotes-in-javascript
-
-
-
-
+    3. stack vs. heap https://www.geeksforgeeks.org/stack-vs-heap-memory-allocation/
