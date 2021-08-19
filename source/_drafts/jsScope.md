@@ -150,9 +150,39 @@ let a = 10
 let a = 10
 ```
 
-在這裡，對於Scope B而言，變數a的宣告定義會被系統定義為還未定義而無法被正常印出，這也代表宣告定義的先後順序會影響存取。
-但若是在Child Scope就定義的話，
+在這裡，對於Scope B而言，變數a的宣告定義會被系統認定為還未定義而無法被正常印出，這也代表宣告定義的先後順序會影響存取。 但若是在Child Scope之前就定義好要存取的變數，那麼可以在Child Scope來存取Parent Scope的元素。
 
+若我們考慮至少1個身在同個Scope的Child Scope，這些Child Scope彼此間的存取狀況會是如何？我們先繼續沿用上個例子來假設，首先我們在Scope B產生名為Scope D的Scope，現在我們有Scope C 和 Scope D，當我們想在Scope C存取Scope D的變數時，會因為宣告的先後順序而無法正常存取，而當我們想在Scope D存取Scope C下的變數時，我們會因為Scope C的變數已經被釋放掉而無法正常存取，換言之，Scope C 和 Scope D這兩者間無法彼此存取他們所擁有的變數。
+
+```
+
+// Scope A: Root Scope
+
+let a = 10
+
+{ // Scope B: Child Scope of Root Scope
+    let b = 20 
+    
+    console.log(a)
+    { // Scope C: Child Scope of Scope B
+        let c = 30
+    }
+
+    { // Scope D: Child Scope of Scope B
+        let d = 40
+    }
+    
+
+}
+
+```
+
+### 總結
+
+整體而言，若要存取的變數在Scope之前宣告好的話， 我們可以：
+1. 無法在Parent Scope存取Child Scope所定義的變數。
+2. Child Scope能夠因為事先宣告的關係而能夠存取位於Parent Scope的變數。
+3. 多個在同一個Parent Scope下的Child Scope是無法存取彼此間的變數。
 
 
 ## Root Scope
