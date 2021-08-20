@@ -47,3 +47,37 @@ console.log(arr[N - 1])
 
 就能順利存取該元素
 
+
+4. array擁有幾種常見的屬性，比如可以回傳陣列長度或者陣列有多少個元素的length，
+使用方法為
+
+```
+array.length
+```
+
+
+可以搭配該屬性和for迴圈來遍歷陣列中的每個元素，比如透過以下語法來印出陣列中的每個元素。
+
+```
+let array = [1, 2, 3, 4, 5, 6, 7]
+
+for (let index = 0; index < array.length. index++) {
+
+	console.log(array[index])
+}
+```
+
+5. 陣列擁有可以被當作stack或者queue的方法，push方法和pop方法分別代表著stack常見的push和pop，而shift方法和unshift方法則是分別代表著queue常見的dequeue和enqueue。
+
+陣列的push方法會從陣列尾部添加元素，而pop方法則是從陣列尾部後取出值，相當符合stack的後進先出的特性，比如說：
+
+```
+let array = [1, 2, 3, 4, 5]
+array.push(6)
+```
+
+會在5之後添加6，而若是pop且陣列內容維持push之前的狀態的話，會把5這個元素給去掉
+```
+array.pop()
+```
+
