@@ -67,7 +67,7 @@ for (let index = 0; index < array.length. index++) {
 }
 ```
 
-5. 陣列擁有可以被當作stack或者queue的方法，push方法和pop方法分別代表著stack常見的push和pop，而shift方法和unshift方法則是分別代表著queue常見的dequeue和enqueue。
+5. 陣列擁有可以被當作stack或者queue的方法，push方法和pop方法分別代表著stack常見的push和pop，而shift方法和unshift方法則是分別代表著queue常見的dequeue和enqueue，而這四個方法都會確實更動陣列中的元素。
 
 陣列的push方法會從陣列尾部添加元素，而pop方法則是從陣列尾部後取出值，相當符合stack的後進先出的特性，比如說：
 
@@ -79,5 +79,31 @@ array.push(6)
 會在5之後添加6，而若是pop且陣列內容維持push之前的狀態的話，會把5這個元素給去掉
 ```
 array.pop()
+```
+
+陣列的unshift方法則將目前在陣列的所有元素都往後移一個，使新增的元素放入第一個位置，而shift方法則將目前陣列上的第一個元素取出來，然後將剩餘的元素都往前移一格，比如說：假設一個陣列內容為1,2,3,4,5的陣列，我們要對它做shift或者unshift處理
+
+```
+let array = [1, 2, 3, 4, 5]
+array.shift()
+```
+
+當執行shift時，會從陣列取出1這個數字，然後2,3,4,5都會往前面移動，使陣列內容變成：
+
+```
+array = [2, 3, 4, 5]
+```
+
+若我們將array內容繼續維持1,2,3,4,5，然後對它執行unshift(value1)時，
+
+```
+let array = [1, 2, 3, 4, 5]
+array.unshift(value1)
+```
+
+這會使陣列中的1,2,3,4,5都往後移一格，然後讓出空間存放value1，其陣列內容為：
+
+```
+array = [value1, 1, 2, 3, 4, 5]
 ```
 
