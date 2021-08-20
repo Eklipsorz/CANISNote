@@ -147,3 +147,26 @@ Note：
 2. 若endIndex為負值時，就告訴系統讀到倒數第n個元素就停止擷取，比如說str.slice(0,-1)就會從第一個元素擷取一直擷取到倒數第二個元素，讀到倒數第一個元素時便停止擷取。
 
 
+
+9. concat則是將其他陣列與目前陣列進行合併，其合併型式為在目前陣列的尾端接上其他陣列的內容，過程中不會更動原本內容，回傳值會是新陣列，該陣列會存放合併結果，與push功能很像，但實際上來說concat不會更動原本陣列的內容，而push則是會更動，主要語法為：
+
+```
+oldarray.concat(newarray)
+oldarray.concat(value1, value2, ....)
+```
+
+oldarray和newarray分別是陣列，回傳值會是oldarray尾端會增加newarray後的結果，另一個則是將value1, value2, ... 插入至oldarray尾端。 
+
+比如說：有兩個陣列分別為array1和array2，其內容分別為[1,2,3]和[6,7]，經過concat處理之後，
+```
+let array1 = [1, 2, 3]
+let array2 = [6, 7]
+
+array1.concat(array2)
+```
+
+最後的結果會是：
+```
+newarray = [1, 2, 3, 6, 7]
+```
+
