@@ -69,8 +69,12 @@ for (let index = 0; index < array.length. index++) {
 
 5. 陣列擁有可以被當作stack或者queue的方法，push方法和pop方法分別代表著stack常見的push和pop，而shift方法和unshift方法則是分別代表著queue常見的dequeue和enqueue，而這四個方法都會確實更動陣列中的元素。
 
-陣列的push方法會從陣列尾部添加元素，而pop方法則是從陣列尾部後取出值，相當符合stack的後進先出的特性，比如說：
+陣列的push方法會從陣列尾部添加元素，而pop方法則是從陣列尾部後取出值，相當符合stack的後進先出的特性，push的語法為：
 
+```
+arr.push(element1[, ...[, elementN]])
+```
+arr為陣列，而element1, ... elementN是會一個又一個從arr尾端加入進去的元素。，比如說：
 ```
 let array = [1, 2, 3, 4, 5]
 array.push(6)
