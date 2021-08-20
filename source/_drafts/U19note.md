@@ -62,4 +62,6 @@ for (let key in obj) {
 
 6. 查閱某物件的所有property、value、property: value之方法：
 
-
+a. Object.keys(obj)：以一維陣列來回傳obj所擁有的屬性名稱
+b. Object.values(obj)：以一維陣列來回傳obj所擁有的屬性對應值
+c. Object.entries(obj)：以二維陣列來回傳obj所擁有的[key:value]值，每一個元素皆是[key:value]的一維陣列。
