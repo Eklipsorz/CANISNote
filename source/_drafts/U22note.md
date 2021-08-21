@@ -19,7 +19,7 @@ function funName (variable 1, variable 2, ...., variable N) {
 
 function 為宣告函式的關鍵字，而funName則是你所定義的函式名稱，而variable 1至variable N則是這個函式會用到的參數(Parameter)，這些參數會存在由這個函式所構成的Scope，而statement則是函式要做的處理，而return的部分則是看函式是否需要回傳value或者由expression所代表的value給呼叫者。
 
-3. 呼叫宣告過的函式，主要的語法會是：以上面宣告為例子
+3. 呼叫宣告過的函式，在程式語言會被稱之為呼叫者(caller)，而被呼叫的函式則被稱之為被呼叫者(callee)，主要的語法會是：以上面宣告為例子
 
 ```
 let/const result = funName(value 1, value 2, ...., value N)
@@ -40,6 +40,15 @@ let/const result = funName(value 1, value 2, ...., value N)
 }
 ```
 
+其中return的部分會傳給呼叫者，再接著間接地傳遞給result這個變數，然而若函式本身不存在return且呼叫者仍想要回傳值的話，呼叫者拿到的回傳值會因為函式本身並沒有return，所以回傳值會是沒有，但系統會預設給它一個undefined，最後result會間接地拿到undefined。
+
+```
+function funName (variable 1, variable 2, ...., variable N) {
+	statement
+}
+
+let/const result = funName(value 1, value 2, ...., value N)
+```
 4. 使用上的簡化
 
 
