@@ -115,3 +115,25 @@ function showDetail (obj) {
 }
 showDetail(user)
 ```
+
+2. 利用函式來建立物件：
+
+```
+function createPlayer (name, hp, mp) {
+  return {
+    name: name,
+    hp: hp,
+    mp: mp
+  }
+}
+
+const player1 = createPlayer('Magician', 30, 100)
+const player2 = createPlayer('Warrior', 100, 30)
+
+console.log(player1) // {name: "Magician", hp: 30, mp: 100}
+console.log(player2) // {name: "Warrior", hp: 100, mp: 30}
+
+```
+
+
+
