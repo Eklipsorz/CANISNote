@@ -26,4 +26,18 @@ str = 'A'
 ```
 
 
-2. 由多個字元的一般字串很容易被系統當作String物件，所以他可以使用該物件下的一些方法：charAt、indexOf、slice、trim、split、
+2. 由多個字元的一般字串很容易被系統當作String物件，所以他可以使用該物件下的一些方法：charAt、indexOf、slice、trim、split、substring、substr，這些方法並不會更動原本字串的內容。
+
+a. charAt(index): 回傳指定位置index的字元
+
+b. indexOf(searchvalue, start): 從start位置開始找字元searchvalue所在的位置，找到第一個之後便直接回傳其位置
+
+c. slice用法跟陣列一樣
+
+d. trim()：清除字串起始處和結尾處所出現的多餘空白
+
+e. split(separator)：根據separator所指定的字元來分割出好幾個子字串並放入陣列中
+
+f. substring(start, end)：從start位置擷取至end處之前的內容，回傳結果便是擷取後的內容。
+
+g. substr(start, length)：從start位置擷取內容，內容長度到達length個字元時便停止，回傳結果便是擷取內容。
