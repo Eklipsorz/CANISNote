@@ -3,7 +3,7 @@ title: U25note
 tags:
 ---
 
-1. 物件除了擁有屬性以外，還可以擁有一些方法(method)，這些方法都是表現物件本身會有的行為、功能，每個方法都是由特定的函式所構成。
+1. 物件除了擁有屬性以外，還可以擁有一些方法(method)，這些方法都是表現物件本身會有的行為、功能，每個方法都是由特定的函式所構成，而方法本身在物件裡頭會和其他屬性一樣被當成雜湊表上的key值或者變數，只是可以存放函式物件。
 
 
 
@@ -91,4 +91,27 @@ function funName(obj) {
 
 Note: 
 
-1. 
+1. 利用for迴圈來印出一個物件的所有屬性值並用函式來封裝，假設一個物件屬性如同下面的object，而印出所有屬性值的函式名為showDetail，可以看到利用for迴圈會根據obj所擁有的雜湊表上表示的key來迭代，然後由於key裡頭也有method1，所以得用typeof來檢測是否有函式物件，最後會印出所有屬性值。
+
+```
+let/const object = {
+	property1: value1,
+	property2: value2,
+		.
+	propertyN: valueN
+
+	method1: function () {
+
+		 }
+
+}
+
+function showDetail (obj) {
+  for (let prop in obj) {
+    if (typeof user[prop] !== 'function') {
+      console.log(user[prop])
+    }
+  }
+}
+showDetail(user)
+```
