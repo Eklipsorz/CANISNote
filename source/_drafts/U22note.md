@@ -17,9 +17,18 @@ function funName (variable 1, variable 2, ...., variable N) {
 }
 ```
 
-function 為宣告函式的關鍵字，而funName則是你所定義的函式名稱，而variable 1至variable N則是這個函式會用到的參數(Parameter)，這些參數會存在由這個函式所構成的Scope，而statement則是函式要做的處理，而return的部分則是看函式是否需要回傳value或者由expression所代表的value給呼叫者。
+function 為宣告函式的關鍵字，而funName則是你所定義的函式名稱，而variable 1至variable N則是這個函式會用到的參數(Parameter)，這些參數會存在由這個函式所構成的Scope，也就是他們是該函式的區域變數且他們能夠向其他變數那樣會根據指派內容而變動自己型別，而statement則是函式要做的處理，而return的部分則是看函式是否需要回傳value或者由expression所代表的value給呼叫者，也可以是沒有variable 1至variable N這幾個參數的函式：
 
-3. 呼叫宣告過的函式，在程式語言會被稱之為呼叫者(caller)，而被呼叫的函式則被稱之為被呼叫者(callee)，主要的語法會是：以上面宣告為例子
+```
+function funName () {
+	statement
+	return value/expression
+}
+```
+
+
+
+3. 呼叫(call)/調用(invoke)宣告過的函式，在程式語言會被稱之為呼叫者(caller)，而被呼叫的函式則被稱之為被呼叫者(callee)，主要的語法會是：以上面宣告為例子
 
 ```
 let/const result = funName(value 1, value 2, ...., value N)
