@@ -36,3 +36,59 @@ let/const objName = {
 objName.method1(variable1, variable2, variable3, .... , variableN)
 objName.method2(variable1, variable2, variable3, .... , variableN)
 ```
+
+
+4. this 變數在object裡指的是目前呼叫函式或者方法的擁有者(owner)物件，適用場景為當某種物件想要在自己方法來使用自己所擁有的屬性的場景，而每個物件的屬性值也不一樣，比如說obj1, obj2, obj3....等等這些物件，這些物件的原型都皆是如下，而這些物件的屬性值又不一樣，這時我們若透過obj1.method1()來呼叫，會得到他自己本身的屬性，而改為obj2.method1()來呼叫，又是另一種不同的屬性值。
+
+```
+let/const objName = {
+	property1: value1,
+		.
+	propertyN: valueN,
+	method1: function() {
+			statement
+			return this.property1
+		 }
+
+}
+
+
+```
+
+5. 物件本身可以被當作函式的引數值以及回傳值，那以下的程式碼當例子，我們可以透過funName(objName)來呼叫使用，其結果會印出objName物件的所有屬性值。
+```
+let/const objName = {
+	property1: value1,
+		.
+	propertyN: valueN
+}
+
+function funName(obj) {
+
+	console.log(obj.property1)
+		.
+	console.log(obj.propertyN)
+}
+```
+
+而若是拿物件當作回傳值的話，則是以宣告物件的形式來回傳，就如同funName所回傳的型態：
+```
+function funName(obj) {
+
+	return {
+		property1: value1,
+			.
+		propertyN: valueN
+	
+	}
+
+}
+
+```
+
+
+
+
+Note: 
+
+1. 
