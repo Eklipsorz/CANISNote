@@ -56,7 +56,7 @@ function funName (variable 1, variable 2, ...., variable N) {
 	statement
 }
 
-let/const result = funName(value 1, value 2, ...., value N)
+let/const result = funName (value 1, value 2, ...., value N)
 ```
 4. 使用上的簡化
 
