@@ -54,10 +54,18 @@ variableB.property1 = value
 5. 若函式參數是以primitive為主的變數，其變數會透過copied by value來獲得引數內容，而若是以object為主的變數，則透過copied by reference，可以直接變更或者控制該reference對應的物件。
 
 note：
-1. 所有primitive 型別的內容皆為immutable，換言之，只要它們一被放入記憶體中，他們對應的記憶體區塊是不允許被修改的，除非重新複製其內容。
+1. 所有primitive 型別的內容皆為immutable，換言之，只要它們一被放入記憶體中，他們對應的記憶體區塊是不允許被修改的，除非重新複製其內容；而物件本身不是immutable。
 
 2. 承接第一點，若變數對應immutable 內容時，其變數會被稱之為immutable variable，但變數本身並不是immutable。
 
+3. 若要直接像primitive那樣直接複製整塊object內容給一個變數，則可以透過以下方式來複製：assign方法會另外分配另一塊新的記憶體來儲存物件a的所有內容，並把其參照位址給clone，其中變數a和變數clone儲存的參照並不會是一樣的。
+
+```
+let a = { foo:1 }
+let clone = {}
+Object.assign(clone, a)
+
+```
 
 參考資料：
 
