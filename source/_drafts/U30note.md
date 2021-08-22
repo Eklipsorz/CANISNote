@@ -19,10 +19,20 @@ let a = '10'
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629620809/blog/variable2Memory/declarationOfMultiVariables_h9evtm.png)
 
 
+當要更動已經存放primitive內容的變數時，系統會因為primitive內容本身是immutable而無法直接更動到其內容而另外分配額外記憶體來存放變更內容，並把新的記憶體區塊定義給原本的變數，這會使得這個變數看起來就像是宣告並定義內容給新的變數一樣，而舊的那塊會被回收或者釋放掉。比如說：當我們要將變數a更動為'12'的話，就會另外要塊記憶體存放'12'，而舊的那塊會被回收。
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629620809/blog/variable2Memory/reassignVariableA_r3opnp.png)
+
+2. 當一個變數A想儲存變數B所儲存的primitive 內容時，系統也會因為immutable的特性而另外建立一塊記憶體區塊來存放變數B目前儲存到的內容：
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629623013/blog/variable2Memory/varA2varB_m32qth.png)
+
+由於這樣的轉移過程等同於把變數B的值複製至變數A上，又被稱之為copied by value或者call by value。
 
 
+2. 變數如何存放object 型別的資料：當宣告定義一個物件給一個變數時，系統會分配一個記憶體區塊來儲存物件上內容並放在記憶體中的heap區，最後讓變數本身儲存該記憶體區塊的記憶體位址或者參照位址(reference)，但變數本身是儲存在stack區塊：
 
-2. 變數如何存放object 型別的資料：
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629624064/blog/variable2Memory/varA2Obj_jn2shi.png)
 
 3. 兩者間修改的差異：
 
@@ -32,4 +42,20 @@ let a = '10'
 
 
 note：
+1. 所有primitive 型別的內容皆為immutable，換言之，只要它們一被放入記憶體中，他們對應的記憶體區塊是不允許被修改的，除非重新複製其內容。
+
+2. 承接第一點，若變數對應immutable 內容時，其變數會被稱之為immutable variable，但變數本身並不是immutable。
+
+
+
+
+
 1. copied by reference 
+
+
+
+
+參考資料：
+
+1. https://developer.mozilla.org/en-US/docs/Glossary/Primitive
+2. https://stackoverflow.com/questions/16115512/understanding-javascript-immutable-variable
