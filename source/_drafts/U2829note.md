@@ -34,8 +34,7 @@ Math.round((baseLength * baseLength * height) / 3)
 Math.round((baseLength * baseLength * height * 100) / 3) / 100
 ```
 
-另一個方法則是使用toFixed(2)方法來四捨五入進位至小數點後第二位：
-
+另一個方法則是使用toFixed(2)方法來四捨五入進位至小數點後第二位，但結果會是以字串來顯示：
 ```
 ((baseLength * baseLength * height) / 3).toFixed(2)
 ```
