@@ -18,7 +18,7 @@ tags:
 
 note:
 a. 排版樣式: 
-	- 定位相關(影響區塊在畫面的位置，position、top/right/bottom/left等)
-	- 畫面流(影響區塊內的水平、垂直排版，display grid/flex、block/inline-block等)
+- 定位相關(影響區塊在畫面的位置，position、top/right/bottom/left等)
+- 畫面流(影響區塊內的水平、垂直排版，display grid/flex、block/inline-block等)
 
 b. 
