@@ -16,11 +16,17 @@ right: value
 
 2. 若position 設定為static時，其容器大小並不會跟著內容而變化，而定位方式會依照原有的Page Flow來排定，在這情況下不會受到top、bottom、left、right任一種影響。
 
-3. 若position 設定為relative時，其容器大小並不會跟著內容而變化，而定位方式會從static
+3. 若position 設定為relative時，其容器大小並不會跟著內容而變化，而定位方式會從static改變，且以static模式下的元素之定位參考點為基準點(下圖橘點)來定位，由該橘點來構成其元素能夠位移的範圍(橘框)：
 
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629707392/blog/htmlPosition/relativeStartPoint_nsc1nk.png)
 
+若
 
+```
+top: 30px
+left
 
+```
 
 note:
 1. Page Flow/Normal Flow: Flow是指放置內容的方向，而這裡Page Flow是指還沒套用任何CSS樣式的預設HTML放置內容之方向，其方向會是先由上而下來放，再來就從左至右。
