@@ -84,9 +84,10 @@ note:
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629706579/blog/htmlPosition/positioningPoint_edkots.png)
 
 
+4. position: static vs. relative vs. absolute vs. fixed 
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629726945/blog/htmlPosition/strengthOf4PositionsFromAC_xgtx7o.png)
 
-4. z-index: 該屬性定義另一種維度來控制多個元素在相同位置上的呈現順序-深度，其屬性值越大，就越先呈現，數值越小，就越後呈現，但這不表示多個元素在相同位置的呈現會因為數值大而被覆蓋掉，而是以多個屬性能夠呈現為目標來達到此屬性值的效果。
+5. z-index: 該屬性定義另一種維度來控制多個元素在相同位置上的呈現順序-深度，其屬性值越大，就越先呈現，數值越小，就越後呈現，但這不表示多個元素在相同位置的呈現會因為數值大而被覆蓋掉，而是以多個屬性能夠呈現為目標來達到此屬性值的效果。
 
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629713706/blog/htmlPosition/ExportedContentImageFromAC_smdaug.png)
-
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629726946/blog/htmlPosition/zIndexFromAC_vhpa0z.png)
 
