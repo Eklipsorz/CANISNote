@@ -40,6 +40,14 @@ b. 當value1為負值時，top、bottom、left、right的移動方向會變成�
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629709253/blog/htmlPosition/bodyStartPoint_en0fzx.png)
 
+(原文： is positioned relative to the nearest positioned ancestor (instead of positioned relative to the viewport.) However, if an absolute positioned element has no positioned ancestor, it uses the document body, and move along with page scrolling.)
+
+其top、bottom、left、right的移動方式會如同設定relative那樣去決定元素的定位。
+
+
+
+
+
 
 note:
 1. Page Flow/Normal Flow: Flow是指放置內容的方向，而這裡Page Flow是指還沒套用任何CSS樣式的預設HTML放置內容之方向，其方向會是先由上而下來放，再來就從左至右。
