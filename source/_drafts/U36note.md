@@ -49,7 +49,7 @@ b. 當value1為負值時，top、bottom、left、right的移動方向會變成�
 
 在這情況下設定top、bottom、left、right時，會以最近的邊線當作基準：
 
-當value1為正值，
+當value1為正值，會盡量使元素放置在viewport內部
 - top設定為value1，元素的上邊界(border-top)會跟viewport的上邊界在viewport內部保持value1的距離
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629711353/blog/htmlPosition/topFixed_yavtfv.png)
 
@@ -62,7 +62,17 @@ b. 當value1為負值時，top、bottom、left、right的移動方向會變成�
 - right設定value1，元素的右邊界(border-right)會跟viewport的右邊界在viewport內部保持value1的距離
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629711353/blog/htmlPosition/rightFixed_bewenm.png)
 
+當value1為負值，其相關邊界會從viewport外部向內部展開，比如說當top的value1為負時，元素上邊界會與viewport上邊界在viewport在外部保持value1的距離。
 
+另外當同時使用top、bottom、left、right時，會自動調整元素高寬來滿足其設定值，比如說若設定類似以下語法時，
+```
+left: value1
+right: value2
+```
+
+其結果會是：
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629713038/blog/htmlPosition/leftrightFixedExample_gfitur.png)
 
 note:
 1. Page Flow/Normal Flow: Flow是指放置內容的方向，而這裡Page Flow是指還沒套用任何CSS樣式的預設HTML放置內容之方向，其方向會是先由上而下來放，再來就從左至右。
@@ -75,4 +85,8 @@ note:
 
 
 
-4. 
+4. z-index: 該屬性定義另一種維度來控制多個元素在相同位置上的呈現順序-深度，其屬性值越大，就越先呈現，數值越小，就越後呈現，但這不表示多個元素在相同位置的呈現會因為數值大而被覆蓋掉，而是以多個屬性能夠呈現為目標來達到此屬性值的效果。
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629713706/blog/htmlPosition/ExportedContentImageFromAC_smdaug.png)
+
+
