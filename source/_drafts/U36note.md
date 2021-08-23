@@ -44,10 +44,19 @@ b. 當value1為負值時，top、bottom、left、right的移動方向會變成�
 
 其top、bottom、left、right的移動方式會如同設定relative那樣去決定元素的定位。
 
+5. 若position 設定為fixed時，其容器大小會跟著內容而變化，而定位方式會從static改變，且直接在viewport內部移動，以元素能夠放入viewport為目標，所以不會以定位參考點當移動標準，通常viewport會由body元素來承擔，整體來說會像是：
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629711523/blog/htmlPosition/originFixed_gy0g62.png)
+
+在這情況下設定top、bottom、left、right時，會以最近的邊線當作基準：
+
+當value1為正值，
+- top設定為value1，元素的上邊界(border-top)會跟viewport的上邊界保持value1的距離
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629711353/blog/htmlPosition/topFixed_yavtfv.png)
 
 
-
-
+- bottom設定value1，元素的下邊界(border-bottom)會跟viewport的下邊界保持
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629711353/blog/htmlPosition/bottomFiexd_h9olxv.png)
 
 note:
 1. Page Flow/Normal Flow: Flow是指放置內容的方向，而這裡Page Flow是指還沒套用任何CSS樣式的預設HTML放置內容之方向，其方向會是先由上而下來放，再來就從左至右。
