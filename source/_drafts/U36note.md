@@ -105,19 +105,8 @@ c. 若兩個彼此為相反方向共存的話，只會挑選優先權比較高�
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629793622/blog/htmlPosition/coexist_fourPos_auzrtm.png)
 
 
-4. 若position 設定為absolute時，其容器大小會跟著內容而變化，而定位方式會從static改變，且以離該元素最近的定位父元素(ancestor element，其position被設定static以外的值)所擁有定為參考點為基準點(圖中橘點)來定位，並由基準點(橘點)構成該元素能夠移動的範圍，而且不會為了不違反Page Flow或者HTML上結構的規定而改變定位。
 
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629708899/blog/htmlPosition/absoluteStartPoint_ihsj9c.png) 
-
-若一直都找不到合適的父元素(ancestor element)的話，會以body本身的定位參考點來當作基準點：
-
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629709253/blog/htmlPosition/bodyStartPoint_en0fzx.png)
-
-(原文： is positioned relative to the nearest positioned ancestor (instead of positioned relative to the viewport.) However, if an absolute positioned element has no positioned ancestor, it uses the document body, and move along with page scrolling.)
-
-其top、bottom、left、right的移動方式會如同設定relative那樣去決定元素的定位。
-
-5. 若position 設定為fixed時，其容器大小會跟著內容而變化，而定位方式會從static改變，且直接在viewport內部定位，定位方式是以元素和viewport這兩者間的邊界作為基準點，通常viewport會由body元素來承擔，整體來說會像是：
+4. 若position 設定為fixed時，其容器大小會跟著內容而變化，而定位方式會從static改變，且直接在viewport內部定位，定位方式是以元素和viewport這兩者間的邊界距離作為基準點，通常viewport會由body元素來承擔，整體來說會像是：
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629711523/blog/htmlPosition/originFixed_gy0g62.png)
 
 在這情況下設定top、bottom、left、right時，會以最近的邊線當作基準：
@@ -147,7 +136,13 @@ right: value2
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629713038/blog/htmlPosition/leftrightFixedExample_gfitur.png)
 
-6. 若position設定為sticky，其容器大小並不會跟著內容而變化，而定位方式會從static改變，根據設定sticky的元素邊界與離他最近的scrolling ancestor(帶有scrolling 機制或者帶有捲軸元素的父元件)之間的邊界之間的距離(如圖中的value2)是否小於門檻值來變動元件的特性，其門檻值會以top、bottom、left、right的任一值為主，會優先以top值為門檻值(threshold)：
+5. 若position 設定為absolute時，其容器大小會跟著內容而變化，而定位方式會從static改變，且以離該元素最近的定位父元素(ancestor element，其position被設定static以外的值)所擁有定為參考點為基準點(圖中橘點)來定位，而定位方式是以該元素邊界和父元素邊界在父元素內部之間的距離作為基準點來調整top、bottom、left、right，類似於position: fixed的定位方式，只是差別在於還會挑有定位過的父元素，若一直都找不到合適的父元素(ancestor element)的話，才會以body/viewport邊界和其元素邊界之差來呈現。
+
+(原文： is positioned relative to the nearest positioned ancestor (instead of positioned relative to the viewport.) However, if an absolute positioned element has no positioned ancestor, it uses the document body, and move along with page scrolling.)
+
+其top、bottom、left、right的移動方式會如同設定fixed那樣去決定元素的定位。
+
+5. 若position設定為sticky，其容器大小並不會跟著內容而變化，而定位方式會從static改變，根據設定sticky的元素邊界與離他最近的scrolling ancestor(帶有scrolling 機制或者帶有捲軸元素的父元件)之間的邊界之間的距離(如圖中的value2)是否小於門檻值來變動元件的特性，其門檻值會以top、bottom、left、right的任一值為主，會優先以top值為門檻值(threshold)：
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629787015/blog/htmlPosition/stickyPosition_kxapar.png)
 
