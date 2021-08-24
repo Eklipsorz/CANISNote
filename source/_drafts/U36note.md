@@ -74,6 +74,19 @@ right: value2
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629713038/blog/htmlPosition/leftrightFixedExample_gfitur.png)
 
+6. 若position設定為sticky，其容器大小並不會跟著內容而變化，而定位方式會從static改變，根據設定sticky的元素邊界與離他最近的scrolling ancestor(帶有scrolling 機制的父元件)之間的邊界之間的距離(如圖中的value2)是否小於門檻值來變動元件的特性，其門檻值會以top、bottom、left、right的任一值為主，會優先以top值為門檻值(threshold)：
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629787015/blog/htmlPosition/stickyPosition_kxapar.png)
+
+
+
+
+其實際定位位置會以top、bottom、left、right為主，而門檻值會是以top、bottom、left、right的任一值為主，top的優先權會大於其餘三者，若距離是大於門檻值時，該sticky的元件會以relative形式來呈現，而top、bottom、left、right並不會以relative來影響其位置。
+
+
+
+
+
 note:
 1. Page Flow/Normal Flow: Flow是指放置內容的方向，而這裡Page Flow是指還沒套用任何CSS樣式的預設HTML放置內容之方向，其方向會是先由上而下來放，再來就從左至右。
 
@@ -91,3 +104,5 @@ note:
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629726946/blog/htmlPosition/zIndexFromAC_vhpa0z.png)
 
+
+6. 當一個元件設定自己的overflow屬性為hidden、scroll、auto、overlay時，便會被系統當成是scolling element。而overflow屬性是定義元素內容超過呈現範圍時該如何呈現。
