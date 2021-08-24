@@ -53,11 +53,10 @@ c. 若兩個彼此為相反方向共存的話，只會挑選優先權比較高�
 
 而若是挑選right的話，結果會是：
 
-![](
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629793057/blog/htmlPosition/rightRelativePos_aez4yw.png)
 
 
-- 當top和bottom共存的話，只會以top為優先，
-
+- 當top和bottom共存的話，只會以top為優先，比如說設定以下樣式，並讓top和bottom共同出現，且數值皆為10px。
 
 ```
 .relative {			//調整名為relative元素之樣式
@@ -73,8 +72,34 @@ c. 若兩個彼此為相反方向共存的話，只會挑選優先權比較高�
 
 ```
 
+其最後的呈現結果為：
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629793297/blog/htmlPosition/coexist_topAndbottom_cd6kib.png)
+
+若是挑選到bottom的話，其呈現結果為：
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629793297/blog/htmlPosition/bottomRelativePos_vnl36d.png)
+
+- 不為相反方向的屬性可以同時在元素呈現，bottom/top任一種和left/right任一種混搭，
+比如說設定以下樣式，並讓4種屬性同時出現，且數值如下所示：
+
+```
+.relative {
+  position: relative; 
+
+   /* 偏移 */
+  bottom: 10px;
+  top: 20px;
+  left: 10px;
+  right: 300px;
+  background: #ccc;
+  z-index:2;
+}
 
 
+```
+
+最後的呈現效果會以top: 20px和left: 10px為主：
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629793622/blog/htmlPosition/coexist_fourPos_auzrtm.png)
 4. 若position 設定為absolute時，其容器大小會跟著內容而變化，而定位方式會從static改變，且以離該元素最近的定位父元素(ancestor element，其position被設定static以外的值)所擁有定為參考點為基準點(圖中橘點)來定位，並由基準點(橘點)構成該元素能夠移動的範圍，而且不會為了不違反Page Flow或者HTML上結構的規定而改變定位。
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629708899/blog/htmlPosition/absoluteStartPoint_ihsj9c.png) 
