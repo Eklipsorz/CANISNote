@@ -100,6 +100,8 @@ c. 若兩個彼此為相反方向共存的話，只會挑選優先權比較高�
 最後的呈現效果會以top: 20px和left: 10px為主：
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629793622/blog/htmlPosition/coexist_fourPos_auzrtm.png)
+
+
 4. 若position 設定為absolute時，其容器大小會跟著內容而變化，而定位方式會從static改變，且以離該元素最近的定位父元素(ancestor element，其position被設定static以外的值)所擁有定為參考點為基準點(圖中橘點)來定位，並由基準點(橘點)構成該元素能夠移動的範圍，而且不會為了不違反Page Flow或者HTML上結構的規定而改變定位。
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629708899/blog/htmlPosition/absoluteStartPoint_ihsj9c.png) 
