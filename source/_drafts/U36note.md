@@ -31,6 +31,49 @@ a. value1為正值時，
 b. 當value1為負值時，top、bottom、left、right的移動方向會變成反方向，比如當top被設定為目前為負值的value1時，元素的黑點會以橘點為中心向上移動至value1。
 
 
+c. 若兩個彼此為相反方向共存的話，只會挑選優先權比較高的方向來調整：
+
+- 當left和right共存的話，只會以left為優先，比如說設定以下樣式，並讓left和right共同出現，且數值皆為10px。
+```
+.relative {		//調整名為relative元素之樣式
+  position: relative; 
+
+   /* 偏移 */
+  right: 10px;
+  left: 10px;
+  
+  background: #ccc;
+  z-index:2;
+}
+```
+
+其最後會挑選left作為最後的呈現結果：
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629792533/blog/htmlPosition/coexist_rightAndleft_n4wfjy.png)
+
+而若是挑選right的話，結果會是：
+
+![](
+
+
+- 當top和bottom共存的話，只會以top為優先，
+
+
+```
+.relative {			//調整名為relative元素之樣式
+  position: relative; 
+
+   /* 偏移 */
+  top: 10px;
+  bottom: 10px;
+  
+  background: #ccc;
+  z-index:2;
+}
+
+```
+
+
 
 4. 若position 設定為absolute時，其容器大小會跟著內容而變化，而定位方式會從static改變，且以離該元素最近的定位父元素(ancestor element，其position被設定static以外的值)所擁有定為參考點為基準點(圖中橘點)來定位，並由基準點(橘點)構成該元素能夠移動的範圍，而且不會為了不違反Page Flow或者HTML上結構的規定而改變定位。
 
@@ -89,7 +132,7 @@ note:
 
 2. Viewport (可視區): 是使用者能夠在網頁看到的全部區域(is the user's visible area of a web page)
 
-3. 定位參考點：元素本身放置其他位置的基準點，通常元素會以自身的左上角作為定位參考點：圖中的黑點就是元素的定位參考點，當要位移該元素時，會以那個點來移動，並連帶移動整個元素。
+3. 定位參考點：元素本身放置其他位置的基準點，通常元素會以自身的左上角作為定位參考點：圖中的黑點就是元素的定位參考點，當要位移該元素時，會以那個點來移動，並連帶移動整個元素，該定位參考點適用於position: relative，其餘position模式下皆不適用。
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629706579/blog/htmlPosition/positioningPoint_edkots.png)
 
