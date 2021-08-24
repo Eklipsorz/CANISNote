@@ -31,7 +31,10 @@ a. value1為正值時，
 b. 當value1為負值時，top、bottom、left、right的移動方向會變成反方向，比如當top被設定為目前為負值的value1時，元素的黑點會以橘點為中心向上移動至value1。
 
 
-c. 若兩個彼此為相反方向共存的話，只會挑選優先權比較高的方向來調整：
+c. 若兩個彼此為相反方向共存的話，只會挑選優先權比較高的方向來調整：我們以下圖的relative元素作為例子，而所有元素皆以position: static為主：
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629793848/blog/htmlPosition/originPos_a8a7ma.png)
+
 
 - 當left和right共存的話，只會以left為優先，比如說設定以下樣式，並讓left和right共同出現，且數值皆為10px。
 ```
