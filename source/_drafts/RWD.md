@@ -15,10 +15,24 @@ tags:
 	- 優點：每一種獨立出來的網頁可以針對特定螢幕尺寸做更大的優化
 	- 缺點：維護上會因為版本區分太多而使其成本更大且不易管理
 
+在這裡只針對RWD來討論，
 
 
 
+Draft:
+1. 定義預設的 viewport 尺寸: viewport
+2. media queries
+3. 設定分界點 :breakpoint
 
+
+RWD的核心是Mobile First，得優先考量最小尺寸的裝置-手機，在尺寸較小的情況下，什麼內容最應該先被呈現，隨後等考量的尺寸慢慢變大時，再來增加更多呈現內容，然而每一種裝置的尺寸都不盡相同，因此會依照統計的方式來對每一種裝置的尺寸再一次分好幾類來方便開發，每一類會以某種特定尺寸標準或者breakpoint來區分目前裝置是屬於哪一類，常見的breakpoint會以320px、480px、720px、768px、960px、1024px等等作為寬度來區分，這種breakpoint適用於比較大型的內容排版，因此被稱之為major breakpoint。
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629897360/blog/rwd/majorBreakPoint_euitnt.png)
+
+開發上可以根據每一種breakpoint來設計不同的內容排版，然而除了會以單一值的breakpoint作為區分以外，同一種breakpoint的排版可能又會因為實際裝置尺寸而使部分元件排版跑掉，因此又會多區分一個breakpoint，而這個breakpoint主要適用於比較細微的排版，而因此被稱之為minor breakpoint
+
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629897366/blog/rwd/minorAndMajorBreakPoint_lg8fps.png)
 Note:
 1. google 在2015年宣布"行動裝置友善"網站的搜尋排序將優於傳統網站，並提供行動指南以及檢測網站行動裝置友善的網站。
 - 行動指南： https://developers.google.com/webmasters/mobile-sites/
