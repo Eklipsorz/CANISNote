@@ -86,4 +86,3 @@ Note:
 
 Question:
 1. breakpoint為啥會以寬度作為標準？
-2. media和link的效能
