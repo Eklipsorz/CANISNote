@@ -5,13 +5,25 @@ tags:
 
 1. Content： HTML的預設樣式，比如字體大小、圖片、表格的處理。
 
-2. Components： Website 常見的元件，比如導覽列、下拉選單、警告訊息、按鈕、大看板(Jumbotron)
+Content/Typography：可以調整字體大小
+Content/Figures：可以同時排列圖片和文字
+
+
+2. Component：現代網頁常用的元件如導覽列、下拉選單、警告訊息、按鈕、大看板(Jumbotron)等。
+
+Component/Pagination: 分頁元件、分頁元件樣式
+Component/Carousel：輪番圖(透過按鈕可以輪流轉換圖片)
+Component/Tooltips：浮動說明(當指標浮動到特定元件時會顯示的說明)
+
+
 
 3. Layout: 排版
 
-4. Utilities: 共用的排版屬性
+4. Utilities ：提供了元件微調、排版、樣式的通用程式碼。
 
-
+Utilities/Position：position排版
+Utilities/Text：文字排版，比如置中、置左、置右
+Utilities/Spacing：內外間距排版
 
 
 
