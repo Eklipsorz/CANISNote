@@ -9,7 +9,7 @@ tags:
 
 3. Layout: 排版
 
-4. Utilities: 共用的屬性
+4. Utilities: 共用的排版屬性
 
 
 
