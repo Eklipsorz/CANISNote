@@ -7,13 +7,12 @@ tags:
 ---
 
 
-Critical Rendering Path 是瀏覽器如何將網頁檔案轉化成網頁的處理路徑，其路徑包含了Networking、HTML/CSS/JavaScript三者合力形成的DOM(Document Object Model)樹狀結構和CSSOM(CSS Object Model)樹狀結構、DOM樹狀結構和CSSOM樹狀結構結合而成的Render Tree、Layout、Paint，每個路徑之間關係會如同下圖所示那樣。
+Critical Rendering Path 是瀏覽器如何將網頁檔案轉化成網頁的處理路徑，其路徑包含了Network、HTML/CSS/JavaScript三者合力形成的DOM(Document Object Model)樹狀結構和CSSOM(CSS Object Model)樹狀結構、DOM樹狀結構和CSSOM樹狀結構結合而成的Render Tree、Layout、Paint，每個路徑之間關係會如同下圖所示那樣。
 
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629966828/blog/RenderingPath/Critical_Rendering_Path_mpepx8.png)
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629981981/blog/RenderingPath/Critical_Rendering_Path_kh7nl9.png)
 
 
-
-## Networking
+## Network
 
 當一個使用者開始透過URL來瀏覽網頁時，會試著解析URL對應的IP是誰，唯有知道IP是哪個伺服器負責處理網頁以及向誰發送"要求網頁檔案回傳過來"的請求。
 
@@ -34,7 +33,7 @@ Critical Rendering Path 是瀏覽器如何將網頁檔案轉化成網頁的處�
 這個小節將會以HTML、CSS、JavaScript來獨立描述它們在被接收時，瀏覽器會有什麼樣的表現，主要會有HTML FILE、CSS FILE、JavaScript FILE這三個部分。
 
 ### HTML FILE
-當瀏覽器收到HTML檔案被切分出來的封包時，瀏覽器不會直接等待完整檔案被拼湊出來，而是邊收邊將收到的內容按照DOM形式來建立一個DOM節點(註1)，每一個節點都各代表一個獨立的內容或者標籤，最後由這些節點按照HTML檔案所指示的巢狀結構來構成對應的樹狀結構，該樹狀結構被稱之為DOM Tree，比如說：
+當瀏覽器收到HTML檔案被切分出來的封包時，瀏覽器不會直接等待完整檔案被拼湊出來，而是邊收邊將收到的內容按照DOM形式來建立一個DOM節點(註1)，每一個節點都各代表一個獨立的內容或者標籤，最後由這些節點按照HTML檔案所指示的巢狀結構來構成對應的樹狀結構，該樹狀結構被稱之為DOM Tree，拿下面的HTML程式碼來當例子的話：
 
 ```
 <html>
@@ -50,8 +49,39 @@ Critical Rendering Path 是瀏覽器如何將網頁檔案轉化成網頁的處�
 </html>
 ```
 
-會被轉化為以下樹狀結構：
+在解析的過程中，會被轉化為以下樹狀結構：
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629973153/blog/RenderingPath/domTreeExample_ep0cvp.png)
+
+### CSS FILE
+
+當瀏覽器收到CSS檔案被切分出來的封包時，瀏覽器會直接等待整個CSS檔案拼湊出來才開始解析，這是因為CSS屬性很容易被後續接收到的內容給覆蓋掉，甚至造成結構性的改變。當開始解析時，也會依據DOM的形式將CSS的類別、標籤、ID、內容獨立成節點來拼湊一個樹狀結構，而這個樹狀結構被稱之為CSSOM。
+
+若以上面為例子來建立特定CSS樣式的話，其內容會是
+
+```
+p {
+    text-align: center;
+    padding: 5%;
+    font-size: 2vw;
+    border: 2px solid #000;
+    color: #308D46;
+    font-weight: bold;
+}
+
+h1 {
+   text-align: center;
+   font-size: 10vw;
+}
+
+label {
+    display: none;
+}
+
+```
+
+經過瀏覽器解析的話，其CSSOM會是：
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629982746/blog/RenderingPath/cssomTreeExample_lbkboi.png)
 
 ## 註解：
 1. DOM (Document Object Model)，一種讓程式語言方便操作網頁元素的介面，其形式是將每一個標籤和內容都轉化為一個物件，最後再根據網頁結構的parent-child關係來重新將這些元件以樹狀形式來結合成一個DOM Tree，樹狀的每一個節點皆為前面所述的物件。
