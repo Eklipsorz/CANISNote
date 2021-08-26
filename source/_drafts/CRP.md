@@ -81,11 +81,43 @@ label {
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629982746/blog/RenderingPath/cssomTreeExample_lbkboi.png)
 
+### JavaScript 
+
+在產生DOM和CSSOM之後，我們還可以透過JavaScript在Render Tree產生之前來變更DOM或者CSSOM的內容，假設一個HTML檔案內容為以下內容，後頭有個script包覆著的內容，其內容會是JavaScript的語法。
+
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <title>Document</title>
+</head>
+<body>
+        <h1>hi world</h1>
+        <h3></h3>
+        <script>
+            document.getElementsByTagName("h3")[0].innerHTML = "a123"
+        </script>
+        
+</body>
+</html>
+
+```
+而其內容是變更原本沒內容的h3標籤元素：在這裡你可以看到內容會被指定為"a123"。
+
+```
+document.getElementsByTagName("h3")[0].innerHTML = "a123"
+```
+
+而當我們以瀏覽器來讀取整份檔案時，會在DOM Tree裡發現h3標籤元素所儲存的內容變更為"a123"，不再是無內容：
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629989767/blog/RenderingPath/result_javascript_within__html_ijz2jg.png)
+
 
 ## Render Tree
 
-### JavaScript FILE
-在產生DOM和CSSOM之後，我們還可以透過JavaScript在Render Tree產生之前來變更DOM或者CSSOM的內容，比如透過
 
 ## 註解：
 1. DOM (Document Object Model)，一種讓程式語言方便操作網頁元素的介面，其形式是將每一個標籤和內容都轉化為一個物件，最後再根據網頁結構的parent-child關係來重新將這些元件以樹狀形式來結合成一個DOM Tree，樹狀的每一個節點皆為前面所述的物件。
