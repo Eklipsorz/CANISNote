@@ -31,7 +31,7 @@ Critical Rendering Path 是瀏覽器如何將網頁檔案轉化成網頁的處�
 這個小節將會以HTML、CSS來獨立描述它們在被接收時，瀏覽器會有什麼樣的表現，主要會有HTML FILE、CSS FILE這個部份。
 
 ### HTML FILE to DOM Tree
-當瀏覽器收到HTML檔案被切分出來的封包時，瀏覽器不會直接等待完整檔案被拼湊出來，而是邊收邊將收到的內容按照DOM形式來建立一個DOM節點(註1)，每一個節點都各代表一個獨立的內容或者標籤，最後由這些節點按照HTML檔案所指示的巢狀結構來構成對應的樹狀結構，該樹狀結構被稱之為DOM Tree，拿下面的HTML程式碼來當例子的話：
+當瀏覽器收到HTML檔案被切分出來的封包時，瀏覽器不會直接等待完整檔案被拼湊出來，而是邊收邊將收到的內容按照DOM形式來建立一個DOM節點(註1)，每一個節點都各代表一個獨立的內容或者對應標籤，最後由這些節點按照HTML檔案所指示的巢狀結構來構成對應的樹狀結構，該樹狀結構被稱之為DOM Tree，拿下面的HTML程式碼來當例子的話：
 
 ```
 <html>
@@ -81,7 +81,7 @@ label {
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629982746/blog/RenderingPath/cssomTreeExample_lbkboi.png)
 
-### JavaScript 
+### JavaScript  
 
 在產生DOM和CSSOM之後，我們還可以透過JavaScript在Render Tree產生之前來變更DOM或者CSSOM的內容，假設一個HTML檔案內容為以下內容，後頭有個script包覆著的內容，其內容會是JavaScript的語法。
 
@@ -112,12 +112,16 @@ label {
 document.getElementsByTagName("h3")[0].innerHTML = "a123"
 ```
 
-而當我們以瀏覽器來讀取整份檔案時，會在DOM Tree裡發現h3標籤元素所儲存的內容變更為"a123"，不再是無內容：
+而當我們以瀏覽器來讀取整份檔案時，會在DOM Tree裡發現h3標籤元素所儲存的內容變更為"a123"，不再是無內容，從這邊展現出JavaScript可以在合併前影響著DOM和CSSOM
+
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629989767/blog/RenderingPath/result_javascript_within__html_ijz2jg.png)
 
+若script部分程式碼是擺在h3元素定義之前的話，其script執行的結果會是無法改變h3元素內容。
 
 ## Render Tree
+在經過解析而獲得DOM以及CSSOM之後，接著會根據兩者對應的標籤、類別、ID是否一樣來尋找同一個網頁元素進行合併，合併後的節點會以DOM節點的形式多增加一個子節點來表示父節點(網頁元素)要調整的樣式是為何。
 
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629991053/blog/RenderingPath/newNode_renderTree_otmzal.png)
 
 ## 註解：
 1. DOM (Document Object Model)，一種讓程式語言方便操作網頁元素的介面，其形式是將每一個標籤和內容都轉化為一個物件，最後再根據網頁結構的parent-child關係來重新將這些元件以樹狀形式來結合成一個DOM Tree，樹狀的每一個節點皆為前面所述的物件。
