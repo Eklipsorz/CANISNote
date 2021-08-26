@@ -1,9 +1,11 @@
 ---
 title: Critical Rendering Path (一) 簡介
 tags:
- - HTML
- - CSS 
+  - HTML
+  - CSS
+date: 2021-08-27 00:01:22
 ---
+
 
 
 Critical Rendering Path 是瀏覽器如何將網頁檔案轉化成網頁的處理路徑，其路徑包含了Network、HTML轉換至DOM(Document Object Model)樹狀結構、CSS轉換至CSSOM(CSS Object Model)樹狀結構、DOM樹狀結構和CSSOM樹狀結構結合而成的Render Tree、Layout、Paint，每個路徑之間關係會如同下圖所示那樣。在本文會談論到路徑上會包含到的東西，但比較偏重於Network至Layout之間的東西，剩下將由後續的文章進行補充，因此而將本文歸類為(一)。
