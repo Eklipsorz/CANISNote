@@ -2,12 +2,11 @@
 title: Critical Rendering Path (一) 簡介
 tags:
  - HTML
- - CSS
- - JavaScript
+ - CSS 
 ---
 
 
-Critical Rendering Path 是瀏覽器如何將網頁檔案轉化成網頁的處理路徑，其路徑包含了Network、HTML轉換至DOM(Document Object Model)樹狀結構、CSS轉換至CSSOM(CSS Object Model)樹狀結構、DOM樹狀結構和CSSOM樹狀結構結合而成的Render Tree、Layout、Paint，每個路徑之間關係會如同下圖所示那樣。
+Critical Rendering Path 是瀏覽器如何將網頁檔案轉化成網頁的處理路徑，其路徑包含了Network、HTML轉換至DOM(Document Object Model)樹狀結構、CSS轉換至CSSOM(CSS Object Model)樹狀結構、DOM樹狀結構和CSSOM樹狀結構結合而成的Render Tree、Layout、Paint，每個路徑之間關係會如同下圖所示那樣。在本文會談論到路徑上會包含到的東西，但比較偏重於Network至Layout之間的東西，剩下將由後續的文章進行補充，因此而將本文歸類為(一)。
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629987931/blog/RenderingPath/Critical_Rendering_Path_ntcjvi.png)
 
@@ -81,7 +80,7 @@ label {
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629982746/blog/RenderingPath/cssomTreeExample_lbkboi.png)
 
-### JavaScript  
+### JavaScript 可以在合併前進行元素的內容變更 
 
 在產生DOM和CSSOM之後，我們還可以透過JavaScript在Render Tree產生之前來變更DOM或者CSSOM的內容，假設一個HTML檔案內容為以下內容，後頭有個script包覆著的內容，其內容會是JavaScript的語法。
 
@@ -133,6 +132,12 @@ document.getElementsByTagName("h3")[0].innerHTML = "a123"
 最後的合併結果會是：
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629992416/blog/RenderingPath/finalRenderTreeExample_sf7ylt.png)
+
+## Layout 
+在這個階段中會利用Render Tree的結果會根據實際畫面大小來決定每個元素要放在哪裡以及大小為何以此來構造出網頁上的基本架構。
+
+## Paint
+在這個階段中會基於Layout的架構，根據Render Tree的指示來對畫面上的pixel進行繪製，過程中會有無數次Draw 呼叫以及Rasterisation流程
 
 
 ## 註解：
