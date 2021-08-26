@@ -1,6 +1,9 @@
 ---
 title: Critical Rendering Path 簡介
 tags:
+ - HTML
+ - CSS
+ - JavaScript
 ---
 
 
@@ -28,6 +31,9 @@ Critical Rendering Path 是瀏覽器如何將網頁檔案轉化成網頁的處�
 當瀏覽器已經得知對應IP是什麼，那麼使用者(瀏覽器)會再重新對該IP來要求伺服器回傳網頁的對應檔(包含了HTML檔案、CSS檔案、JavaScript檔案)給使用者的瀏覽器，而回傳檔案的形式並不會一口氣以一個完整檔案傳過去，而是以固定大小的封包(Packet)形式將原檔案切分成好幾等分傳給使用者的瀏覽器來處理。
 
 ## When the browser receive 
+這個小節將會以HTML、CSS、JavaScript來獨立描述它們在被接收時，瀏覽器會有什麼樣的表現，主要會有HTML FILE、CSS FILE、JavaScript FILE這三個部分。
+
+### HTML FILE
 當瀏覽器收到HTML檔案被切分出來的封包時，瀏覽器不會直接等待完整檔案被拼湊出來，而是邊收邊將收到的內容按照DOM形式來建立一個DOM節點(註1)，每一個節點都各代表一個獨立的內容或者標籤，最後由這些節點按照HTML檔案所指示的巢狀結構來構成對應的樹狀結構，該樹狀結構被稱之為DOM Tree，比如說：
 
 ```
