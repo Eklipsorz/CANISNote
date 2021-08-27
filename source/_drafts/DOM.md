@@ -1,5 +1,5 @@
 ---
-title: DOM
+title: DOM - 節點的構造
 tags:
  - HTML
 categories:
@@ -7,7 +7,7 @@ categories:
 ---
 
 
-DOM (Document(註1) Object Model)是將HTML檔案本身內容轉化多個物件或者多個節點，並將這些物件/節點組合成樹狀結構。每一個節點(Tag 1)都帶有一些子節點來表示對應元素的類別(class1~classN)、ID(id)、文字內容、原本對應元素在HTML所包含的元素/節點(tag，帶有其他子節點的節點或者帶有子節點集合的標籤):
+DOM (Document(註1) Object Model)是將HTML檔案本身內容轉化多個物件或者多個節點，並將這些物件/節點組合成樹狀結構。每一個節點(Tag 1)都帶有一些子節點來表示對應元素的HTML屬性值(id和class)、文字內容、原本對應元素在HTML所包含的元素/節點(tag，帶有其他子節點的節點或者帶有子節點集合的標籤):
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630051797/blog/dom/aDomNode_uehzgh.png)
 
