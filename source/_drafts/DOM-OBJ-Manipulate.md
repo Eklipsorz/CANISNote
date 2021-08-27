@@ -17,6 +17,7 @@ tags:
 
 ### 屬性查找
 
+#### querySelector 家族語法：
 1. document.querySelector(CSS selectors)
 
 - 功能：依據selector給予的名稱來找到與名稱相同的元素，其CSS selectors的欄位是要填入要找的CSS選擇器名稱(註1)。
@@ -28,7 +29,7 @@ tags:
 
 - 回傳形式：會以NodeList來回傳找到的結果。
 
-3. getElementBy 家族語法:
+#### getElementBy 家族語法：
 與querySelector家族不同的是，若能抓到多個相同屬性值的元素，都會放入HTMLCollection 物件(註4)並回傳，而ID的話，因為其值只會在網頁出現一次，所以沒必要放入該物件，直接回傳找到的物件/節點就行，而HTMLCollection 物件跟NodeList 物件是不同的。
 
 a. document.getElementById(elementID):
