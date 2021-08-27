@@ -34,7 +34,7 @@ categories:
 
 2. How to look up the style (CSSOM) of the element 
 只要在chrome瀏覽著自己想要看的網頁，並對著他右鍵檢查，再點擊以下按鈕，
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630071135/blog/dom/lookupTheElement_znq5c3.png)
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630071414/blog/dom/selectElement_oxy0q4.png)
 
 接著你再點擊你想看的元素就能在styles那邊看到該元素對應的(解析後)樣式:
 
