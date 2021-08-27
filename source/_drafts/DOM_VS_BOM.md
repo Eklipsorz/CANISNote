@@ -15,6 +15,7 @@ DOM是種樹狀結構的模型，其根節點是目前網站的檔案本身-docu
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630066487/blog/dom/bomHierarchy_kp1icw.png)
 
+然而W3C還未對BOM進行嚴格的規範，基本上瀏覽器對於BOM的實現會有不一致的問題，不過大部分瀏覽器都支援BOM和DOM這兩套模型，當如果要調用DOM的節點時，可以不必從BOM的根節點開始調用，直接從DOM根節點就可以實現了，然而當要調用BOM的節點時，就必須直接從BOM根節點開始進行。
 
 ## 註解
 1. meta資料指的是定義資料的資料，如同字面上的意思，在網頁裡是負責設定以及定義一些呈現規則、要載入哪些資料的文字內容。
