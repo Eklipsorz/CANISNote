@@ -22,12 +22,11 @@ tags:
 
 
 
-2. document.querySelector(CSS selectors)
-功能性與document.querySelector一樣，不同的點在於可以挑選所有選擇器名稱相同的元素並放入一個特殊且與Array相似的物件-NodeList，其物件可以像Array使用index來呼叫每一個被放入的元素。
+2. document.querySelectorAll(CSS selectors)
+功能性與document.querySelector一樣，不同的點在於可以挑選所有選擇器名稱相同的元素並放入一個特殊且與Array相似的物件-NodeList(註2)，其物件可以像Array使用index來呼叫每一個被放入的元素。
 
-若我們檢驗其回傳值是否為陣列，可以使用下面例子以及chrome進行檢驗：
+若我們檢驗其回傳值是否為陣列，可以使用下面例子以及chrome進行檢驗：在這個例子會透過query
 
-首先利用querySelector('.card-body li')
 ```
 <html>
 
@@ -57,11 +56,17 @@ tags:
 ## 註解
 1. 其要找的名稱格式是依據CSS如何從名稱挑選選擇器的規則而定，比如要找某類別下的子元素，就是'.class child'，
 其中.class為類別名稱，而child則是該類別為class的元素所擁有的子元素，而中間的空格是依據CSS要挑選parent selector下的child selector而加的: 
+
 ```
 selectorName1 selectorNmae2 {
 	/* CSS CODE */
 }
 ```
+
+2. NodeList並不是陣列，只是類似於陣列的特殊物件，其物件不能夠新增刪除元素，只能對其物件進行讀取，物件內的每個元素皆由一個數字index來做綁定，可以透過index來直接讀取對應的元素，具體能做的事情：
+
+- 可透過迭代器來對物件內所存的內容進行遍歷(forEach)
+- 它擁有length屬性可以知道它存了多少個節點
 
 ## 參考資料
 1. NodeList物件，https://developer.mozilla.org/en-US/docs/Web/API/NodeList
