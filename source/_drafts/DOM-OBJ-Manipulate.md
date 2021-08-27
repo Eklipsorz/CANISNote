@@ -6,7 +6,7 @@ tags:
 
 
 查找DOM元素，有兩種途徑：
-1. 利用屬性挑選(Selection)：直接選出第一個根元素並利用屬性來直接對樹狀結構進行查找。
+1. 利用屬性挑選(Selection)：利用根元素物件特有的方法來直接對樹狀結構進行查找。
 2. 節點遍歷(Traverse)：選出最前面的元素，往該元素所擁有的子元素開始找，再來找兄弟元素，直到找到需要的元素
 
 
@@ -25,12 +25,12 @@ tags:
 
 
 2. document.querySelectorAll(CSS selectors)
-- 功能：與document.querySelector一樣，不同的點在於可以挑選所有選擇器名稱相同的元素並放入一個特殊且與Array相似的物件-NodeList(註2、3)，其物件可以像Array使用index來呼叫每一個被放入的元素。
 
-- 回傳形式：會以NodeList來回傳找到的結果。
+- 功能：與document.querySelector一樣，不同的點在於可以挑選所有選擇器名稱相同的元素並放入一個特殊且與Array相似的物件-NodeList(註2、3)，且該NodeList並不具有live特性(註4)，其物件可以像Array使用index來呼叫每一個被放入的元素。
+- 回傳形式：會以不具有live特性的NodeList來回傳找到的結果。
 
 #### getElementBy 家族語法：
-與querySelector家族不同的是，若能抓到多個相同屬性值的元素，都會放入HTMLCollection 物件(註4)並回傳，而ID的話，因為其值只會在網頁出現一次，所以沒必要放入該物件，直接回傳找到的物件/節點就行，而HTMLCollection 物件跟NodeList 物件是不同的。
+與querySelector家族不同的是，若能抓到多個相同屬性值的元素，都會放入HTMLCollection 物件(註5)並回傳，而ID的話，因為其值只會在網頁出現一次，所以沒必要放入該物件，直接回傳找到的物件/節點就行，而HTMLCollection 物件跟NodeList 物件是不同的。
 
 a. document.getElementById(elementID):
 
@@ -39,21 +39,24 @@ a. document.getElementById(elementID):
 
 b. document.getElementsByClassName(classname)
 
-- 功能：根據elementID來尋找擁有相同名字屬性的元素，將找到的元素放入HTMLCollection 物件內並將該物件回傳給呼叫者。
-- 回傳形式：以HTMLCollection這物件來回傳。
+- 功能：根據elementID來尋找擁有相同類別屬性的元素，將找到的元素放入具有live特性的HTMLCollection 物件內並將該物件回傳給呼叫者。
+- 回傳形式：以具有live特性的HTMLCollection這物件來回傳。
 
 
 c. document.getElementsByName(name)
  
-- 功能：根據elementID來尋找擁有相同類別名稱的元素，將找到的元素都放入HTMLCollection 物件內並將該物件回傳給呼叫者。
-- 回傳形式：以HTMLCollection這物件來回傳。
+- 功能：根據elementID來尋找擁有相同名字(name是種標籤會有的屬性)值的元素，將找到的元素都放入具有live特性的NodeList 物件內並將該物件回傳給呼叫者。
+- 回傳形式：以具有live特性的NodeList物件來回傳。
 
 d. document.getElementsByTagName(name)
 
-- 功能：根據elementID來尋找擁有相同標籤的元素，將找到的元素都放入HTMLCollection 物件內並將該物件回傳給呼叫者。
-- 回傳形式：以HTMLCollection這物件來回傳。
+- 功能：根據elementID來尋找擁有相同標籤的元素，將找到的元素都放入具有live特性的HTMLCollection 物件內並將該物件回傳給呼叫者。
+- 回傳形式：以具有live特性的HTMLCollection這物件來回傳。
 
-## querySelectAll vs. getElementsBy Family
+## querySelect Family vs. getElementsBy Family
+
+
+
 
 ## Traverse
 
@@ -116,13 +119,21 @@ console.log(Array.isArray(list))
 結果會是：
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630077428/blog/dom_Manipulation/arrayCheckExample_sknq9w.png)
 
-4. HTMLCollection 跟 NodeList 是類似於陣列的物件，除了本身只能存元素節點這物件以外，其餘功能性大致和NodeList一樣，擁有：
+4. live特性
+
+
+5. HTMLCollection 跟 NodeList 是類似於陣列的物件，除了本身只能存元素節點這物件以外，其餘功能性大致和NodeList一樣，擁有：
 
 - 每個元素都有數字index來綁定，好方便透過index去讀取對應的元素
 - 擁有length屬性去得知物件目前所存的內容大小 
 
+ 
 
 ## 參考資料
 1. NodeList物件，https://developer.mozilla.org/en-US/docs/Web/API/NodeList
 2. Node object vs. Element object，https://stackoverflow.com/questions/9979172/difference-between-node-object-and-element-object
 3. DOM API 查找節點，https://ithelp.ithome.com.tw/articles/10191765
+4. querySelectorAll 回傳的NodeList，https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll
+5. getElementsByTagName 回傳的HTMLCollection，https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementsByTagName
+6. getElementsByClassName 回傳的HTMLCollection，https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementsByClassName
+7. getElementsByName 回傳的NodeList，https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementsByName   
