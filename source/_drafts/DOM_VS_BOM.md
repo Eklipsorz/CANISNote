@@ -11,12 +11,9 @@ DOM是種樹狀結構的模型，其根節點是目前網站的檔案本身-docu
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630065451/blog/dom/domHierarchy_tpuaxj.png)
 
 
-除了DOM以外，還有一種是為了能與瀏覽器本身進行互動的樹狀結構的模型，其根節點為瀏覽器本身(window)，
+除了DOM以外，還有一種是為了能與瀏覽器本身進行互動的樹狀結構的模型-Browser Object Model，在DOM的基礎下將瀏覽器本身視為一個物件來允許其他語法與它互動，在這個模型下，其根節點是瀏覽器本身(window)，其子節點有DOM根節點-document、frames、history、location、screen，其中document節點子節點會接續著DOM剩下的內容。
 
-瀏覽器本身(window)，再由它細分好幾個子節點，比如目前讀取的HTML檔案本身-document、frames、history、location、navigator、screen，
-
-
-
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630066487/blog/dom/bomHierarchy_kp1icw.png)
 
 
 ## 註解
