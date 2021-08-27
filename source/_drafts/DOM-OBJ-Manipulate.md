@@ -31,26 +31,26 @@ tags:
 3. getElementBy 家族語法:
 與querySelector家族不同的是，若能抓到多個相同屬性值的元素，都會放入HTMLCollection 物件(註4)並回傳，而ID的話，因為其值只會在網頁出現一次，所以沒必要放入該物件，直接回傳找到的物件/節點就行，而HTMLCollection 物件跟NodeList 物件是不同的。
 
-- document.getElementById(elementID):
+a. document.getElementById(elementID):
 
- - 根據elementID來尋找擁有相同ID的元素，找到並回傳該物件。
- - 回傳形式：以元素節點的形式回傳。
+- 功能：根據elementID來尋找擁有相同ID的元素，找到並回傳該物件。
+- 回傳形式：以元素節點的形式回傳。
 
-- document.getElementsByClassName(classname)
+b. document.getElementsByClassName(classname)
 
- - 根據elementID來尋找擁有相同名字屬性的元素，將找到的元素放入HTMLCollection 物件內並將該物件回傳給呼叫者。
- - 回傳形式：以HTMLCollection這物件來回傳。
+- 功能：根據elementID來尋找擁有相同名字屬性的元素，將找到的元素放入HTMLCollection 物件內並將該物件回傳給呼叫者。
+- 回傳形式：以HTMLCollection這物件來回傳。
 
 
-- document.getElementsByName(name)
+c. document.getElementsByName(name)
  
- - 根據elementID來尋找擁有相同類別名稱的元素，將找到的元素都放入HTMLCollection 物件內並將該物件回傳給呼叫者。
- - 回傳形式：以HTMLCollection這物件來回傳。
+- 功能：根據elementID來尋找擁有相同類別名稱的元素，將找到的元素都放入HTMLCollection 物件內並將該物件回傳給呼叫者。
+- 回傳形式：以HTMLCollection這物件來回傳。
 
-- document.getElementsByTagName(name)
+d. document.getElementsByTagName(name)
 
- - 根據elementID來尋找擁有相同標籤的元素，將找到的元素都放入HTMLCollection 物件內並將該物件回傳給呼叫者。
- - 回傳形式：以HTMLCollection這物件來回傳。
+- 功能：根據elementID來尋找擁有相同標籤的元素，將找到的元素都放入HTMLCollection 物件內並將該物件回傳給呼叫者。
+- 回傳形式：以HTMLCollection這物件來回傳。
 
 ## querySelectAll vs. getElementsBy Family
 
