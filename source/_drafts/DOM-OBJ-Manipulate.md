@@ -115,8 +115,10 @@ console.log(Array.isArray(list))
 結果會是：
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630077428/blog/dom_Manipulation/arrayCheckExample_sknq9w.png)
 
-4. 形容NodeList和HTMLCollection的live特性都是指著當物件內的對應元素有所變動時便會自動更新NodeList和HTMLCollection，我們拿getElementsByName以及querySelectorAll這兩個方法當作例子，前者方法會產生具有live特性的NodeList，而後者方法會產生不具有live特性的NodeList，而這兩者會出現在以下程式碼中的<script>標籤並放入console來觀測網頁元素內容的變動是否改變NodeList的長度，若有的話，代表其NodeList就具有live特性，而沒有則表示不具有其特性。
+4. 形容NodeList和HTMLCollection的live特性都是指著當物件內的對應元素有所變動時便會自動更新NodeList和HTMLCollection，而這特性並不會是NodeList和HTMLCollection專有的，所以也有可能存在著不具有Live特性的NodeList或者HTMLCollection。
 
+
+我們拿getElementsByName以及querySelectorAll這兩個方法當作例子，前者方法會產生具有live特性的NodeList，而後者方法會產生不具有live特性的NodeList，而這兩者會出現在以下程式碼中的<script>標籤並放入console來觀測網頁元素內容的變動是否改變NodeList的長度，若有的話，代表其NodeList就具有live特性，而沒有則表示不具有其特性。程式碼是以Kuro Hsu在iT邦提供的程式碼為基礎來修改的。
 ```
 <div id="outer">
 	<div name="inner">inner1</div>
@@ -208,7 +210,6 @@ allInner = document.querySelectorAll('div')
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630088620/blog/dom_Manipulation/notLive2Live_mlavsq.png)
 
 
-而這特性並不會是NodeList和HTMLCollection專有的，所以也有可能存在著不具有Live特性的NodeList或者HTMLCollection。
 
 5. HTMLCollection 跟 NodeList 是類似於陣列的物件，除了本身只能存元素節點這物件以外，其餘功能性大致和NodeList一樣，擁有：
 
