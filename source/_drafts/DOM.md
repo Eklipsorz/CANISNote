@@ -49,3 +49,4 @@ DOM (Document(註1) Object Model)是將HTML檔案本身內容轉化多個物件�
 
 ## 參考資料
 1. children 和 childNodes 的差別，https://www.geeksforgeeks.org/what-is-the-difference-between-children-and-childnodes-in-javascript/
+2. HTML 屬性，https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes
