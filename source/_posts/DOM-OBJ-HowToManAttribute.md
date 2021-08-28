@@ -78,6 +78,6 @@ NODE.style.styleName: styleValue
 
 ## 參考資料
 1. DOMTokenList簡介，https://developer.mozilla.org/en-US/docs/Web/API/DOMTokenList
-2. Element.classList 簡介，https://developer.mozilla.org/en-US/docs/Web/API/Element/classList
-3. CSSStyleDeclaration 簡介，https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration
+2. Element.classList簡介，https://developer.mozilla.org/en-US/docs/Web/API/Element/classList
+3. CSSStyleDeclaration簡介，https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration
 4. NODE.style簡介，https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style
