@@ -17,8 +17,10 @@ NODE.classList 指元素節點所擁有的屬性之一，其值會對應著具�
 
 NODE.classList.add(className1,...., classNameN)：對元素節點所擁有的DOMTokenList進行其他樣式名稱(className1,...classNameN)的增加，而被增加進來的樣式名稱會從DOMTokenList的尾部位開始放入，而參數量(可被放進去的樣式數量)則不限定於1~2個，可以按照開發者的需求而不斷放入。
 
-NODE.classList.remove(className1,..., classNameN)：從DOMTokenList物件刪除指定樣式名稱，而className1至classNameN則是依據開發者而定，沒限定於1~2個。
+另外要指定的類別名稱必須事先指定好該類別下所擁有的屬性以及其屬性值是為何，否則會
+因為無法找到對應的類別名稱而設定預設樣式。
 
+NODE.classList.remove(className1,..., classNameN)：從DOMTokenList物件刪除指定樣式名稱，而className1至classNameN則是依據開發者而定，沒限定於1~2個。
 
 
 ## Node-Attribute: className
@@ -33,15 +35,16 @@ NODE.className 屬性是指元素節點所採用的屬性(尤指類別)節點是
 NODE.className = "class1 class2 .... classN"
 ```
 
+另外要指定的類別名稱必須事先指定好該類別下所擁有的屬性以及其屬性值是為何，否則會因為無法找到對應的類別名稱而設定預設樣式。
 
 ## Node-Attribute: style
-style是元素節點的屬性之一，用來表示目前對應網頁標籤元素在style所定義的屬性值，style會使用CSSStyleDeclaration 物件來儲存對應的HTML標籤上所擁有的style屬性而定，舉一個例子，在span標籤下設定style屬性來證明元素節點下的style值會跟標籤的style值是一致：
+style是元素節點的屬性之一，用來表示目前對應網頁標籤元素在style所定義的屬性值，style會使用CSSStyleDeclaration 物件(註2)來儲存對應的HTML標籤上所擁有的style屬性，舉一個例子，在span標籤下設定style屬性來證明元素節點下的style值會跟標籤的style值是一致：
 
 ```
 <span style="color: red;background: blanchedalmond;">My Website</span>
 ```
 
-那麼在元素節點下的style內容會是：從右半邊console去抓取span標籤元素，並且利用cssText來方便觀察元素節點下的style內容會是什麼，而左半邊的紅色字體正是用span標籤元素來呈現。
+那麼在元素節點下的style內容會是：從右半邊console去抓取span標籤元素，並且利用cssText(註3)來方便觀察元素節點下的style內容會是什麼，而左半邊的紅色字體正是用span標籤元素來呈現。
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630158193/blog/dom_Manipulation/styleExample_ptjfbo.png)
 
