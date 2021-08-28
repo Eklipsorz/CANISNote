@@ -1,10 +1,12 @@
 ---
 title: DOM - How To Manipulate Attribute From Object
 tags:
- - HTML
+  - HTML
 categories:
- - Web Development
+  - Web Development
+date: 2021-08-28 22:00:44
 ---
+
 
 在JavaScript中，我們可以透過classList、style、className來更動對應網頁元素的樣式是為何，甚至可以依據某些事件發生而變動。在本文中，我們將簡介這些方法
 
