@@ -21,17 +21,23 @@ NODE.innerText = value1
 
 
 預設上，瀏覽器會依據讀取的優先順序而決定某些子元素的存放順序，也就是說當瀏覽器讀取左邊的內容時，一開始讀取到element這標籤就建立element節點，接著又從標籤內發現content1這獨立內容(可以是另一個節點、文字、註解，但不會是類別屬性)，瀏覽器讀取到便建立屬於content1節點並當作是element元素的第一個子節點，而隨後讀取到的content2，便轉化成第二個子節點，後面依此類推。
+
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630164255/blog/dom_Manipulation/file2DOM_tpcrw7.png)
 
+後面新增的子節點將會放在子節點N(child node N)之後。
 
+parentNode.appendChild(newNode)：
+將元素節點newNode當作是另一個元素節點parentNode的子節點，其子節點會放在目前子節點之後，也就是子節點N(child node N)之後，而新放入的子節點將會是子節點N+1(child node N+1)
 
-
-
-parentNode.appendChild(newNode)
-將元素節點newNode當作是另一個元素節點parentNode的子節點，其子節點會放在element
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630164722/blog/dom_Manipulation/defaultAddNewNode_eon6un.png)
 
 parentNode.insertBefore(newNode, referenceNode)
-將元素節點newNode當作是parentNode子節點，並放在另一個parentNode的子節點referenceNode之前。
+將元素節點newNode當作是parentNode子節點，並放在另一個parentNode的子節點referenceNode之前，而child node N會是第N+1個子節點
 
-parentNode.replaceChild(newChild, oldChild)
-將元素節點newNode當作是parentNode子節點，並將這個新的子節點取代掉另一個parentNode的子節點oldChild
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630165095/blog/dom_Manipulation/insertBeforeNode_burnu5.png)
+
+
+parentNode.replaceChild(newNode, oldNode)
+將元素節點newNode當作是parentNode子節點，並將這個新的子節點取代掉另一個parentNode的子節點oldNode，而子節點oldNode將會被移除並釋放記憶體空間。
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630166583/blog/dom_Manipulation/replaceChildNode_xhwsxd.png)
