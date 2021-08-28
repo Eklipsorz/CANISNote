@@ -20,8 +20,15 @@ NODE.innerText = value1
 指定內容value1給元素節點，這相當於在該對應標籤內，指定value1為其標籤內部的內容，但與innerHTML不同的事情就是不會被重新解析
 
 
-element.appendChild(aChild)
-將元素節點aChild當作是另一個元素節點element的子節點，其子節點會放在element
+預設上，瀏覽器會依據讀取的優先順序而決定某些子元素的存放順序，也就是說當瀏覽器讀取左邊的內容時，一開始讀取到element這標籤就建立element節點，接著又從標籤內發現content1這獨立內容(可以是另一個節點、文字、註解，但不會是類別屬性)，瀏覽器讀取到便建立屬於content1節點並當作是element元素的第一個子節點，而隨後讀取到的content2，便轉化成第二個子節點，後面依此類推。
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630164255/blog/dom_Manipulation/file2DOM_tpcrw7.png)
+
+
+
+
+
+parentNode.appendChild(newNode)
+將元素節點newNode當作是另一個元素節點parentNode的子節點，其子節點會放在element
 
 parentNode.insertBefore(newNode, referenceNode)
 將元素節點newNode當作是parentNode子節點，並放在另一個parentNode的子節點referenceNode之前。
