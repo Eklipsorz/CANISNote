@@ -27,7 +27,7 @@ Critical Rendering Path 是瀏覽器如何將網頁檔案轉化成網頁的處�
 - 對ISP發送請求詢問它那邊的快取是否有對應IP，沒有朝下一個目標找
 - 就開始針對ISP的DNS Server進行遞迴式搜查，直到找到對應IP
 
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629987931/blog/RenderingPath/Critical_Rendering_Path_ntcjvi.png)
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629970812/blog/RenderingPath/howtofindIP_pku1yw.png)
 
 當瀏覽器已經得知對應IP是什麼，那麼使用者(瀏覽器)會再重新對該IP來要求伺服器回傳網頁的對應檔(包含了HTML檔案、CSS檔案、JavaScript檔案)給使用者的瀏覽器，而回傳檔案的形式並不會一口氣以一個完整檔案傳過去，而是以固定大小的封包(Packet)形式將原檔案切分成好幾等分傳給使用者的瀏覽器來處理。
 
