@@ -42,3 +42,11 @@ parentNode.replaceChild(newNode, oldNode)
 將元素節點newNode當作是parentNode子節點，並將這個新的子節點取代掉另一個parentNode的子節點oldNode，而子節點oldNode將會被移除並釋放記憶體空間。
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630166583/blog/dom_Manipulation/replaceChildNode_xhwsxd.png)
+
+parentElement.removeChild(NODE)
+刪除parenElement下的子節點NODE
+
+NODE.remove()
+移除NODE節點
+
+補充：Modern style
