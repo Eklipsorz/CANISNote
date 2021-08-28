@@ -20,6 +20,11 @@ NODE.innerText = value1
 指定內容value1給元素節點，這相當於在該對應標籤內，指定value1為其標籤內部的內容，但與innerHTML不同的事情就是不會被重新解析
 
 
+element.appendChild(aChild)
+將元素節點aChild當作是另一個元素節點element的子節點，其子節點會放在element
 
+parentNode.insertBefore(newNode, referenceNode)
+將元素節點newNode當作是parentNode子節點，並放在另一個parentNode的子節點referenceNode之前。
 
-
+parentNode.replaceChild(newChild, oldChild)
+將元素節點newNode當作是parentNode子節點，並將這個新的子節點取代掉另一個parentNode的子節點oldChild
