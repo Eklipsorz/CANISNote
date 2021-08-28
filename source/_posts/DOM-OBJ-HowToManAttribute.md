@@ -77,7 +77,7 @@ NODE.style.styleName: styleValue
 
 
 ## 參考資料
-1. DOMTokenList簡介，https://developer.mozilla.org/en-US/docs/Web/API/DOMTokenList
-2. Element.classList簡介，https://developer.mozilla.org/en-US/docs/Web/API/Element/classList
-3. CSSStyleDeclaration簡介，https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration
-4. NODE.style簡介，https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style
+1. DOMTokenList，https://developer.mozilla.org/en-US/docs/Web/API/DOMTokenList
+2. Element.classList，https://developer.mozilla.org/en-US/docs/Web/API/Element/classList
+3. CSSStyleDeclaration，https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration
+4. NODE.style，https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style
