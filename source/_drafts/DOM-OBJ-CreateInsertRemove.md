@@ -5,9 +5,6 @@ tags:
  - JavaScript
 ---
 
-Draft:
-
-
 
 
 ## Create an Element
@@ -44,11 +41,13 @@ Draft:
 
 後面新增的子節點將會放在子節點N(child node N)之後，另外，我們可以利用子節點存放方式以及存放順序，來建立一個類似於陣列的結構來存放這些子節點，並搭配index來方便存取特定子節點，在這裡瀏覽器有內建一些這樣子的物件來方便存子節點，比如NodeList以及HTMLCollection這兩種。
 
+### Insert an Element as the last element:
 parentNode.appendChild(newNode)：
 將元素節點newNode當作是另一個元素節點parentNode的子節點，其子節點會放在目前子節點之後，也就是子節點N(child node N)之後，而新放入的子節點將會是子節點N+1(child node N+1)
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630164722/blog/dom_Manipulation/defaultAddNewNode_eon6un.png)
 
+### Insert an Element before the element:
 parentNode.insertBefore(newNode, referenceNode)
 將元素節點newNode當作是parentNode子節點，並放在另一個parentNode的子節點referenceNode之前，而child node N會是第N+1個子節點，
 
@@ -56,13 +55,24 @@ parentNode.insertBefore(newNode, referenceNode)
 
 若子節點referenceNode不存在的話，會直接將節點newNode放到所有子節點之後，其動作等同於appendChild(newNode)。
 
+### Replace the old element with an new Element: 
 parentNode.replaceChild(newNode, oldNode)
 將元素節點newNode當作是parentNode子節點，並將這個新的子節點取代掉另一個parentNode的子節點oldNode，而子節點oldNode將會被移除並釋放記憶體空間。
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630166583/blog/dom_Manipulation/replaceChildNode_xhwsxd.png)
 
-parentElement.removeChild(NODE)
-在DOM中，刪除parenElement下的子節點NODE，但實際上仍存在記憶體中等帶著下一次的新增。
+
+## Remove an Element
+當我們想要移除DOM上的某個元素時，可以使用以下的方法來實現，但這些方法只是單純從DOM上移除，而非是將整個元素從記憶體中移除，所以每當執行這些方法後，這些元素會以類似剛建立的元素一樣，待在記憶體中，等待成為其他元素的子元素。
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630228692/blog/dom_Manipulation/removeResult_apsatq.png)
+
+### Remove a child node
+
+Element.removeChild(NODE)
+在DOM中，刪除Element下的子節點NODE，但實際上仍存在記憶體中等帶著下一次的新增。
+
+### Remove a node
 NODE.remove()
 在DOM中，移除NODE節點，但實際上仍存在記憶體中等待著下一次的新增。
 
@@ -71,18 +81,21 @@ NODE.remove()
 
 在這幾個方法中，我們將使用newNode set來當作每個方法的示例圖中的範例，而newNode set裡頭是由要被插入的多個新節點(node1至nodeN)所構成的集合。
 
-a. Element.before(node1, node2,....., nodeN)
+### Insert an Element before the element
+Element.before(node1, node2,....., nodeN):
 將 node1 至 nodeN 這些節點設定為Element節點的parent節點所擁有的子節點，並將這些新的子節點放到Element節點之前，換言之，執行完之後，node1至nodeN這些節點就是Element節點的sibling 節點，且放在Element節點的前面。
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630225558/blog/dom_Manipulation/beforeExample_tycheb.png)
 
 
-b. Element.prepend(node1, node2,...., nodeN)
+### Insert an Element before the first child
+Element.prepend(node1, node2,...., nodeN):
 將 node1 至 nodeN 這些節點設定為Element節點的子節點，並將這些新的子節點放到Element節點的第一個子節點之前。
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630225557/blog/dom_Manipulation/prependExample_l69you.png)
 
-c. Element.append(node1, node2,...., nodeN)
+### Insert an Element as the last child
+Element.append(node1, node2,...., nodeN):
 將 node1 至 nodeN 這些節點設定為Element節點的子節點，並將這些新的子節點放到Element節點的最後一個子節點之後，其結果等同於for迴圈版本的appendChild： 其中node為 node1 至 nodeN，透過for迴圈將這些新節點放到後頭。
 
 ```
@@ -93,8 +106,9 @@ for (let node of NewNodeSet) {
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630225557/blog/dom_Manipulation/appendExample_gfbdyu.png)
 
+### Insert an Element after the element
 
-d. Element.after(node1, node2,..., nodeN)
+Element.after(node1, node2,..., nodeN):
 將 node1 至 nodeN 這些節點設定為Element的parent節點所擁有的子節點，並將這些新的子節點放到Element節點之後，換言之，這些新的子節點就是Element節點的sibling節點，且放在Element節點之後。
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630225557/blog/dom_Manipulation/afterExample_jxnc8j.png)
