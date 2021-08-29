@@ -1,11 +1,13 @@
 ---
 title: DOM - Create-Insert-Remove for an object
 tags:
- - HTML
- - JavaScript
+  - HTML
+  - JavaScript
 categories:
- - Web Development
+  - Web Development
+date: 2021-08-29 17:33:43
 ---
+
 
 
 在這文章中，我們將簡介一個DOM物件是如何被建立、刪除、當成其他元素的子元素，而簡介內容將會以我目前所知的內容而定，後頭若有新的內容時，便會額外再增加內容。
