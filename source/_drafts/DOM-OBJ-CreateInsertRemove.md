@@ -44,19 +44,25 @@ parentNode.replaceChild(newNode, oldNode)
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630166583/blog/dom_Manipulation/replaceChildNode_xhwsxd.png)
 
 parentElement.removeChild(NODE)
-在DOM中，刪除parenElement下的子節點NODE
-
+在DOM中，刪除parenElement下的子節點NODE，但實際上仍存在記憶體中等帶著下一次的新增。
 NODE.remove()
 在DOM中，移除NODE節點，但實際上仍存在記憶體中等待著下一次的新增。
 
-補充：Modern style
+## Modern style: Insert an element
+近代的JavaScript有針對多個子元素推出幾個相關語法，這些語法與先前插入元素的方法-appendInsert、insertBefore、replaceChild相比，他們能夠接受多個子元素或者由多個元素所構成的元素集合當作參數來放入指定的地方，而先前的方法只能夠一次插入一個元素。另外由於語法上比較新，部分舊的瀏覽器很有可能無法支援較新版本的JS語法，比如IE瀏覽器。 
+
+在這幾個方法中，我們將使用newNode set來當作每個方法的示例圖中的範例，而newNode set裡頭是由要被插入的多個新節點(node1至nodeN)所構成的集合。
 
 a. Element.before(node1, node2,....., nodeN)
 將 node1 至 nodeN 這些節點設定為Element節點的parent節點所擁有的子節點，並將這些新的子節點放到Element節點之前，換言之，執行完之後，node1至nodeN這些節點就是Element節點的sibling 節點。
 
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630225558/blog/dom_Manipulation/beforeExample_tycheb.png)
+
+
 b. Element.prepend(node1, node2,...., nodeN)
 將 node1 至 nodeN 這些節點設定為Element節點的子節點，並將這些新的子節點放到Element節點的第一個子節點之前。
 
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630225557/blog/dom_Manipulation/prependExample_l69you.png)
 
 c. Element.append(node1, node2,...., nodeN)
 將 node1 至 nodeN 這些節點設定為Element節點的子節點，並將這些新的子節點放到Element節點的最後一個子節點之後，其結果等同於: 其中node為 node1 至 nodeN，透過for迴圈將這些新節點放到後頭。
@@ -64,10 +70,12 @@ c. Element.append(node1, node2,...., nodeN)
 ```
 for (let node of NewNodeSet) {
 	Element.appendChild(node)
-}
 ```
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630225557/blog/dom_Manipulation/appendExample_gfbdyu.png)
+
 
 d. Element.after(node1, node2,..., nodeN)
 將 node1 至 nodeN 這些節點設定為Element的parent節點所擁有的子節點，並將這些新的子節點放到Element節點之後，換言之，這些新的子節點就是Element節點的sibling節點。
 
-
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630225557/blog/dom_Manipulation/afterExample_jxnc8j.png)
