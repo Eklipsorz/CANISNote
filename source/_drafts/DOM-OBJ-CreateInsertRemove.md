@@ -7,19 +7,37 @@ tags:
 
 Draft:
 
-document.createElement(tagName)
+
+
+
+## Create an Element
+透過createElement方法來建立新的網頁元素newTag，並且利用innerHTML/innerText賦予內容Content給其網頁元素，讓網頁元素在HTML形式中會像是下圖中那樣。在這小節中，我們將會簡介這些方法。
+
+```
+<newTag>
+	Content
+</newTag>
+```
+
+1. document.createElement(tagName)
 建立標籤名稱為tagName的元素節點，但在這個狀態下的元素節點並不會跟任何節點扯上parent或者child這些關係，就只是單純建立一個節點。
 
 回傳形式：以元素節點進行回傳
 
 
-NODE.innerHTML = value1
+2. NODE.innerHTML = value1
+
 指定HTML內容value1給元素(節點)NODE，這相當於在該對應標籤內，指定value1為其標籤內部的內容，其內容會被重新以HTML形式來解析並產出新的DOM
 
-NODE.innerText = value1
+3. NODE.innerText = value1
 指定內容value1給元素節點，這相當於在該對應標籤內，指定value1為其標籤內部的內容，但與innerHTML不同的事情就是不會被重新解析
 
+## Traditional Style: Insert an Element
+當我們透過createElement和innerHTML/innerText來建立並指派一個新元素時，就只是單純在記憶體建立這個新元素且它並沒有任何父元素以及沒有任何子元素，這使得它無法在瀏覽器正常顯示，為了讓它能夠在瀏覽器正常顯示，必須讓該元素成為可顯示元素之下的子元素，但不會是其他元素的父元素，因為新元素本身是處在不可顯示的範圍內。
 
+在本文中，我們先介紹瀏覽器是如何從讀取到的HTML內容來轉化成節點，並透過它來得知節點們是以何種形式來儲存，進而透過一些插入方法來說明一個新元素是如何被插入或者被當成可顯示的元素之下的子元素。
+
+### How the browser handles some new nodes
 預設上，瀏覽器會依據讀取的優先順序而決定某些子元素的存放順序，也就是說當瀏覽器讀取左邊的內容時，一開始讀取到element這標籤就建立element節點，接著又從標籤內發現content1這獨立內容(可以是另一個節點、文字、註解，但不會是類別屬性)，瀏覽器讀取到便建立屬於content1節點並當作是element元素的第一個子節點，而隨後讀取到的content2，便轉化成第二個子節點，後面依此類推。
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630164255/blog/dom_Manipulation/file2DOM_tpcrw7.png)
@@ -54,7 +72,7 @@ NODE.remove()
 在這幾個方法中，我們將使用newNode set來當作每個方法的示例圖中的範例，而newNode set裡頭是由要被插入的多個新節點(node1至nodeN)所構成的集合。
 
 a. Element.before(node1, node2,....., nodeN)
-將 node1 至 nodeN 這些節點設定為Element節點的parent節點所擁有的子節點，並將這些新的子節點放到Element節點之前，換言之，執行完之後，node1至nodeN這些節點就是Element節點的sibling 節點。
+將 node1 至 nodeN 這些節點設定為Element節點的parent節點所擁有的子節點，並將這些新的子節點放到Element節點之前，換言之，執行完之後，node1至nodeN這些節點就是Element節點的sibling 節點，且放在Element節點的前面。
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630225558/blog/dom_Manipulation/beforeExample_tycheb.png)
 
@@ -65,17 +83,18 @@ b. Element.prepend(node1, node2,...., nodeN)
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630225557/blog/dom_Manipulation/prependExample_l69you.png)
 
 c. Element.append(node1, node2,...., nodeN)
-將 node1 至 nodeN 這些節點設定為Element節點的子節點，並將這些新的子節點放到Element節點的最後一個子節點之後，其結果等同於: 其中node為 node1 至 nodeN，透過for迴圈將這些新節點放到後頭。
+將 node1 至 nodeN 這些節點設定為Element節點的子節點，並將這些新的子節點放到Element節點的最後一個子節點之後，其結果等同於for迴圈版本的appendChild： 其中node為 node1 至 nodeN，透過for迴圈將這些新節點放到後頭。
 
 ```
 for (let node of NewNodeSet) {
 	Element.appendChild(node)
+}
 ```
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630225557/blog/dom_Manipulation/appendExample_gfbdyu.png)
 
 
 d. Element.after(node1, node2,..., nodeN)
-將 node1 至 nodeN 這些節點設定為Element的parent節點所擁有的子節點，並將這些新的子節點放到Element節點之後，換言之，這些新的子節點就是Element節點的sibling節點。
+將 node1 至 nodeN 這些節點設定為Element的parent節點所擁有的子節點，並將這些新的子節點放到Element節點之後，換言之，這些新的子節點就是Element節點的sibling節點，且放在Element節點之後。
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630225557/blog/dom_Manipulation/afterExample_jxnc8j.png)
