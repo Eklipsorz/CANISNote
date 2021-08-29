@@ -1,11 +1,14 @@
 ---
-title: DOM-OBJ-CreateInsertRemove
+title: DOM - Create-Insert-Remove for an object
 tags:
  - HTML
  - JavaScript
+categories:
+ - Web Development
 ---
 
 
+在這文章中，我們將簡介一個DOM物件是如何被建立、刪除、當成其他元素的子元素，而簡介內容將會以我目前所知的內容而定，後頭若有新的內容時，便會額外再增加內容。
 
 ## Create an Element
 透過createElement方法來建立新的網頁元素newTag，並且利用innerHTML/innerText賦予內容Content給其網頁元素，讓網頁元素在HTML形式中會像是下圖中那樣。在這小節中，我們將會簡介這些方法。
