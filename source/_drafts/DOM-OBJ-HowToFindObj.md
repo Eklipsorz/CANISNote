@@ -57,10 +57,12 @@ d. document.getElementsByTagName(name)
 
 
 ## Traverse
-不同於Selection，遍歷是利用樹狀結構的節點A以某種方向來轉移至節點B，當然，若節點B並非是自己想要找的節點，只是跟要找的節點具有parent-child關係或者sibling關係，那麼可能或許會從節點B以另一種方向來轉移至另一個節點，直到找到你想要找的節點。在這裡以某個節點為主，方向可以歸類為五種：往父元素的方向、往前一個兄弟節點的方向、往後一個兄弟節點的方向、往第一個子元素的方向、往最後一個子元素的方向。
+不同於Selection，遍歷是利用樹狀結構的節點A以某種方向來轉移至節點B，當然，若節點B並非是自己想要找的節點，只是跟要找的節點具有parent-child關係或者sibling關係，那麼可能或許會從節點B以另一種方向來轉移至另一個節點，直到找到你想要找的節點。在這裡以某個節點 m (element m) 為主，方向可以歸類為五種(如下所示)：往父元素節點的方向(橘紅色箭頭)、往前一個兄弟節點的方向(淺藍色箭頭)、往後一個兄弟節點的方向(淺綠色箭頭)、往第一個子元素的方向(深黃色箭頭)、往最後一個子元素的方向(紫紅色箭頭)。
 
-用圖說明每個方向的示意圖
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630310467/blog/dom_Manipulation/traverseDirection_orxjyb.png)
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630312874/blog/dom_Manipulation/traverseDirection_oelny2.png)
+
+從這圖可看出，往父元素節點的方向會單純從節點m轉移至節點m的父元素節點，往前一個兄弟節點(同為父節點的節點)的方向會從節點m轉移至其父元素節點，再從父元素節點轉移至在節點m之前的節點，往後一個兄弟節點的方向會從節點m轉移至其父元素節點，再從父元素節點轉移至節點m之後的節點，緊接著就是對著節點m的子節點進行轉移，往第一個子元素的方向是會從節點m轉移至節點m的第一個子元素節點，往最後一個子元素的方向則是從節點m轉移至節點m的最後一個子元素節點。
+
 
 ### Traverse over all node
 遍歷所有種類的節點
