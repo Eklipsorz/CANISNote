@@ -147,17 +147,26 @@ let child = node.lastChild
 node.lastChild.lastChild
 ```
 
-### Traverse over all element node
-只遍歷元素節點
+### Traverse for an element node
 
-用途說明只探查元素節點。
+在本小節中，會描述只存取五種方向的"元素"種類的節點，元素種類則意味著瀏覽器會檢查要存取的節點是否為"元素"種類的節點，若是元素種類的節點則能夠被存取，否則就會跳過不予存取。在這裡代表五種方向的屬性分別為parentElement、previousElementSibling、nextElementSibling、firstElementChild、lastElementChild。
 
-parentElement
-previousElementSibling
-nextElementSibling
-firstElementChild
-lastElementChild
 
+#### node.parentElement
+除了只會存取"元素"種類的節點以外，大致上與node.parentNode的功能性相同，會以"往父元素節點的方向"來存取父元素節點，若該屬性值回傳null，表示節點node目前就是根元素節點。
+
+#### node.previousElementSibling
+除了只會存取"元素"種類的節點以外，大致上與node.previousSibling的功能性相同，會以"往前一個兄弟節點的方向"來存取其兄弟節點，若該屬性值回傳null，表示節點node就是第一個兄弟節點。
+
+
+#### node.nextElementSibling
+除了只會存取"元素"種類的節點以外，大致上與node.nextSibling的功能性相同，會以"往後一個兄弟節點的方向"來存取其兄弟節點，若該屬性值回傳null，表示節點node就是最後一個兄弟節點。
+
+#### node.firstElementChild
+除了只會存取"元素"種類的節點以外，大致上與node.firstChild的功能性相同，會以"往第一個子元素的方向"來存取其子元素節點，若該屬性值回傳null，表示節點node並沒有任何子元素節點。
+
+#### node.lastElementChild
+除了只會存取"元素"種類的節點以外，大致上與node.lastChild的功能性相同，會以"往最後一個子元素的方向"來存取其子元素節點，若該屬性值回傳null，表示節點node並沒有任何子元素節點。
 
 ## 註解
 
