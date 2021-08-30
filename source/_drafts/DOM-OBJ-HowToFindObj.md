@@ -1,17 +1,19 @@
 ---
-title: DOM Object Manipulation
+title: DOM - How to find an Node Object
 tags:
+ - HTML
  - JavaScript
+categoires:
+ - Web Development
 ---
 
 
+
 查找DOM元素，有兩種途徑：
-1. 利用屬性挑選(Selection)：利用根元素物件特有的方法來直接對樹狀結構進行查找。
+1. 利用屬性挑選(Selection)：利用根元素物件的方法依特徵進行指定元素物件的查找。
 2. 節點遍歷(Traverse)：選出最前面的元素，往該元素所擁有的子元素開始找，再來找兄弟元素，直到找到需要的元素
 
-
-
-
+附註該文章內容是以目前已知的知識為主，之後會再往後補充。
 
 ## Selection
 
@@ -56,9 +58,39 @@ d. document.getElementsByTagName(name)
 
 ## Traverse
 
+a. 遍歷是尋找特定元素的手段之一
+
+b. 遍歷方向主要有五種方向：向上往父元素的方向、向前一個兄弟節點的方向、向後一個兄弟節點的方向、向第一個子元素的方向、向最後一個子元素的方向。
+
+用圖說明每個方向的示意圖
+
+### Traverse over all node
+遍歷所有種類的節點
+
+用圖說明節點的種類
+parentNode
+previousSibling
+nextSibling
+firstChild
+lastChild
+
+### Traverse over all element node
+只遍歷元素節點
+
+用途說明只探查元素節點。
+
+parentElement
+previousElementSibling
+nextElementSibling
+firstElementChild
+lastElementChild
 
 
 ## 註解
+
+0. 在這裡提到的特徵是指(要被尋找的)元素物件所被挑選的選擇器名稱(含標籤名稱、類別名稱、ID)、擁有的name屬性是什麼。
+
+
 1. 其要找的名稱格式是依據CSS如何從名稱挑選選擇器的規則而定，比如要找某類別下的子元素，就是'.class child'，
 其中.class為類別名稱，而child則是該類別為class的元素所擁有的子元素，而中間的空格是依據CSS要挑選parent selector下的child selector而加的: 
 
@@ -217,6 +249,8 @@ allInner = document.querySelectorAll('div')
 - 擁有length屬性去得知物件目前所存的內容大小 
 - 可透過迭代器來對物件內所存的內容進行遍歷(forEach)
  
+
+
 
 ## 參考資料
 1. NodeList物件，https://developer.mozilla.org/en-US/docs/Web/API/NodeList

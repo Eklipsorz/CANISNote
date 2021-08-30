@@ -5,7 +5,7 @@ tags:
 
 1. Content： HTML的預設樣式，比如字體大小、圖片、表格的處理。
 
-Content/Typography：可以調整字體大小
+Content/Typography：可以調整字體大小、清單樣式
 Content/Figures：可以同時排列圖片和文字
 
 
