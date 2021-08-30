@@ -68,7 +68,7 @@ d. document.getElementsByTagName(name)
 ### Trap: break and blank
 
 
-在接下來的幾個小節中，將會談論如何透過節點物件所擁有的一些屬性來進行節點之間的轉移，這些屬性將根據上述提到的五種方向來分為五種屬性，另外若嚴格考慮到節點本身是否為元素種類的節點，又會把這五種屬性切分為十種屬性，一半屬性是只存取五種方向的元素種類的節點，另一半屬性則只存取五種方向的任意種類的節點。
+在接下來的幾個小節中，將會談論如何透過節點物件所擁有的一些屬性來進行節點之間的存取，這些屬性將根據上述提到的五種方向來分為五種屬性，另外若嚴格考慮到節點本身是否為元素種類的節點，又會把這五種屬性切分為十種屬性，一半屬性是只存取五種方向的元素種類的節點，另一半屬性則只存取五種方向的任意種類的節點。
 
 
 ### Traverse over all node
@@ -78,7 +78,17 @@ previousSibling、nextSibling、firstChild、lastChild。
 
 #### node.parentNode 
 
-代表著節點node的父元素節點parentNode，也就是上述提到的"往父元素節點的方向"，我們可以透過以下類似的語法來存取
+代表著節點node的父元素節點parentNode，也就是上述提到的"往父元素節點的方向"，我們可以透過以下類似的語法來存取這個父元素節點：
+
+```
+let parent = node.parentNode
+```
+
+也可以將node.parentNode整個視為node的父元素節點進行對父元素節點的五種方向之存取，比如這句會直接對父元素節點進行"往父元素節點的方向"來存取其父元素節點。
+
+```
+node.parentNode.parentNode
+```
 
 
 previousSibling
