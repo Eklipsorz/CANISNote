@@ -57,10 +57,7 @@ d. document.getElementsByTagName(name)
 
 
 ## Traverse
-
-a. 遍歷是尋找特定元素的手段之一
-
-b. 遍歷方向主要有五種方向：往父元素的方向、往前一個兄弟節點的方向、往後一個兄弟節點的方向、往第一個子元素的方向、往最後一個子元素的方向。
+不同於Selection，遍歷是利用樹狀結構的節點A以某種方向來轉移至節點B，當然，若節點B並非是自己想要找的節點，只是跟要找的節點具有parent-child關係或者sibling關係，那麼可能或許會從節點B以另一種方向來轉移至另一個節點，直到找到你想要找的節點。在這裡以某個節點為主，方向可以歸類為五種：往父元素的方向、往前一個兄弟節點的方向、往後一個兄弟節點的方向、往第一個子元素的方向、往最後一個子元素的方向。
 
 用圖說明每個方向的示意圖
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630310467/blog/dom_Manipulation/traverseDirection_orxjyb.png)
