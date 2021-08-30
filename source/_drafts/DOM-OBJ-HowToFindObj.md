@@ -63,7 +63,7 @@ a. 遍歷是尋找特定元素的手段之一
 b. 遍歷方向主要有五種方向：往父元素的方向、往前一個兄弟節點的方向、往後一個兄弟節點的方向、往第一個子元素的方向、往最後一個子元素的方向。
 
 用圖說明每個方向的示意圖
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630310264/blog/dom_Manipulation/traverseDirection_c1ojgc.png)
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630310467/blog/dom_Manipulation/traverseDirection_orxjyb.png)
 
 ### Traverse over all node
 遍歷所有種類的節點
