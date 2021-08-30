@@ -71,7 +71,7 @@ d. document.getElementsByTagName(name)
 在接下來的幾個小節中，將會談論如何透過節點物件所擁有的一些屬性來進行節點之間的存取，這些屬性將根據上述提到的五種方向來分為五種屬性，另外若嚴格考慮到節點本身是否為元素種類的節點，又會把這五種屬性切分為十種屬性，一半屬性是只存取五種方向的元素種類的節點，另一半屬性則只存取五種方向的任意種類的節點。
 
 
-### Traverse over all node
+### Traverse for each type of node
 
 在本小節中，會描述只存取五種方向的任意種類的節點，任意種類則意味著不論某個節點node想存取任意方向的節點是哪一個種類，只要能夠讓節點node透過自身的屬性去存取到的節點皆能夠存取，在這裡代表五種方向的屬性分別為parentNode、previousSibling、
 previousSibling、nextSibling、firstChild、lastChild。
