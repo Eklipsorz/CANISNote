@@ -17,11 +17,9 @@ categoires:
 
 ## Selection
 利用根元素物件所提供的方法來依據要找的節點n所擁有的特徵為何來尋找該節點n，而在這裡的特徵會是以該節點所擁有的CSS選擇器名稱、對應的標籤名稱、對應標籤下的name屬性值是為何來尋找。
+使用DFS來實現
 
-
-### 屬性查找
-
-#### querySelector 家族語法：
+### querySelector 家族語法：
 1. document.querySelector(CSS selectors)
 
 - 功能：依據selector給予的名稱來找到與名稱相同的元素，其CSS selectors的欄位是要填入要找的CSS選擇器名稱(註1)。
@@ -33,7 +31,7 @@ categoires:
 - 功能：與document.querySelector一樣，不同的點在於可以挑選所有選擇器名稱相同的元素並放入一個特殊且與Array相似的物件-NodeList(註2、3)，且該NodeList並不具有live特性(註4)，其物件可以像Array使用index來呼叫每一個被放入的元素。
 - 回傳形式：會以不具有live特性的NodeList來回傳找到的結果。
 
-#### getElementBy 家族語法：
+### getElementBy 家族語法：
 與querySelector家族不同的是，若能抓到多個相同屬性值的元素，都會放入HTMLCollection 物件(註5)並回傳，而ID的話，因為其值只會在網頁出現一次，所以沒必要放入該物件，直接回傳找到的物件/節點就行，而HTMLCollection 物件跟NodeList 物件是不同的。
 
 a. document.getElementById(elementID):
