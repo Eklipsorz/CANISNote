@@ -78,21 +78,47 @@ previousSibling、nextSibling、firstChild、lastChild。
 
 #### node.parentNode 
 
-代表著節點node的父元素節點parentNode，也就是上述提到的"往父元素節點的方向"，我們可以透過以下類似的語法來存取這個父元素節點：
+代表著節點node的父元素節點parentNode，也就是上述提到的"往父元素節點的方向"來存取父元素節點，若該屬性值回傳null，表示節點node目前就是根元素節點，我們可以透過以下類似的語法來存取這個父元素節點：
 
 ```
 let parent = node.parentNode
 ```
 
-也可以將node.parentNode整個視為node的父元素節點進行對父元素節點的五種方向之存取，比如這句會直接對父元素節點進行"往父元素節點的方向"來存取其父元素節點。
+也可以將node.parentNode整個視為節點node的父元素節點並對該父元素節點進行五種方向的存取，比如這句會直接對父元素節點進行"往父元素節點的方向"來存取其父元素節點。
 
 ```
 node.parentNode.parentNode
 ```
 
+#### node.previousSibling
 
-previousSibling
-nextSibling
+代表著節點node的前一個兄弟節點previousSibling，也就是上述提到的"往前一個兄弟節點的方向"來存取其兄弟節點，若該屬性值回傳null，表示節點node就是第一個兄弟節點，我們可以透過以下類似的語法來存取前一個兄弟節點：
+
+```
+let sibling = node.previousSibling
+```
+
+也可以將node.previousSibling整個視為節點node的前一個兄弟節點並對該兄弟節點進行五種方向的存取，比如這句會直接對兄弟節點進行"往前一個兄弟節點的方向"來存取它前一個兄弟節點。
+
+```
+node.previousSibling.previousSibling
+```
+
+#### node.nextSibling
+
+代表著節點node的後一個兄弟節點nextSibling，也就是上述提到的"往後一個兄弟節點的方向"來存取其兄弟節點，若該屬性值回傳null，表示節點node就是最後一個兄弟節點，我們可以下類似的語法來存取後一個兄弟節點：
+
+```
+let sibling = node.nextSibling
+```
+
+也可以將node.nextSibling整個視為節點node的後一個兄弟節點並對該兄弟節點進行五種方向的存取，比如這句會直接對兄弟節點進行"往後一個兄弟節點的方向"來存取它後一個兄弟節點。
+
+```
+node.nextSibling.nextSibling
+```
+
+#### node.firstChild
 firstChild
 lastChild
 
