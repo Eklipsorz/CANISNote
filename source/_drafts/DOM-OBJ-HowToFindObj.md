@@ -106,7 +106,7 @@ node.previousSibling.previousSibling
 
 #### node.nextSibling
 
-代表著節點node的後一個兄弟節點nextSibling，也就是上述提到的"往後一個兄弟節點的方向"來存取其兄弟節點，若該屬性值回傳null，表示節點node就是最後一個兄弟節點，我們可以下類似的語法來存取後一個兄弟節點：
+代表著節點node的後一個兄弟節點nextSibling，也就是上述提到的"往後一個兄弟節點的方向"來存取其兄弟節點，若該屬性值回傳null，表示節點node就是最後一個兄弟節點，我們可以透過以下類似的語法來存取後一個兄弟節點：
 
 ```
 let sibling = node.nextSibling
@@ -119,8 +119,33 @@ node.nextSibling.nextSibling
 ```
 
 #### node.firstChild
-firstChild
-lastChild
+
+代表著節點node的第一個子元素節點firstChild，也就是上述提到的"往第一個子元素的方向"來存取其子元素節點，若該屬性值回傳null，表示節點node並沒有任何子元素節點，我們可以透過以下類似的語法來存取第一個子元素節點：
+
+```
+let child = node.firstChild
+```
+
+也可以將node.firstChild整個視為節點node的第一個子元素節點並對該子節點進行五種方向的存取，比如這句會直接對子節點進行"往第一個子元素的方向"來存取它的第一個子元素節點。
+
+```
+node.firstChild.firstChild
+```
+
+
+#### node.lastChild
+
+代表著節點node的最後一個子元素節點lastChild，也就是上述提到的"往最後一個子元素的方向"來存取其子元素節點，若該屬性值回傳null，表示節點node並沒有任何子元素節點，我們可以透過以下類似的語法來存取最後一個子元素節點：
+
+```
+let child = node.lastChild
+```
+
+也可以將node.lastChild整個視為節點node的最後一個子元素節點並對該子節點進行五種方向的存取，比如這句會直接對子節點進行"往最後一個子元素的方向"來存取它的最後一個子元素節點。
+
+```
+node.lastChild.lastChild
+```
 
 ### Traverse over all element node
 只遍歷元素節點
