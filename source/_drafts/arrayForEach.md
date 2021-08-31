@@ -17,6 +17,7 @@ for (let i = 0; i < array.length; i++) {
 }
 ```
 
+回傳值：undefined (因為forEach本身並不會回傳任何東西)
 
 forEach主要有兩個參數，分別為函式物件和this參數，第一個是函式物件(必填)，第二個是指定函式物件的呼叫者是誰的this參數(可選)。
 
