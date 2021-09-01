@@ -25,7 +25,7 @@ tags:
 
 然而，當元件上的事件發生時，預設上很有可能是什麼事都不會發生，更別說是回應該事件，因為大部分元件都不會綁定特定事件的事件處理器，所以我們必須手動建立代表事件處理器內容的函式物件以及透過JS所提供的語法將函式物件綁定在元件上的特定事件上，這樣子才會讓該元件碰上相同事件時去執行處理器內容(呼叫函式物件來執行)來回應事件。
 
-### How to bind handler to an event
+### 如何綁定事件處理器至特定事件
  
 在這裡以DOM Level 2 (註xx) 為主的方法-addEventListener (註xx) 來進行，其語法如下所示，主要是綁定元素節點element上所發生的某種事件eventType與特定事件處理器handler(函式物件)進行兩者間的綁定註冊，同時也利用useCapture來告訴瀏覽器當觸發時何時執行，若是true的話，則會在capture phase階段執行；若是false的話，則是在bubbling phase，預設沒填的話會是false。
 
@@ -38,9 +38,16 @@ eventType得放入字串，用來代表要將處理器對應至何種事件，�
 - 'click': 鼠標點擊元素
 - 'mousemove': 鼠標滑過元素
 - 'mouseout':  鼠標離開元素 
+- 'keydown': 點擊且長按一個鍵時
+- 'keyup': 放開按鍵時
+- 'submit': 提交表單時
+- 'focus': 點擊某個輸入框時
+- 'input': 輸入框內容改變時
+- 'DOMContentLoaded': 當 HTML 下載完成並完整的建立 DOM 模型時觸發
 
+其中'click'、'mousemove'、'mouseout'是滑鼠會產生的事件，'keydown'、'keyup'則是鍵盤會產生的事件，'submit'、'focus'、'input'是瀏覽器上的表單事件，'DOMContentLoaded'則是瀏覽器本身的事件，用來避免HTML下載不完全的問題。
 
-其函式物件hander的第一個參數在瀏覽器中會接收一個事件物件(event object，註xx)，該物件儲存事件發生時的資訊，包括引發事件的元件是啥，比如該物件的屬性target會指向發生特定事件的物件，也就是引發handler處理的物件。
+而函式物件hander的第一個參數在瀏覽器中會接收一個事件物件(event object，註xx)，該物件儲存事件發生時的資訊，包括引發事件的元件是啥，比如該物件的屬性target會指向發生特定事件的物件，也就是引發handler處理的物件。
 
 ```
 function funct1 (event) {
@@ -52,12 +59,33 @@ function funct1 (event) {
 
 
 
+### 另一種綁定事件處理器的方法
+
+在早期，HTML標籤存在著一種可以綁定事件處理器的屬性，比如反應滑鼠點擊事件的onclick，而其屬性值是填入代表事件處理器的函式物件，該物件需要另外加載存有該函式物件的JavaScript文件才能正常執行，而語法會是如下所示，其中property為特定事件的對應屬性名，而handler則是以字串傳入函式名稱。
+
+```
+property="handler()"
+```
+
+在標籤的呈現上會是：
+
+```
+<element property="handler()"> </element>
+```
+
+以input和onclick為例的話，input為代表能填入文字的文字區塊或者按鈕，在這裡會被當成按鈕來使用，但按鈕被點擊時，便會按照onclick所指示的事件處理器去執行其內容。
+
+```
+<input value="Click me" onclick="greeting()" type="button">
+```
+
+在標籤上利用屬性來綁定事件處理器，雖會帶來直觀上的理解以及因語法過於老舊而具有一定容錯率，但具有兩個主要缺點，第一個當存有函式物件(事件處理器)的JavaScript文件太慢加載的話，會因為函式物件不存在而在觸發事件的時候回報錯誤，第二個缺點則是因為內容/結構/事件不能獨立分開(比如HTML語法和JavaScript相關語法不能以不同檔案來分開、負責事件處理的程式碼不能完全存放在JavaScript上)而造成開發維護上的困難以及可讀性很差。
+
 
 
 除了建立監聽器以外，我們還能透過以下語法來移除該特定元件element上的事件處理-handler，
 element.removeEventListener(event, handler, useCapture)
 
-## 不建議的事件驅動
 
 
 
@@ -82,15 +110,6 @@ Question：
 
 ## 註解
 
-1. 事件物件不同於元素節點物件、節點物件，單純就只是儲存"發生在DOM特定元件下"的事件所會有的資訊。
-2. 常見的事件種類eventType:
-- click：鼠標點擊(元素)
-- mousemove：鼠標滑過(元素)
-- mouseout：鼠標離開(元素)
-- keydown：點擊且長按一個鍵時
-- keyup：放開按鍵時
-
-3. 通常特定元件下的事件就表示將
 
 4. addEventListener 可綁定多個不同事件的事件處理器在同一個元件上，
 
