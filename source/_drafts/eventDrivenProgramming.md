@@ -66,9 +66,8 @@ element.addEventListener(eventType, handler, useCapture)
 ```
 
 1. 當多個事件綁定方法中的eventType、handler、useCapture皆一樣時，只能留下一個事件綁定
-2. 當多個事件綁定方法中的eventType、handler皆一樣且useCapture皆不一樣時，只會留下兩個事件綁定分別為capture 階段和bubbling 階段。
-
-
+2. 當多個事件綁定方法中的eventType、handler皆一樣且useCapture皆不一樣時，只會留下兩個事件綁定分別為capture 階段和bubbling 階段，這是因為這兩個階段下的執行時機點皆為不同。
+3. 其餘參數的可能性皆視為獨立事件的綁定。
 
 ### 另一種綁定事件處理器的方法
 
