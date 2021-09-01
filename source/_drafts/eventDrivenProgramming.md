@@ -21,16 +21,51 @@ tags:
 
 瀏覽器上的網頁會以網頁元件和使用者之間的互動為主，網頁元件指的是DOM節點，而互動則是使用者對著特定元件產生一系列的事件，使該元件能夠以特定的事件處理來回應使用者，比如點擊什麼元件跑出什麼畫面、拖曳什麼元件跑出什麼結果。
 
-在這裡，只要使用者在瀏覽器中的任意可見範圍內產生事件，瀏覽器會利用Rendering前後所得到的資料(所有物件在畫面的實際座標、大小等等)來針對該事件所發生的地方或者座標進一步判斷事件是屬於何種元件的，通常當事件的來源處是發生在特定元件內部，那麼會被當作是該元件上的事件，比如鼠標點擊事件點擊到網頁元件，而該網頁元件上的事件就是鼠標點擊事件。
+在這裡，只要使用者在瀏覽器中的任意可見範圍內產生事件，瀏覽器會利用Rendering前後所得到的資料(所有物件在畫面的實際座標、大小等等)來針對該事件所發生的地方或者座標進一步判斷事件是屬於何種元件的，通常當事件的來源處是發生在特定元件內部，那麼會被當作是該元件上的事件，比如鼠標點擊事件點擊到網頁元件，那麼網頁元件上的事件就是鼠標點擊事件。
 
-然而預設上，大部分的網頁元件是不存在對應事件
+然而，當元件上的事件發生時，預設上很有可能是什麼事都不會發生，更別說是回應該事件，因為大部分元件都不會綁定特定事件的事件處理器，所以我們必須手動建立代表事件處理器內容的函式物件以及透過JS所提供的語法將函式物件綁定在元件上的特定事件上，這樣子才會讓該元件碰上相同事件時去執行處理器內容(呼叫函式物件來執行)來回應事件。
+
+### How to bind handler to an event
+ 
+在這裡以DOM Level 2 (註xx) 為主的方法-addEventListener (註xx) 來進行，其語法如下所示，主要是綁定元素節點element上所發生的某種事件eventType與特定事件處理器handler(函式物件)進行兩者間的綁定註冊，同時也利用useCapture來告訴瀏覽器當觸發時何時執行，若是true的話，則會在capture phase階段執行；若是false的話，則是在bubbling phase，預設沒填的話會是false。
+
+```
+element.addEventListener(eventType, handler, useCapture)
+```
+
+eventType得放入字串，用來代表要將處理器對應至何種事件，常見事件有：
+
+- 'click': 鼠標點擊元素
+- 'mousemove': 鼠標滑過元素
+- 'mouseout':  鼠標離開元素 
+
+
+其函式物件hander的第一個參數在瀏覽器中會接收一個事件物件(event object，註xx)，該物件儲存事件發生時的資訊，包括引發事件的元件是啥，比如該物件的屬性target會指向發生特定事件的物件，也就是引發handler處理的物件。
+
+```
+function funct1 (event) {
+        do_something
+}
+```
+
+最後當element上的特定事件eventType發生時，系統會直接執行函式物件handler的內容。
+
+
+
+
+
+除了建立監聽器以外，我們還能透過以下語法來移除該特定元件element上的事件處理-handler，
+element.removeEventListener(event, handler, useCapture)
+
+## 不建議的事件驅動
+
+
 
 ## Event Flow
 
 上述提到瀏覽器可以透過自身機制來判斷某事件是屬於某元件上，但如果考慮到事
 
 藉由前面所述來判斷某物件發生
-
 
 
 接著利用這些資訊從BOM的根節點-window節點，若不符合的話，則會往DOM的根節點-document，若還是找不到則繼續往下層-body或者body之下的節點，直到找到符合(信號帶有的)資訊的節點，該節點就會被瀏覽器當作發生事件的節點。
@@ -45,53 +80,6 @@ Question：
 1. 瀏覽器到底怎判定元件的？
 2. 若預設上每個元件都沒設置對應的事件處理，是否可以讓瀏覽器不做後續的事件判斷？
 
-### How to bind handler to an event 
-JavaScript提供了一些方法來將特殊函式物件綁定在特定事件，在這裡以DOM Level 2為主的方法來進行，其語法如下所示，主要是綁定元素節點element上所發生的某種事件eventType與特定事件處理器(函式物件)進行綁定，同時也利用useCapture來決定要在瀏覽器找到該節點的對應事件處理器時執行(該期間為Capture phase，註xx)/在瀏覽器找到節點且等開始進行
-Bubbling phase
-
-```
-element.addEventListener(eventType, handler, useCapture)
-```
-
-
-
-1. 透過addEventListener方法(註xx)可以建立負責建立監聽事件的程式並綁定在元素element，其中eventType會以字串形式來表示要監聽何種事件(註xx)，而handler則是以函式物件來表示當事情發生時所要做的處理是什麼，最後的參數
-A Boolean value that specifies whether the event should be executed in the capturing or in the bubbling phase. 
-
-Possible values:
-true - The event handler is executed in the capturing phase
-false- Default. The event handler is executed in the bubbling phase
-
-
-```
-element.addEventListener(eventType, handler, useCapture)
-```
-
-當element上的特定事件eventType發生時，系統會直接執行函式物件handler的內容。
-
-
-2. 透過以下語法來建立當事件發生時所要做的事件處理-handler，本身是函式物件，形式上可接受匿名、箭頭、擁有函式名稱等函式形式。但該函式物件所傳入的參數會被預設為第一個參數會接收一個事件物件event (event object，註xx)，該物件會儲存事件發生時的資訊，包括引發事件的元件是啥，比如該物件的屬性target會指向發生特定事件的物件，也就是引發handler處理的物件。
-
-```
-function funct1 (event) {
-	do_something
-}
-```
-
-
-
-
-
-除了建立監聽器以外，我們還能透過以下語法來移除該特定元件element上的事件處理-handler，
-element.removeEventListener(event, handler, useCapture)
-
-## 不建議的事件驅動
-
-
-
-
-
-
 ## 註解
 
 1. 事件物件不同於元素節點物件、節點物件，單純就只是儲存"發生在DOM特定元件下"的事件所會有的資訊。
@@ -104,8 +92,10 @@ element.removeEventListener(event, handler, useCapture)
 
 3. 通常特定元件下的事件就表示將
 
-4. addEventListener
+4. addEventListener 可綁定多個不同事件的事件處理器在同一個元件上，
 
+unknown
+觸發事件的元素和監聽對象的不必要是同一個
 
 ## 參考資料:
 
