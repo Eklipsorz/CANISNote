@@ -25,7 +25,7 @@ tags:
 
 然而，當元件上的事件發生時，預設上很有可能是什麼事都不會發生，更別說是回應該事件，因為大部分元件都不會綁定特定事件的事件處理器，所以我們必須手動建立代表事件處理器內容的函式物件以及透過JS所提供的語法將函式物件綁定在元件上的特定事件上，這樣子才會讓該元件碰上相同事件時去執行處理器內容(呼叫函式物件來執行)來回應事件。
 
-### 如何綁定事件處理器至特定事件
+## 如何綁定事件處理器至特定事件
  
 在這裡以DOM Level 2 (註xx) 為主的方法-addEventListener (註xx) 來進行，其語法如下所示，主要是綁定元素節點element上所發生的某種事件eventType與特定事件處理器handler(函式物件)進行兩者間的綁定註冊，同時也利用useCapture來告訴瀏覽器當觸發時何時執行，若是true的話，則會在capture phase階段執行；若是false的話，則是在bubbling phase，預設沒填的話會是false。
 
@@ -55,7 +55,18 @@ function funct1 (event) {
 }
 ```
 
-最後當element上的特定事件eventType發生時，系統會直接執行函式物件handler的內容。
+最後當element上的特定事件eventType發生時，系統會直接執行函式物件handler的內容，另外這裏this變數會是呼叫者-發生特定事件的物件。
+
+### 多個 element.addEventListener 在不同參數下的表現
+
+在這小節中，我們將以參數相同數來觀察其方法的表現，而使用的語法會是：
+
+```
+element.addEventListener(eventType, handler, useCapture)
+```
+
+1. 當多個事件綁定方法中的eventType、handler、useCapture皆一樣時，只能留下一個事件綁定
+2. 當多個事件綁定方法中的eventType、handler皆一樣且useCapture皆不一樣時，只會留下兩個事件綁定分別為capture 階段和bubbling 階段。
 
 
 
@@ -82,10 +93,14 @@ property="handler()"
 在標籤上利用屬性來綁定事件處理器，雖會帶來直觀上的理解以及因語法過於老舊而具有一定容錯率，但具有兩個主要缺點，第一個當存有函式物件(事件處理器)的JavaScript文件太慢加載的話，會因為函式物件不存在而在觸發事件的時候回報錯誤，第二個缺點則是因為內容/結構/事件不能獨立分開(比如HTML語法和JavaScript相關語法不能以不同檔案來分開、負責事件處理的程式碼不能完全存放在JavaScript上)而造成開發維護上的困難以及可讀性很差。
 
 
+## 移除特定事件的事件處理器
 
-除了建立監聽器以外，我們還能透過以下語法來移除該特定元件element上的事件處理-handler，
-element.removeEventListener(event, handler, useCapture)
+除了建立監聽器以外，我們還能透過以下語法來移除該特定元件element上的事件處理-handler，試著透過移除來獲取多餘的記憶體空間、避免記憶體洩漏問題，移除節點element上所發生的特定事件eventType和對應的事件處理器handler之間的綁定，該綁定必須是已經事先註冊好的才能移除，而useCapture若是true的話，就在capture phase
+```
+element.removeEventListener(eventType, handler, useCapture)
+```
 
+若考慮後續移除的問題，handler所儲存的函式物件必須是命名函式形式，若是匿名或者箭頭函式，反而會找不到對應的事件處理器來移除。
 
 
 
