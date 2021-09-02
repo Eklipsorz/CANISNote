@@ -26,6 +26,65 @@ tags:
 
 然而，當元件上的事件發生時，預設上很有可能是什麼事都不會發生，更別說是回應該事件，因為大部分元件都不會綁定特定事件的事件處理器，所以我們必須手動建立代表事件處理器內容的函式物件以及透過JS所提供的語法將函式物件綁定在元件上的特定事件上，這樣子才會讓該元件碰上相同事件時去執行處理器內容(呼叫函式物件來執行)來回應事件。
 
+## Event Flow
+
+
+從"簡介: 瀏覽器如何知道物件上發生事件"小節中簡介了瀏覽器是如何判定事件是屬於哪些物件以及判定的基準，所以當使用者對網頁頁面內的一個元件進行互動時，瀏覽器會幫助使用者找到該元件並根據事件種類以及事先註冊好的事件處理器內容來回應使用者所產生的事件。
+
+然而，如果使用者對著巢狀結構下的子元件來進行互動時，比如類似於程式碼中的元素3(element3)，那麼瀏覽器該如何判定這次的互動/事件是屬於哪個元素呢？瀏覽器大可直接根據事件是源自於哪裡來將事件歸類於element3，
+```
+<element1>
+   <element2>
+   	<element3>
+		content
+	</element3>
+   </element2>
+</element1>
+
+```
+
+可由於是巢狀關係(如下圖)，元素3(element3)被元素2(element2)所包含著，而元素2(element2)被元素1(element1)包含著，嚴格來說，當使用者對元素3(element3)做互動，同樣地也對著另外兩個元素進行互動，更甚至說包含這些元素的元素(比如body)也跟著互動。
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630587482/blog/event/threeElements_lohr6c.png)
+
+
+這時，瀏覽器可以有幾種選擇去決定事件是屬於哪個元件，第一種選擇是按照之前的規則，直接將事件歸類於元素3(element3)，另一種則是讓所有包含元素3的元素也跟著被當作是自己元件上的事件來觸發事件處理器，只是觸發的順序會按照所謂的事件流(event flow)來讓這些元件輪流被觸發，第二種因為後來的瀏覽器大戰而成名，所以主流上會是以第二種為主。
+
+
+
+### Event flow是什麼
+
+事件流(Event Flow)指的是在巢狀結構中接收事件的順序，通俗一點就是就頁面上元件的接收事件順序，在這個架構上會在DOM中，把"包含實際發生事件N的元件X"的所有元件都當成發生事件N的元件，但實際上瀏覽器仍會判定該事件N是屬於元件X的，並且依照事件流的順序來發送(代表事件的)信號傳遞給這些元件，讓這些元件能夠去觸發自己對於該事件的事件處理器，傳遞順序上主要分為兩種：第一種為事件捕獲(Event capturing)，另一種為事件冒泡(Event bubbling)，在正式傳遞前，瀏覽器會利用"包含實際發生事件N的元件X"來找到所有元件並是先建立好傳遞路徑：
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630598685/blog/event/propagationPath_ixsyik.png)
+
+左邊是未建立路徑的DOM架構(包含了BOM根節點-Window)，右邊則是已建立路徑後的架構，其中被淺紅色選取上的元素則是被當成傳遞路徑，若去除掉剩餘沒被選上的元素，實際傳遞路徑會是：
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630598661/blog/event/realPropagationPath_j7xf4k.png)
+
+確定好路徑之後，傳遞順序將會以路徑上的節點進行。
+
+
+#### 事件捕獲(Event capturing)
+
+原始想法是由Netscape公司提出的概念，會以最上層的元素(節點)為出發點往下傳遞信號。首先會先傳遞信號至Window節點，再接著傳遞信號至Document節點，接著就是body節點，這樣的動作會持續到傳遞信號至實際發生事件的元素節點X。
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630598612/blog/event/eventCapturing_b480hr.png)
+
+#### 事件冒泡(Event bubbling)
+
+原始想法是由Microsoft公司提出的概念，其命名方式是以氣泡水中的氣泡皆會往上跑為命名，會以實際發生事件的元素節點X往上傳遞信號。首先會先傳遞信號至元素節點X，再接著傳遞信號至節點X的父節點，然後再以父節點的父節點往上傳，直到傳遞到最上層的節點-Window。
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630598612/blog/event/eventBubbling_r3nbai.png)
+
+### 現今解法：對於巢狀關係的事件問題
+
+直到現今，大部分瀏覽器仍採用於Event Flow的概念，甚至將兩種不同方向結合成新的Flow並分為三個階段，第一個階段為捕獲階段(Capturing Phase)，第二個階段為目標階段(Target Phase)，最後一個階段為冒泡階段(Bubbling Phase)，當使用者對某個元件X進行互動時，瀏覽器會先透過第一個階段來傳遞信號，接著就是第二個階段：將信號傳遞至實際發生事件/互動的元件X，最後就是第三個階段傳遞信號。
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630599039/blog/event/currentPropagationPath_kopcrh.png)
+
+
+
 ## 如何綁定事件處理器至特定事件
  
 在這裡以DOM Level 2 (註xx) 為主的方法-addEventListener (註xx) 來進行，其語法如下所示，主要是綁定元素節點element上所發生的某種事件eventType與特定事件處理器handler(函式物件)進行兩者間的綁定註冊，同時也利用useCapture來告訴瀏覽器當觸發時何時執行，若是true的話，則會在capture phase階段執行；若是false的話，則是在bubbling phase，預設沒填的話會是false。
@@ -104,96 +163,6 @@ element.removeEventListener(eventType, handler, useCapture)
 
 
 
-## Event Flow
-
-
-從"簡介: 瀏覽器如何知道物件上發生事件"小節中簡介了瀏覽器是如何判定事件是屬於哪些物件以及判定的基準，所以當使用者對網頁頁面內的一個元件進行互動時，瀏覽器會幫助使用者找到該元件並根據事件種類以及事先註冊好的事件處理器內容來回應使用者所產生的事件。
-
-然而，如果使用者對著巢狀結構下的子元件來進行互動時，比如類似於程式碼中的元素3(element3)，那麼瀏覽器該如何判定這次的互動/事件是屬於哪個元素呢？瀏覽器大可直接根據事件是源自於哪裡來將事件歸類於element3，
-```
-<element1>
-   <element2>
-   	<element3>
-		content
-	</element3>
-   </element2>
-</element1>
-
-```
-
-可由於是巢狀關係(如下圖)，元素3(element3)被元素2(element2)所包含著，而元素2(element2)被元素1(element1)包含著，嚴格來說，當使用者對元素3(element3)做互動，同樣地也對著另外兩個元素進行互動，更甚至說包含這些元素的元素(比如body)也跟著互動。
-
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630587482/blog/event/threeElements_lohr6c.png)
-
-
-這時，瀏覽器可以有幾種選擇去決定事件是屬於哪個元件，第一種選擇是按照之前的規則，直接將事件歸類於元素3(element3)，另一種則是讓所有包含元素3的元素也跟著被當作是自己元件上的事件來觸發事件處理器，只是觸發的順序會按照所謂的事件流(event flow)來讓這些元件輪流被觸發，第二種因為後來的瀏覽器大戰而成名，所以主流上會是以第二種為主。
-
-
-
-### Event flow是什麼
-
-事件流(Event Flow)指的是在巢狀結構中接收事件的順序，通俗一點就是就頁面上元件的接收事件順序，在這個架構上會在DOM中，把"包含實際發生事件N的元件X"的所有元件都當成發生事件N的元件，但實際上瀏覽器仍會判定該事件N是屬於元件X的，並且依照事件流的順序來發送(代表事件的)信號傳遞給這些元件，讓這些元件能夠去觸發自己對於該事件的事件處理器，傳遞順序上主要分為兩種：第一種為事件捕獲(Event capturing)，另一種為事件冒泡(Event bubbling)，在正式傳遞前，瀏覽器會利用"包含實際發生事件N的元件X"來找到所有元件並是先建立好傳遞路徑：
-
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630598685/blog/event/propagationPath_ixsyik.png)
-
-左邊是未建立路徑的DOM架構(包含了BOM根節點-Window)，右邊則是已建立路徑後的架構，其中被淺紅色選取上的元素則是被當成傳遞路徑，若去除掉剩餘沒被選上的元素，實際傳遞路徑會是：
-
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630598661/blog/event/realPropagationPath_j7xf4k.png)
-
-確定好路徑之後，傳遞順序將會以路徑上的節點進行。
-
-
-#### 事件捕獲(Event capturing)
-
-原始想法是由Netscape公司提出的概念，會以最上層的元素(節點)為出發點往下傳遞信號。首先會先傳遞信號至Window節點，再接著傳遞信號至Document節點，接著就是body節點，這樣的動作會持續到傳遞信號至實際發生事件的元素節點X。
-
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630598612/blog/event/eventCapturing_b480hr.png)
-
-#### 事件冒泡(Event bubbling)
-
-原始想法是由Microsoft公司提出的概念，其命名方式是以氣泡水中的氣泡皆會往上跑為命名，會以實際發生事件的元素節點X往上傳遞信號。首先會先傳遞信號至元素節點X，再接著傳遞信號至節點X的父節點，然後再以父節點的父節點往上傳，直到傳遞到最上層的節點-Window。
-
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630598612/blog/event/eventBubbling_r3nbai.png)
-
-#### 現今對於相同問題
-
-
-直到現今，大部分瀏覽器仍採用於Event Flow的概念，甚至將兩種不同方向結合成新的Flow並分為三個階段，第一個階段為捕獲階段(Capture Phase)，第二個階段為目標階段(Target Phase)，最後一個階段為冒泡階段(Bubbling Phase)，當使用者對某個元件X進行互動時，瀏覽器會先透過第一個階段來傳遞信號，接著就是第二個階段：將信號傳遞至實際發生事件/互動的元件X，最後就是第三個階段傳遞信號。
-
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630599039/blog/event/currentPropagationPath_kopcrh.png)
-
-q4: 現今版本的event flow是什麼
-
-
-q5: 在現今，如何透過語法實現event flow?
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-上述提到瀏覽器可以透過自身機制來判斷某事件是屬於某元件上，但如果考慮到事
-
-藉由前面所述來判斷某物件發生
-
-
-接著利用這些資訊從BOM的根節點-window節點，若不符合的話，則會往DOM的根節點-document，若還是找不到則繼續往下層-body或者body之下的節點，直到找到符合(信號帶有的)資訊的節點，該節點就會被瀏覽器當作發生事件的節點。
-
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630479314/blog/event/capturePhase_tg6oec.png)
-
-當找到時，瀏覽器便檢查該節點是否有對應事件/信號的事件處理器-handler，若有的話，便會直接執行其處理器內容。預設情況下，網頁元件一開始並不會有任何處理器來綁定任意事件種類，必須透過JS來進行綁定。而這種從上往下找節點
-capture phase
-bubbling phase
-
 Question：
 1. 瀏覽器到底怎判定元件的？
 2. 若預設上每個元件都沒設置對應的事件處理，是否可以讓瀏覽器不做後續的事件判斷？
@@ -201,10 +170,7 @@ Question：
 ## 註解
 
 
-4. addEventListener 可綁定多個不同事件的事件處理器在同一個元件上，
-
-unknown
-觸發事件的元素和監聽對象的不必要是同一個
+4. addEventListener 具有兩點好處：1. 可綁定多個不同事件的事件處理器在同一個元件上，2. 觸發事件的元素和監聽對象的不必要是同一個，也就是具有事件委派的功能。
 
 ## 參考資料:
 
