@@ -134,11 +134,11 @@ element.removeEventListener(eventType, handler, useCapture)
 
 事件流(Event Flow)指的是在巢狀結構中接收事件的順序，通俗一點就是就頁面上元件的接收事件順序，在這個架構上會在DOM中，把"包含實際發生事件N的元件X"的所有元件都當成發生事件N的元件，但實際上瀏覽器仍會判定該事件N是屬於元件X的，並且依照事件流的順序來發送(代表事件的)信號傳遞給這些元件，讓這些元件能夠去觸發自己對於該事件的事件處理器，傳遞順序上主要分為兩種：第一種為事件捕獲(Event capturing)，另一種為事件冒泡(Event bubbling)，在正式傳遞前，瀏覽器會利用"包含實際發生事件N的元件X"來找到所有元件並是先建立好傳遞路徑：
 
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630595210/blog/event/propagationPath_m5jlc6.png)
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630598685/blog/event/propagationPath_ixsyik.png)
 
 左邊是未建立路徑的DOM架構(包含了BOM根節點-Window)，右邊則是已建立路徑後的架構，其中被淺紅色選取上的元素則是被當成傳遞路徑，若去除掉剩餘沒被選上的元素，實際傳遞路徑會是：
 
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630595721/blog/event/realPropagationPath_otfmr2.png)
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630598661/blog/event/realPropagationPath_j7xf4k.png)
 
 確定好路徑之後，傳遞順序將會以路徑上的節點進行。
 
@@ -147,16 +147,19 @@ element.removeEventListener(eventType, handler, useCapture)
 
 原始想法是由Netscape公司提出的概念，會以最上層的元素(節點)為出發點往下傳遞信號。首先會先傳遞信號至Window節點，再接著傳遞信號至Document節點，接著就是body節點，這樣的動作會持續到傳遞信號至實際發生事件的元素節點X。
 
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630595648/blog/event/eventCapturing_sogjqs.png)
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630598612/blog/event/eventCapturing_b480hr.png)
 
 #### 事件冒泡(Event bubbling)
 
-原始想法是由Microsoft公司提出的概念，會以實際發生事件的元素節點X往上傳遞信號。首先會先傳遞信號至元素節點X，再接著傳遞信號至節點X的父節點，然後再以父節點的父節點往上傳，直到傳遞到最上層的節點-Window。
+原始想法是由Microsoft公司提出的概念，其命名方式是以氣泡水中的氣泡皆會往上跑為命名，會以實際發生事件的元素節點X往上傳遞信號。首先會先傳遞信號至元素節點X，再接著傳遞信號至節點X的父節點，然後再以父節點的父節點往上傳，直到傳遞到最上層的節點-Window。
 
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630595648/blog/event/eventBubbling_nw5zsx.png)
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630598612/blog/event/eventBubbling_r3nbai.png)
+
+#### 現今對於相同問題
+
+直到現今，仍採用於Event Flow的概念，甚至將兩種不同方向結合成新的Flow並分為三個階段，第一個階段為捕獲階段(Capture Phase)，第二個目標階段(Target Phase)，最後一個階段為冒泡階段(Bubbling Phase)
 
 
-q3: event flow目前有哪些
 
 
 q4: 現今版本的event flow是什麼
