@@ -141,7 +141,7 @@ q2: event flow是什麼
 
 左邊是未建立路徑的DOM架構(包含了BOM根節點-Window)，右邊則是建立路徑的架構，其中被淺紅色選取上的元素則是被當成傳遞路徑，若去除掉剩餘沒被選上的元素，實際傳遞路徑會是：
 
-
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630595721/blog/event/realPropagationPath_otfmr2.png)
 
 順序上主要分為兩種：第一種為事件捕獲(Event capturing)，另一種為事件冒泡(Event bubbling)，每一種皆以BOM的架構來傳遞，並且傳遞路徑(如下圖)皆會包含實際包含發生事件的元件為主
 
