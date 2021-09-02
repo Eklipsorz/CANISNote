@@ -157,10 +157,10 @@ element.removeEventListener(eventType, handler, useCapture)
 
 #### 現今對於相同問題
 
-直到現今，仍採用於Event Flow的概念，甚至將兩種不同方向結合成新的Flow並分為三個階段，第一個階段為捕獲階段(Capture Phase)，第二個目標階段(Target Phase)，最後一個階段為冒泡階段(Bubbling Phase)
 
+直到現今，大部分瀏覽器仍採用於Event Flow的概念，甚至將兩種不同方向結合成新的Flow並分為三個階段，第一個階段為捕獲階段(Capture Phase)，第二個階段為目標階段(Target Phase)，最後一個階段為冒泡階段(Bubbling Phase)，當使用者對某個元件X進行互動時，瀏覽器會先透過第一個階段來傳遞信號，接著就是第二個階段：將信號傳遞至實際發生事件/互動的元件X，最後就是第三個階段傳遞信號。
 
-
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630599039/blog/event/currentPropagationPath_kopcrh.png)
 
 q4: 現今版本的event flow是什麼
 
