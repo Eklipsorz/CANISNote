@@ -108,8 +108,25 @@ element.removeEventListener(eventType, handler, useCapture)
 
 q1: 解釋為什麼要有event flow或者背景
 
+從"簡介: 瀏覽器如何知道物件上發生事件"小節中簡介了瀏覽器是如何判定事件是屬於哪些物件以及判定的基準，所以當使用者對網頁頁面內的一個元件進行互動時，瀏覽器會幫助使用者找到該元件並根據事件種類以及事先註冊好的事件處理器內容來回應使用者所產生的事件。
 
 
+
+然而，如果使用者對著巢狀結構下的子元件來進行互動時，比如類似於程式碼中的element3，那麼瀏覽器該如何判定這次的互動/事件是屬於哪個元素的，直觀上來說我們人類很快就能知道事件會是屬於element3，並按照element3的事件處理器來回應事件。
+```
+<element1>
+   <element2>
+   	<element3>
+		content
+	</element3>
+   </element2>
+</element1>
+
+```
+
+由於是巢狀結構，所以在這裡的元件1(element1)會包含著元件2(element2)，而元件2(element2)包含著元件3(element3)，而真正的事件是源自於element3，但由於瀏覽器自己判定事件的基準，可能會把 
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630587482/blog/event/threeElements_lohr6c.png)
 
 q2: event flow是什麼
 
