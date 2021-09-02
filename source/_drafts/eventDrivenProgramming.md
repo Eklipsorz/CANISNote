@@ -106,11 +106,8 @@ element.removeEventListener(eventType, handler, useCapture)
 
 ## Event Flow
 
-q1: 解釋為什麼要有event flow或者背景
 
 從"簡介: 瀏覽器如何知道物件上發生事件"小節中簡介了瀏覽器是如何判定事件是屬於哪些物件以及判定的基準，所以當使用者對網頁頁面內的一個元件進行互動時，瀏覽器會幫助使用者找到該元件並根據事件種類以及事先註冊好的事件處理器內容來回應使用者所產生的事件。
-
-
 
 然而，如果使用者對著巢狀結構下的子元件來進行互動時，比如類似於程式碼中的元素3(element3)，那麼瀏覽器該如何判定這次的互動/事件是屬於哪個元素呢？瀏覽器大可直接根據事件是源自於哪裡來將事件歸類於element3，
 ```
@@ -131,21 +128,32 @@ q1: 解釋為什麼要有event flow或者背景
 
 這時，瀏覽器可以有幾種選擇去決定事件是屬於哪個元件，第一種選擇是按照之前的規則，直接將事件歸類於元素3(element3)，另一種則是讓所有包含元素3的元素也跟著被當作是自己元件上的事件來觸發事件處理器，只是觸發的順序會按照所謂的事件流(event flow)來讓這些元件輪流被觸發，第二種因為後來的瀏覽器大戰而成名，所以主流上會是以第二種為主。
 
-q2: event flow是什麼
 
 
+### Event flow是什麼
 
 事件流(Event Flow)指的是在巢狀結構中接收事件的順序，通俗一點就是就頁面上元件的接收事件順序，在這個架構上會在DOM中，把"包含實際發生事件N的元件X"的所有元件都當成發生事件N的元件，但實際上瀏覽器仍會判定該事件N是屬於元件X的，並且依照事件流的順序來發送(代表事件的)信號傳遞給這些元件，讓這些元件能夠去觸發自己對於該事件的事件處理器，傳遞順序上主要分為兩種：第一種為事件捕獲(Event capturing)，另一種為事件冒泡(Event bubbling)，在正式傳遞前，瀏覽器會利用"包含實際發生事件N的元件X"來找到所有元件並是先建立好傳遞路徑：
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630595210/blog/event/propagationPath_m5jlc6.png)
 
-左邊是未建立路徑的DOM架構(包含了BOM根節點-Window)，右邊則是建立路徑的架構，其中被淺紅色選取上的元素則是被當成傳遞路徑，若去除掉剩餘沒被選上的元素，實際傳遞路徑會是：
+左邊是未建立路徑的DOM架構(包含了BOM根節點-Window)，右邊則是已建立路徑後的架構，其中被淺紅色選取上的元素則是被當成傳遞路徑，若去除掉剩餘沒被選上的元素，實際傳遞路徑會是：
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630595721/blog/event/realPropagationPath_otfmr2.png)
 
-順序上主要分為兩種：第一種為事件捕獲(Event capturing)，另一種為事件冒泡(Event bubbling)，每一種皆以BOM的架構來傳遞，並且傳遞路徑(如下圖)皆會包含實際包含發生事件的元件為主
+確定好路徑之後，傳遞順序將會以路徑上的節點進行。
 
-1. 事件捕獲(Event capturing)
+
+#### 事件捕獲(Event capturing)
+
+原始想法是由Netscape公司提出的概念，會以最上層的元素(節點)為出發點往下傳遞信號。首先會先傳遞信號至Window節點，再接著傳遞信號至Document節點，接著就是body節點，這樣的動作會持續到傳遞信號至實際發生事件的元素節點X。
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630595648/blog/event/eventCapturing_sogjqs.png)
+
+#### 事件冒泡(Event bubbling)
+
+原始想法是由Microsoft公司提出的概念，會以實際發生事件的元素節點X往上傳遞信號。首先會先傳遞信號至元素節點X，再接著傳遞信號至節點X的父節點，然後再以父節點的父節點往上傳，直到傳遞到最上層的節點-Window。
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630595648/blog/event/eventBubbling_nw5zsx.png)
 
 
 q3: event flow目前有哪些
