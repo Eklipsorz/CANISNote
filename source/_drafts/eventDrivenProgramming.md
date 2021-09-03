@@ -163,6 +163,48 @@ element.removeEventListener(eventType, handler, useCapture)
 
 
 
+### Event Delegation
+
+
+
+q1. 解釋為什麼要有event delegation
+
+當我們想要在同一個元素1下的其中1個元素m增加一個事件處理器時，
+```
+<element1>
+	.
+	.
+	<elementm>
+		content
+	</elementm>
+	.
+	.
+</element1>
+```
+
+我們可以直接透過以下語法來實現，
+
+```
+elementm.addEvenetListener(event, function (value1) {
+		// run event-driven content
+})
+```
+
+可如果有更多來自於element1內部的元素想要自己的事件處理器時，這時你有幾種選擇，第一種就是手動增加事件處理器給每個元素，第二種就是透過for迴圈來給予，第三種則是在不替每個元素增加事件處理器的情況下，來透過基於event flow的事件委派(event delegation)來解決，而這也是在這個章節要討論的。
+
+q2. event delegation的意思是什麼
+
+事件委派是一種將element1被其內部的所有子元素委派去擔任他們的監聽器-listener，這個監聽器會負責接收發生在這些子元素上的所有事件，並幫他們執行他們所要有的事件處理器之內容或者幫助他們回應發生在他們身上的事件。
+
+q3. 什麼樣的技術去實現event delegation
+
+要實現這個概念，必須得利用event flow，而event flow本身會跟
+
+
+q4. 如何透過語法去實現
+
+
+
 Question：
 1. 瀏覽器到底怎判定元件的？
 2. 若預設上每個元件都沒設置對應的事件處理，是否可以讓瀏覽器不做後續的事件判斷？
@@ -177,3 +219,4 @@ Question：
 1. https://en.wikipedia.org/wiki/Event_(computing)
 2. https://www.informit.com/articles/article.aspx?p=25856&seqNum=7
 3. https://developer.mozilla.org/en-US/docs/Web/API/Event
+4. https://gomakethings.com/whats-the-difference-between-javascript-event-delegation-bubbling-and-capturing/
