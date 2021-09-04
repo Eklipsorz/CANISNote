@@ -204,14 +204,11 @@ capture phase -> target phase -> bubbling phase
 
 從這些階段來看的話，只有capture phase和bubbling phase這兩個階段能傳遞信號給父元素element1，但我們必須挑選一個合適的階段來進行，當然我們也都能挑兩個階段來處理，但這樣只是會重複引發2次以及2次對應事件的處理，多出一些不必要的花費，因此問題還是回歸原點-到底哪個階段比較合適？
 
-在這裏我們有幾個考量點：第一，傳遞效能、第二，瀏覽器對於capture和bubbling的兼容性分別是如何。我們先來考量第一個點，當我們將前面所提的三個階段合併成一個路徑圖，然後只看看capture phase和bubbling phase，在這張圖當中，傳遞信號會從capture phase開始一直到bubbling phase，若我們分別在這兩階段中的element1設定事件處理器去監聽的話，capture phase肯定會比較bubbling phase來得快，但這個快的前提必須建立在這兩個階段能合併成一個路徑，若瀏覽器本身只能從capture phase和bubbling挑選一個來傳遞信號的話，那麼bubbling肯定會比capture還快。
+在這裏我們有幾個考量點：第一，傳遞效能、第二，瀏覽器對於capture和bubbling的兼容性分別是如何，第三，這兩者的應用場景。不過我們先來考量第一個點，當我們將前面所提的三個階段合併成一個路徑圖，然後只看看capture phase和bubbling phase，在這張圖當中，傳遞信號會從capture phase開始一直到bubbling phase，若我們分別在這兩階段中的element1設定事件處理器去監聽的話，capture phase肯定會比較bubbling phase來得快，但這個快的前提必須建立在這兩個階段能合併成一個路徑，若瀏覽器本身只能從capture phase和bubbling挑選一個來傳遞信號的話，那麼bubbling肯定會比capture還快。
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630741189/blog/event/captureAndBubbling_plctwq.png)
 
-
-
-再來就是
-
+再來就是兼容性問題，capture phase對應著網景公司(Netscape)所提出的event capturing，而bubbling phase對應著微軟(Microsoft)所提出的event bubbling。網景在網景公司和微軟公司之間的瀏覽器大戰中落敗，使得微軟的IE瀏覽器市占率是最高的(以當時大戰來說)，而其相對應提出的概念-event capturing因為處理巢狀關係不如event bubbling來得好（因為後者傳遞路徑可以優先傳遞離子元素較近的元素，這對於實現event delegation來得好)，因為這些種種，漸漸地使得event bubbling變成了event flow的主流。
 
 
 
@@ -243,3 +240,4 @@ Question：
 2. https://www.informit.com/articles/article.aspx?p=25856&seqNum=7
 3. https://developer.mozilla.org/en-US/docs/Web/API/Event
 4. https://gomakethings.com/whats-the-difference-between-javascript-event-delegation-bubbling-and-capturing/
+5. https://www.zhihu.com/question/39474653
