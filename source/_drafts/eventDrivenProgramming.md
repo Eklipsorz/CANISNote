@@ -152,7 +152,7 @@ property="handler()"
 在標籤上利用屬性來綁定事件處理器，雖會帶來直觀上的理解以及因語法過於老舊而具有一定容錯率，但具有兩個主要缺點，第一個當存有函式物件(事件處理器)的JavaScript文件太慢加載的話，會因為函式物件不存在而在觸發事件的時候回報錯誤，第二個缺點則是因為內容/結構/事件不能獨立分開(比如HTML語法和JavaScript相關語法不能以不同檔案來分開、負責事件處理的程式碼不能完全存放在JavaScript上)而造成開發維護上的困難以及可讀性很差。
 
 
-## 移除特定事件的事件處理器
+### 移除特定事件的事件處理器
 
 除了建立監聽器以外，我們還能透過以下語法來移除該特定元件element上的事件處理-handler，試著透過移除來獲取多餘的記憶體空間、避免記憶體洩漏問題，移除節點element上所發生的特定事件eventType和對應的事件處理器handler之間的綁定，該綁定必須是已經事先註冊好的才能移除，而useCapture若是true的話，就在capture phase
 ```
@@ -163,11 +163,7 @@ element.removeEventListener(eventType, handler, useCapture)
 
 
 
-### Event Delegation
-
-
-
-q1. 解釋為什麼要有event delegation
+## Event Delegation
 
 當我們想要在同一個元素1下的其中1個元素m增加一個事件處理器時，
 ```
@@ -192,15 +188,31 @@ elementm.addEvenetListener(event, function (value1) {
 
 可如果有更多來自於element1內部的元素想要自己的事件處理器時，這時你有幾種選擇，第一種就是手動增加事件處理器給每個元素，第二種就是透過for迴圈來給予，第三種則是在不替每個元素增加事件處理器的情況下，來透過基於event flow的事件委派(event delegation)來解決，而這也是在這個章節要討論的。
 
-q2. event delegation的意思是什麼
 
-事件委派是一種將element1被其內部的所有子元素委派去擔任他們的監聽器-listener，這個監聽器會負責接收發生在這些子元素上的所有事件，並幫他們執行他們所要有的事件處理器之內容或者幫助他們回應發生在他們身上的事件。
+### Event delegation的概念是什麼
+
+事件委派是一種將父元素element1被其內部的所有子元素委派去擔任他們的監聽器-listener，這個監聽器會負責接收發生在這些子元素上的所有事件，並幫他們執行他們所要有的事件處理器之內容或者幫助他們回應發生在他們身上的事件。換言之，element1本身會綁定事件處理器去監聽信號，而在element1之下的子元素則不綁定事件處理器，但是每當子元素發生事件的時候，都要讓父元素element1收到代表那事件的信號。
+
+
+### 如何實現概念
+
+我們會利用Event Flow來實現，當事件x發生後，Event Flow會將所有包含發生事件x的元件都傳遞一遍，這剛好可以滿足事件委派的概念"傳遞信號至父元素element1進而執行父元素本身的事件處理器"，而在現今的Evenet Flow中，會先從上至目標元件之前，
+
+```
+capture phase -> target phase -> bubbling phase
+```
+
+
+
+
+
+在這裡會先不替element1的所有子元素增加事件處理器，而是增加一個事件處理器element1去，
 
 q3. 什麼樣的技術去實現event delegation
 
 要實現這個概念，必須得利用event flow，而event flow本身會跟
 
-
+### 如何透過語法來實際操作基於event flow的事件委派
 q4. 如何透過語法去實現
 
 
