@@ -216,12 +216,74 @@ capture phase -> target phase -> bubbling phase
 從這三點來看，並沒有一定要用event capturing來實現event delegation或者一定要用event bubbling來實現event delegation，而是得根據自己所面臨到的開發目標、環境(瀏覽器、作業系統)來決定event delegation該用什麼來實現。
 
 
-q3. 什麼樣的技術去實現event delegation
-
-要實現這個概念，必須得利用event flow，而event flow本身會跟
 
 ### 如何透過語法來實際操作基於event flow的事件委派
-q4. 如何透過語法去實現
+
+
+
+我們以一個清單來表示我們一直在討論的父元素element1，而它的子元素則是清單中的每一個項目，以這份清單和元素來說明是如何透過語法來實現事件委派，過程中我們將會按照事件委派的概念，不綁定事件處理器給任意子元素，只綁定一個事件處理器給父元素，也就是整份清單，同時進一步透過capture和bubbling這兩種不同方向的event flow來實現委派的功能。
+
+首先，例子的結構會以HTML去呈現：
+```
+<!-- HTML 檔案 -->
+<div class="m-5">
+    <ul id="mylist" class="list-unstyled">
+        <!-- display todos here -->
+    </ul>
+</div>
+```
+
+接著再以CSS去調整清單樣式，然後再額外替清單增加outline屬性來標示清單的範圍和大小：
+
+```
+/* CSS檔案 */
+.fa {
+  margin: 0 5px;
+}
+
+#mylist {
+  outline: 2px solid black;
+}
+
+
+li>label[for='item'] {
+  width: 150px;
+}
+
+
+```
+
+最後再以JavaScript去填入那六個清單項目給那份清單中：
+
+```
+// JS檔案
+// 獲取list父元素
+let list = document.querySelector('#mylist')
+
+// 定義資料
+const listItem = ['listItem1', 'listItem2', 'listItem3', 'listItem4', 'listItem5', 'listItem6']
+for (let item of listItem) {
+  addItem(item)
+}
+
+
+// 用來添置項目的函式
+function addItem (text) {
+  let newItem = document.createElement('li')
+  newItem.innerHTML = `
+    <label for="item">${text}</label>
+    <i class="delete fa fa-trash"></i>
+  `
+  list.appendChild(newItem)
+}
+
+```
+
+網頁呈現的結果會是：黑框圍住的範圍是父元素本身，而內部的6個元素則是該父元素的子元素。
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630760897/blog/event/eventDelegationExample_hsxchq.png)
+
+
+
 
 
 
