@@ -221,7 +221,7 @@ capture phase -> target phase -> bubbling phase
 
 
 
-我們以一個清單來表示我們一直在討論的父元素element1，而它的子元素則是清單中的每一個項目，以這份清單和元素來說明是如何透過語法來實現事件委派，過程中我們將會按照事件委派的概念，不綁定事件處理器給任意子元素，只綁定一個事件處理器給父元素，也就是整份清單，同時進一步透過capture和bubbling這兩種不同方向的event flow來實現委派的功能。
+我們以一個清單來表示我們一直在討論的父元素element1，而它的子元素則是清單中的每一個項目，以這份清單和元素來說明是如何透過語法來實現事件委派，過程中我們將把事件x當作點擊事件並按照事件委派的概念來實現，首先會不綁定事件處理器給任意子元素，只綁定一個事件處理器給父元素，也就是整份清單，同時進一步透過capture和bubbling這兩種不同方向的event flow來實現委派的功能。
 
 首先，例子的結構會以HTML去呈現：
 ```
@@ -282,8 +282,15 @@ function addItem (text) {
 網頁呈現的結果會是：黑框圍住的範圍是父元素本身，而內部的6個元素則是該父元素的子元素。
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630760897/blog/event/eventDelegationExample_hsxchq.png)
 
-
-
+接著替父元素綁定一個事件處理器：其中this變數會是指被綁定的物件，而event.target則是實際發生點擊事件的元件，這部分瀏覽器會自動判定你點擊的元件是什麼。
+```
+list.addEventListener('click', function (event) {
+        console.log('The caller is ')
+        console.log(this)
+        console.log('real target: ')
+        console.log(event.target)
+})
+```
 
 
 
