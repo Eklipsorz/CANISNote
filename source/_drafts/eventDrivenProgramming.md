@@ -196,13 +196,23 @@ elementm.addEvenetListener(event, function (value1) {
 
 ### 如何實現概念
 
-我們會利用Event Flow來實現，當事件x發生後，Event Flow會將所有包含發生事件x的元件都傳遞一遍，這剛好可以滿足事件委派的概念"傳遞信號至父元素element1進而執行父元素本身的事件處理器"，然而現今的Event Flow每遇到這狀況時，並不會單純把信號傳遞給父元素，而是按照三個階段來傳遞信號：
+我們會利用Event Flow來實現，當事件x發生後，Event Flow會將所有包含發生事件x的元件都傳遞一遍，這剛好可以滿足事件委派的概念"傳遞信號至父元素element1進而執行父元素本身的事件處理器"，然而現今的Event Flow每遇到這狀況時，並不會單純把信號傳遞給父元素，而是按照三個階段來傳遞信號，每一種階段皆會傳遞按照順序輪流傳遞信號給元件們。
 
 ```
 capture phase -> target phase -> bubbling phase
 ```
 
-從這些階段來看的話，只有capture phase和bubbling phase能夠傳遞信號給父元素，我們必須挑選一個合適的階段來進行，當然我們也都能挑兩個階段來處理，但這樣只是會重複引發2次以及2次對應事件的處理，因此問題仍回歸原點-哪個階段比較合適？
+從這些階段來看的話，只有capture phase和bubbling phase這兩個階段能傳遞信號給父元素element1，但我們必須挑選一個合適的階段來進行，當然我們也都能挑兩個階段來處理，但這樣只是會重複引發2次以及2次對應事件的處理，多出一些不必要的花費，因此問題還是回歸原點-到底哪個階段比較合適？
+
+在這裏我們有幾個考量點：第一，傳遞效能、第二，瀏覽器對於capture和bubbling的兼容性分別是如何。我們先來考量第一個點，當我們將前面所提的三個階段合併成一個路徑圖，然後只看看capture phase和bubbling phase，在這張圖當中，傳遞信號會從capture phase開始一直到bubbling phase，若我們分別在這兩階段中的element1設定事件處理器去監聽的話，capture phase肯定會比較bubbling phase來得快，但這個快的前提必須建立在這兩個階段能合併成一個路徑，若瀏覽器本身只能從capture phase和bubbling挑選一個來傳遞信號的話，那麼bubbling肯定會比capture還快。
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630741189/blog/event/captureAndBubbling_plctwq.png)
+
+
+
+再來就是
+
+
 
 
 
