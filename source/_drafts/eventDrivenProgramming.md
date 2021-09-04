@@ -54,7 +54,7 @@ tags:
 
 ### Event flow是什麼
 
-事件流(Event Flow)指的是在巢狀結構中接收事件的順序，通俗一點就是就頁面上元件的接收事件順序，在這個架構上會在DOM中，把"包含實際發生事件N的元件X"的所有元件都當成發生事件N的元件，但實際上瀏覽器仍會判定該事件N是屬於元件X的，並且依照事件流的順序來發送(代表事件的)信號傳遞給這些元件，讓這些元件能夠去觸發自己對於該事件的事件處理器，傳遞順序上主要分為兩種：第一種為事件捕獲(Event capturing)，另一種為事件冒泡(Event bubbling)，在正式傳遞前，瀏覽器會利用"包含實際發生事件N的元件X"來找到所有元件並是先建立好傳遞路徑：
+事件流(Event Flow)指的是在巢狀結構中接收並執行事件的順序，通俗一點就是就頁面上元件的回應事件順序，在這個架構上會在DOM中，把"包含實際發生事件N的元件X"的所有元件都當成發生事件N的元件，但實際上瀏覽器仍會判定該事件N是屬於元件X的，並且依照事件流的順序來發送(代表事件的)信號傳遞給這些元件，讓這些元件能夠去觸發自己對於該事件的事件處理器，傳遞順序上主要分為兩種：第一種為事件捕獲(Event capturing)，另一種為事件冒泡(Event bubbling)，在正式傳遞前，瀏覽器會利用"包含實際發生事件N的元件X"來找到所有元件並是先建立好傳遞路徑：
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630598685/blog/event/propagationPath_ixsyik.png)
 
@@ -67,13 +67,13 @@ tags:
 
 #### 事件捕獲(Event capturing)
 
-原始想法是由Netscape公司提出的概念，會以最上層的元素(節點)為出發點往下傳遞信號。首先會先傳遞信號至Window節點，再接著傳遞信號至Document節點，接著就是body節點，這樣的動作會持續到傳遞信號至實際發生事件的元素節點X。
+原始想法是由Netscape公司提出的概念，當某事件m發生在元素節點X時，會以最上層的元素(節點)為出發點往下傳遞信號。首先會先傳遞信號至Window節點，並試著執行該節點對應事件m的事件處理器內容，若沒有或者執行完畢就接著往下傳訊號給下個節點，而下個接收到信號的是Document節點，同樣地，再試著執行該節點對應事件m的事件處理器內容，若還是沒有或者執行完畢就接著傳訊號給下個節點，而下個節點是body節點，後續的信號傳播會一直傳送至實際發生事件m的元素節點X。
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630598612/blog/event/eventCapturing_b480hr.png)
 
 #### 事件冒泡(Event bubbling)
 
-原始想法是由Microsoft公司提出的概念，其命名方式是以氣泡水中的氣泡皆會往上跑為命名，會以實際發生事件的元素節點X往上傳遞信號。首先會先傳遞信號至元素節點X，再接著傳遞信號至節點X的父節點，然後再以父節點的父節點往上傳，直到傳遞到最上層的節點-Window。
+原始想法是由Microsoft公司提出的概念，其命名方式是以氣泡水中的氣泡皆會往上跑為命名，當某事件m發生在元素節點X時，會以實際發生事件的元素節點X往上傳遞信號。首先會先傳遞信號至元素節點X，並試著執行該節點對應事件m的事件處理器內容，若沒有或者執行完畢就接著往上傳訊號給下個節點，而下個接收到信號的是元素節點X的父元素節點，同樣地，再試著執行該節點對應事件m的事件處理器內容，若還是沒有或者執行完畢就接著傳訊號給下個節點，接收、執行內容、傳送信號這個動作會一直持續到整個文件的根節點。
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630598612/blog/event/eventBubbling_r3nbai.png)
 
@@ -208,13 +208,13 @@ capture phase -> target phase -> bubbling phase
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1630741189/blog/event/captureAndBubbling_plctwq.png)
 
-再來就是兼容性問題，capture phase對應著網景公司(Netscape)所提出的event capturing，而bubbling phase對應著微軟(Microsoft)所提出的event bubbling。網景在網景公司和微軟公司之間的瀏覽器大戰中落敗，使得微軟的IE瀏覽器市占率是最高的(以當時大戰來說)，而其相對應提出的概念-event capturing因為處理巢狀關係不如event bubbling來得好（因為後者傳遞路徑可以優先傳遞離子元素較近的元素，這對於實現event delegation來得好)，因為這些種種，漸漸地使得event bubbling變成了event flow的主流。
+再來就是兼容性問題，capture phase對應著網景公司(Netscape)所提出的event capturing，而bubbling phase對應著微軟(Microsoft)所提出的event bubbling。網景在網景公司和微軟公司之間的瀏覽器大戰中落敗，使得微軟的IE瀏覽器市佔率是最高的(以當時大戰來說)，而當時的IE只支援event bubbling，它憑著自身來壟斷市場以及event flow的使用率，使開發者養成bubbling去思考event flow這件事，然後隨著瀏覽器市場被其他瀏覽器(如chrome, firefox)蠶食後，這壟斷現象才逐漸緩轉，直到今日，現今大部分知名且新版本的瀏覽器都支援著包含capture和bubbling這兩種event flow，但仍有些部份老舊的瀏覽器只支援一種event flow。
+
+最後一種，這兩者的應用場景皆為不同，最主要是要看父子元素間彼此影響的程度來由誰來實現event delegation，假使父元素element1對於事件x的事件處理器代表a，而子元素對於事件x的事件處理器代表b，當a的執行結果會影響著b所代表的處理器執行內容時，會採用於capture phase來實現event delegation讓a先執行，隨後再執行b，因為若採用於bubbling phase讓b先執行，而a隨後執行，會因為a會更動b的執行內容而使預期結果不一致；反之，當b的執行結果會影著a所代表的處理器執行內容，會採用bubbling phase來讓b先執行，隨後再讓a去執行，否則若採用於capture phase，會使預期結果不一致。
 
 
+從這三點來看，並沒有一定要用event capturing來實現event delegation或者一定要用event bubbling來實現event delegation，而是得根據自己所面臨到的開發目標、環境(瀏覽器、作業系統)來決定event delegation該用什麼來實現。
 
-
-
-在這裡會先不替element1的所有子元素增加事件處理器，而是增加一個事件處理器element1去，
 
 q3. 什麼樣的技術去實現event delegation
 
@@ -241,3 +241,5 @@ Question：
 3. https://developer.mozilla.org/en-US/docs/Web/API/Event
 4. https://gomakethings.com/whats-the-difference-between-javascript-event-delegation-bubbling-and-capturing/
 5. https://www.zhihu.com/question/39474653
+6. https://pjchender.dev/webapis/note-event-capturing-bubbling/
+7. https://javascript.info/bubbling-and-capturing
