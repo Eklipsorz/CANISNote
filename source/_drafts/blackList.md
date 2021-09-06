@@ -41,6 +41,7 @@ const players = [
 
 ### 實現方法1：
 
+首先我打算先用email快速篩出符合比較可能是黑名單的人，然後再進一步用其他資料比對可能是的人和黑名單的人兩者資料是否一樣，若一樣則刪除，若不一樣則跳過，另外想透過while進一步持續對下一筆資料做比對刪除。 
 
 ```
  let lengthBlackList = blackList.length
@@ -86,7 +87,11 @@ const players = [
 
 ```
 
+
 #### 實現1所遇到的bug
 
 
-1. 當測資無法正常刪除時，內部的while會有機會進入無限循環的情況，比如遇到
+1. 當測資無法正常刪除時，內部的while會有機會進入無限循環的情況，比如遇到以下這筆資料，而Walter是黑名單中的人，但因為測資上的ticket和黑名單不同，所以無法在while內部正常被刪除 
+```
+{ name: 'Walter', email: 'walter@example.com', ticket: 'EI57240' }
+```
