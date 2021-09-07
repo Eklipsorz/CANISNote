@@ -3,7 +3,7 @@ title: DOM - How To Manipulate Attribute From Object
 tags:
   - HTML
 categories:
-  - Web Development
+  - Website Development
 date: 2021-08-28 22:00:44
 ---
 

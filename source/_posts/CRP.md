@@ -4,7 +4,7 @@ tags:
   - HTML
   - CSS
 categories:
-  - Web Development
+  - Website Development
 date: 2021-08-27 00:01:22
 
 ---
