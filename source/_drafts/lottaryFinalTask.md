@@ -55,10 +55,10 @@ const players = [
 
 
 ### 加密名字實作
-主要實作一個名為encodeName的函式，會接受一個參數值，該值代表著未加密前的名字，經過函式處理後，會回傳加密後的名字。其中參數本身string，但由於本身在JS上可以被當作String物件(這跟primitivie type的string名字相似，但實則上性質是不同的)來呼叫該物件特有的方法，比如substr和repeat，在這所用到substr會從第一個字元開始取，直到取到2個字元才停止，剛好可獲取明碼顯示的前兩個字元，後頭用上的*和repeat，則是利用*對於JS的型態的轉化去呼叫String物件的repeat方法，該方法會依照參數來複製字串內容並組成新字串，在這裏複製length - 2個*符號接在前兩個明碼字元。
+主要實作一個名為encodeName的函式，功能會加密並回傳加密後的名字，會接受一個參數值，該值代表著未加密前的名字。其中參數本身string，但由於本身在JS上可以被當作String物件(這跟primitivie type的string名字相似，但實則上性質是不同的)來呼叫該物件特有的方法，比如substr和repeat，在這所用到substr會從第一個字元開始取，直到取到2個字元才停止，剛好可獲取明碼顯示的前兩個字元，後頭用上的*和repeat，則是利用*對於JS的型態的轉化去呼叫String物件的repeat方法，該方法會依照參數來複製字串內容並組成新字串，在這裏複製length - 2個*符號接在前兩個明碼字元。
 
 ```
-// encodeName 功能為加密接收到的名字
+// encodeName(parameter1) 功能為加密接收到的名字
 // 參數說明： parameter1 是指要被加密的名字
 function encodeName (name) {
   // 以明碼顯示名字前兩個字元，後續字元全用*符號表示
@@ -68,9 +68,11 @@ function encodeName (name) {
 
 
 ### 加密電子郵件
-主要實作一個名為encodeEmail的函式，會接受一個參數值，該值會代表著未加密前的電子郵件，經過函式處理後，會回傳加密後的電子郵件。同樣地，這裡的參數同樣被當作String物件去調用indexOf、slice、repeat等方法，首先會用indexOfAtSign去獲取@在字串中的索引值，該值會是使用者名稱的字元數，接著利用這字元數進一步獲取一半字元數，並用floor方法去達到規格書的要求，現在我們有了這一半的字元數就能進一步加密，加密方式就用slice從參數的第0個索引值去擷取，ㄧ直到索引值為halfLengthOfUserName才停止擷取，接著在用.和repeat方法來產生3個.符號，最後則繼續用slice將@和@後綴字全曲出來，將這些擷取到的字串和產生出來的新字串結合在一起便是加密後的電子郵件。
+主要實作一個名為encodeEmail的函式，功能會加密並回傳加密後的電子郵件，會接受一個參數值，該值會代表著未加密前的電子郵件。同樣地，這裡的參數同樣被當作String物件去調用indexOf、slice、repeat等方法，首先會用indexOfAtSign去獲取@在字串中的索引值，該值會是使用者名稱的字元數，接著利用這字元數進一步獲取一半字元數，並用floor方法去達到規格書的要求，現在我們有了這一半的字元數就能進一步加密，加密方式就用slice從參數的第0個索引值去擷取，ㄧ直到索引值為halfLengthOfUserName才停止擷取，接著在用.和repeat方法來產生3個.符號，最後則繼續用slice將@和@後綴字全曲出來，將這些擷取到的字串和產生出來的新字串結合在一起便是加密後的電子郵件。
 
-// encodeEmail 功能為加密接收到的email
+
+```
+// encodeEmail(parameter1) 功能為加密接收到的email
 // 參數說明： parameter1 是指要被加密的email
 function encodeEmail (email) {
   // 請封裝你之前寫好的程式碼，並設計必要參數
@@ -88,13 +90,92 @@ function encodeEmail (email) {
 
     return econdedEmail
 }
-
+```
 
 ### 產生樂透抽獎券號碼
 
 
-### 
 
+```
+// generateTicketNumber(parameter1, parameter2) 功能為產生獨立且不重複的抽獎
+// 券號碼給抽獎者，格式為xxxyyy，xxx代表要填入的英文字母，而yyy代表要填入的數字 
+// 參數說明：parameter1~2 是指定抽獎券的號碼格式分別要填多少個英文字母和數字
+function generateTicketNumber (literalLength, digitLength) {
+
+    
+
+    // 利用無限迴圈的特性來不斷產生號碼，直到產生出獨立且不重複的號碼為止
+    while (true) {
+      
+        let ticket = ''
+
+        // 產生英文字母來填入號碼裡
+        for (let round = 0; round < literalLength; round++) {
+            ticket += String.fromCharCode(Math.floor(Math.random() * 26) + 65)
+        }
+
+        // 產生數字來填入號碼裡 
+        for (let round = 0; round < digitLength; round++) {
+            ticket += Math.floor(Math.random() * 10)
+        }
+
+        // ticketSet是存放所有已產生且獨立不重複的號碼，用它檢查新產生出來的號碼是否重複
+        if (!ticketSet.includes(ticket)) {
+
+            // 將獨立不重複的號碼放到ticketSet
+            ticketSet.push(ticket)
+            return ticket
+        }
+    }
+
+}
+```
+
+
+### 抽出特定玩家賦予特定獎項
+主要實作名為一個名為drawWinner的函式，功能會為從指定抽獎者清單抽出贏家並印出指定獎項和其贏家贏家資訊，會接受兩個參數，第一個參數是存放所以抽獎者的清單，第二個參數是指定贏家會獲得什麼樣的獎項。當參數傳進去之後，會先透過random方法產生範圍為1~length(抽獎券人數)的亂數，以這個亂數來當抽獎名單的索引值，而挑出來的對應抽獎者就是贏家，由這個贏家和第二個參數傳入announceMsg進行公告贏家的處理。
+
+
+```
+// drawWinner(parameter1, parameter2) 功能為從抽獎者中抽出一位贏家，並給予特定獎項，最後印出贏家資訊
+// 參數說明：parameter1 是指存放所有抽獎者的陣列，parameter2 是指定發放獎項是什麼
+function drawWinner (players, prize) {
+
+  // 以亂數來抽獎
+  let winnerIndex = Math.floor(Math.random() * players.length) 
+  // 按照winnerIndex找到對應的贏家
+  let winner = players.splice(winnerIndex, 1)[0]
+
+  // 印出贏家資訊
+  announceMsg(winner, prize)
+}
+
+```
+
+### 贏家公告
+
+
+
+
+```
+// announceMsg(parameter1, parameter2) 功能為印出贏家資訊、獎項
+// 參數說明：parameter1 是指贏家，parameter2 是指定獲取的獎項是什麼
+function announceMsg (winner, prize) {
+  // 印出贏家資訊、贏家獲取的獎項是為何
+  console.log(`${winner.ticket} | ${encodeName(winner.name)} | ${encodeEmail(winner.email)} | ${prize}`)
+}
+```
+
+### 賦予參加獎給其他沒抽到的抽獎者
+
+
+
+```
+for (let player of players) {
+  announceMsg(player, '參加獎')
+}
+
+```
 
 
 ## 主程式的呼叫方式
