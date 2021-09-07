@@ -1,11 +1,13 @@
 ---
 title: Simulate a Lottary game
-tags: 
- - JavaScript
- categoires:
- - Backend
- - Website Development
+tags:
+  - JavaScript
+categories:
+  - Backend
+  - Website Development
+date: 2021-09-07 21:19:17
 ---
+
 
 
 該專案是以模擬樂透抽獎為主軸，開發者得要達成加密名字、加密電子郵件、產生樂透抽獎券號碼、抽出特定玩家賦予特定獎項、贏家公告、賦予參加獎給其他沒抽到的抽獎者等子功能，最後將這些功能組合成所要求的專案，而這些子功能必須滿足特定規格才算完成，另外會額外賦予測資方便調整，其測資以測資小節來說明。
