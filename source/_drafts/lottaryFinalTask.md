@@ -133,9 +133,186 @@ function generateTicketNumber (literalLength, digitLength) {
 }
 ```
 
+#### 另一種解法
+
+這是第一版的generateTicketNumber，原本的構想是想把會用到的參數、陣列全鎖定在一個函式內，盡量避免side effect，但由於do-while的實現會使ticketNumber變數宣告和指派過於累贅所以開發第二版。
+
+```
+function generateTicketNumber(players, literalLength, digitLength) {
+
+       let ticketSet = []  
+
+       for (let player of players) {        
+           let ticketNumber
+
+           do {
+
+               ticketNumber = ''
+
+               for (let round = 0; round < literalLength; round++) {
+                   ticketNumber += String.fromCharCode(Math.floor(Math.random() * 26) + 65)
+               }
+
+               for (let round = 0; round < digitLength; round++) {
+                   ticketNumber += Math.floor(Math.random() * 10)
+               }
+
+           } while (ticketSet.includes(ticketNumber))
+
+           player.number = ticketNumber
+       }
+
+
+
+   }
+
+```
+
+
+第二版的generateTicketNumber是出於修正變數宣告和指派變得累贅而修正，內容為以下：
+
+
+```
+function generateTicketNumber(players, literalLength, digitLength) {
+
+       let ticketSet = []  
+
+       for (let player of players) {        
+           
+
+
+          while (true) {
+
+              let ticketNumber =  ''
+
+               for (let round = 0; round < literalLength; round++) {
+                   ticketNumber += String.fromCharCode(Math.floor(Math.random() * 26) + 65)
+               }
+
+               for (let round = 0; round < digitLength; round++) {
+                   ticketNumber += Math.floor(Math.random() * 10)
+               }
+
+               if (ticketSet.includes(ticketNumber) !== false) {
+                    ticketSet.push(ticketNumber)
+                    player.number = ticketNumber
+                    break
+               } 
+
+          }
+
+           
+       }
+
+   }
+```
+
+
+但經由某些大師觀看並給予我2個建議，第一個是進一步利用includes(...)的true或者false來減少if的內容，比如說：
+
+```
+if (ticketSet.includes(ticketNumber) !== false) {
+  .....
+}
+```
+
+改成
+
+```
+if (!ticketSet.includes(ticketNumber)) {
+   .....
+}
+```
+
+另一個建議可以更進一步實現避免side effect，具體方法就是把函式的參數縮減至1~2個或者使用解構方式來利用一個物件當參數，其物件的屬性就是實際的參數值，比如説：
+
+
+```
+function generateTicketNumber ({players, literalLength, digitLength}) {       //宣告並定義generateTicketNumber
+
+}
+
+generateTicketNumber({players, literalLength: 2, digitLength: 4})             // 呼叫generateTicketNumber
+```
+
+
+但由於實際上的參數值players涉及到by reference且又是全域變數，即使改成這樣，仍避免不了side effect，所以得自行把函式和呼叫函式的形式改變成只需要1~2個參數值來實現相同的效果。為了避免最核心的清單被修改到，雖說有為抽獎者清單添增const，但那僅限於該變數的內容，而非參照位址對應到的記憶體空間，所以先捨棄players作為參數，但這樣又難以判斷目前產生的新號碼是否為重複，所以只好在額外添增一個全域陣列ticketSet來存放所有已產生且獨立不重複的號碼，讓函式內容去對它做更動:
+
+
+```
+const ticketSet = []
+
+function generateTicketNumber (...) {
+    ticketSet.push(something)
+}
+```
+
+當然這也引發side effect，但運用該變數的函式和處理目前就generateTicketNumber本身，而先前的players陣列則是因為太多處理和函式用上它，權衡優劣性，只好拿全域陣列的辦法先捨棄players來實現第三版的函式，而第三版函式內容為如下：
+
+```
+const ticketSet = []
+
+// generateTicketNumber(parameter1, parameter2) 功能為產生獨立且不重複的抽獎
+// 券號碼給抽獎者，格式為xxxyyy，xxx代表要填入的英文字母，而yyy代表要填入的數字 
+// 參數說明：parameter1~2 是指定抽獎券的號碼格式分別要填多少個英文字母和數字
+function generateTicketNumber (literalLength, digitLength) {
+
+    
+
+    // 利用無限迴圈的特性來不斷產生號碼，直到產生出獨立且不重複的號碼為止
+    while (true) {
+      
+        let ticket = ''
+
+        // 產生英文字母來填入號碼裡
+        for (let round = 0; round < literalLength; round++) {
+            ticket += String.fromCharCode(Math.floor(Math.random() * 26) + 65)
+        }
+
+        // 產生數字來填入號碼裡 
+        for (let round = 0; round < digitLength; round++) {
+            ticket += Math.floor(Math.random() * 10)
+        }
+
+        // ticketSet是存放所有已產生且獨立不重複的號碼，用它檢查新產生出來的號碼是否重複
+        if (!ticketSet.includes(ticket)) {
+
+            // 將獨立不重複的號碼放到ticketSet
+            ticketSet.push(ticket)
+            return ticket
+        }
+    }
+
+}
+```
+
+而呼叫的形式則改成： 
+
+```
+// 幫每位抽獎者產生一組獨立不重複的抽獎券號碼，號碼預設填入2個大寫英文字母和4個數字
+for (let player of players) {
+  player['ticket'] = generateTicketNumber(2, 4)
+}
+```
+
+主要做了以下修正：
+1. 設定一個全域性質的陣列ticketSet，並設定空陣列
+2. 簡化了判定重複的條件式：
+
+```
+if(!ticketSet.includes(ticketNumber)) {
+
+}
+```
+
+3. 讓最有爭議的players不成為參數，致使呼叫函式的引數之數量和函式參數之數量減少至2個
+
+
+
+
 
 ### 抽出特定玩家賦予特定獎項
-主要實作一個名為drawWinner的函式，功能會為從指定抽獎者清單抽出贏家並印出指定獎項和其贏家加密資訊，會接受兩個參數，第一個參數是存放所以抽獎者的清單，第二個參數是指定贏家會獲得什麼樣的獎項。當參數傳進去之後，會先透過random方法產生範圍為1~length(抽獎券人數)的亂數，以這個亂數來當抽獎名單的索引值，而挑出來的對應抽獎者就是贏家，另外再透過splice以該索引值來從清單直接取出，接著再把清單的對應抽獎者給刪去，以防止後續重複中獎，最後由這個贏家和第二個參數傳入announceMsg進行印出指定獎項和其贏家的加密資訊。
+主要實作一個名為drawWinner的函式，功能會為從指定抽獎者清單抽出贏家並印出指定獎項和其贏家加密資訊，會接受兩個參數，第一個參數是存放所以抽獎者的清單，第二個參數是指定贏家會獲得什麼樣的獎項。當參數傳進去之後，會先透過random方法產生範圍為1~length(抽獎券人數)的亂數，以這個亂數來當抽獎名單的索引值，而挑出來的對應抽獎者就是贏家，另外再透過splice以該索引值來從清單直接取出，接著再把清單的對應抽獎者給刪去，以防止後續重複中獎，最後由這個贏家和第二個參數傳入announceMsg進行印出指定獎項和其贏家的加密資訊。雖說該參數也涉及到players這個具有爭議的陣列，但其函式內容本身不會更動其內容，只是單純讀取陣列內容，所以可以忽視side effect。
 
 
 ```
@@ -153,6 +330,7 @@ function drawWinner (players, prize) {
 }
 
 ```
+
 
 ### 贏家公告
 
@@ -183,5 +361,33 @@ for (let player of players) {
 
 ## 主程式的呼叫方式
 
+首先會先產生獨立不重複的號碼給每位抽獎者，接著再透過三行drawWinder來抽三位贏家，按獲獎順序來分發頭獎、貳獎、叄獎，最後再分發參加獎給剩下沒參加獎的人
+
+```
+
+// 幫每位抽獎者產生一組獨立不重複的抽獎券號碼，號碼預設填入2個大寫英文字母和4個數字
+for (let player of players) {
+  player['ticket'] = generateTicketNumber(2, 4)
+}
 
 
+
+// draw 3 winners and announce the results
+drawWinner(players, '頭獎')
+drawWinner(players, '貮獎')
+drawWinner(players, '叁獎')
+
+// the rest of players get participation award
+// write your code here
+
+for (let player of players) {
+  announceMsg(player, '參加獎')
+}
+
+
+
+```
+
+
+
+ㄇ
