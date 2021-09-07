@@ -389,7 +389,3 @@ for (let player of players) {
 
 
 ```
-
-
-
-ㄇ
