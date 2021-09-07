@@ -43,3 +43,5 @@ function some_process() {
 
 
 https://zhuanlan.zhihu.com/p/379503009
+
+https://dev.to/vonheikemen/dealing-with-side-effects-and-pure-functions-in-javascript-16mg
