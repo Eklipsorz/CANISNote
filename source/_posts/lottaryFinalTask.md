@@ -1,10 +1,10 @@
 ---
 title: Simulate a Lottary game
 tags:
-  - JavaScript
+- JavaScript
 categories:
-  - Backend
-  - Website Development
+- Backend
+- Website Development
 date: 2021-09-07 21:19:17
 ---
 
