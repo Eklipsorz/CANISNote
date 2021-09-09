@@ -37,7 +37,32 @@ let value1 = var1/constant1 operator1 var2/constant2 ...... operator(N-1) varN/c
 var1/constant1 operator1 var2/constant2
 ```
 
-並且檢查var1/constant1 和var2/constant2哪一邊是字串，若有字串，整條表達式會以字串形式來進行並以字串來輸出，
+並且檢查var1/constant1 和var2/constant2哪一邊是字串，若有字串，整條表達式會以字串形式來進行並以字串來輸出，接著就是按照operator的性質來決定非字串的資料要如何隱性轉換。若是operator是能處理數字的加減乘除的話，那麼就是按照數字型別來隱性轉換，比如：
+
+1. 100 + false 就會是
+
+```
+100 + Number(false) = 100 + 0 = 100
+```
+
+2.  99 + null + 1 就會是
+
+```
+99 + Number(null) + 1  = 99 + 0 + 1 = 100
+```
+
+3. 99 + true + NaN 就會是
+
+```
+99 + Number(true) + Number(NaN)  = 99 + 1 + NaN = NaN
+```
+
+4. 99 + true + undefined 就會是，其中Number的參數若不是正常數字時就會是NaN
+```
+99 + Number(true) + Number(undefined)  = 99 + 1 + NaN = NaN
+```
+
+檢查是否有NaN或者undefined，若其中一個有，最後結果就是NaN或者undefined，最後都會以數字型別來處理
 
 
 
@@ -45,34 +70,6 @@ var1/constant1 operator1 var2/constant2
 
 1. 使用顯性轉換
 2. 要比較內容時，請使用====或者!==，別使用==或者!=，這會使直譯器繼續使用隱性轉換
-
-
-A. 表達式中的運算子(operator)大多會取離他們較近的1~2個數值或者物件來計算
-
-
-B. 看先被處理的資料所擁有的型態以及內容是什麼？ 若取到的資料擁有字串型態，整體就以字串來做處理，
-C. 數值運算子處理的優先權，括號優先權最大，其次是乘除，再來就是加減
-
-其內容若能在數值系統表達數字的話，則會被看待為數字型態，否則就依照有沒有字串型態的參數來決定，都沒有的話，會以數字型態來處理，否則就以字串型態
-
-note：
-
-
-例子1：
-
-```
-console.log(100 + false +  '0')
-```
-
-系統會先替第一個運算子(operator)抓取100和false，而false在這裡它會試著轉化為數字型態的0，所以會是數字型態的100(100+0)，接著就是100 + '0'，由於'0'本身是字串且無法被轉化成數值，所以會以字串的型態來表達，其最後結果會是'1000'
-
-例子2：
-
-```
-console.log('a' + false + 0)
-```
-
-一樣地，系統會先第一個運算子抓取了'a'和false，在這裡其中一個單一值為字串，所以字串的形式來處理，其結果會是'afalse'，接下來換下一個運算子，'afalse' + 0，由於'afalse'本身也是字串，所以也是以字串的型態來處理，最後結果為'afalse0'
 
 
 ## 補充資料：
@@ -88,12 +85,21 @@ console.log(100 + false)                  // 100 + 0 = 100
 ```
 
 
-2. 
-a. 會在boolean系統視為true的內容，有非空內容的字串、非0的數字、非Null物件。
-b. 會在boolean系統視為false的內容，有空字串、0、NaN、null、undefined、false。 
-c. 若在boolean系統視為false的內容，可以在數值系統表達0
-d. 若在boolean系統視為true的內容，只有true才能表達1
+2. 可以透過顯性轉換轉換為true/false、數字0/1：
+a. 可在boolean系統轉換為true的內容，有非空內容的字串(包括'0')、非0的數字、非Null物件。
+b. 可在boolean系統轉換為false的內容，有空字串、0、NaN、null、undefined、false。 
+c. 可轉換數字的內容，有具有數字的字串、boolean值、空字串
 
+3. 當if/else條件式、while、for等具有boolean條件式(用boolean值的true和false判定條件成立)使用“原本可在顯性轉換中能轉換為true/flase”的資料作為條件式且只有單一值/單一物件時，其直譯器會以隱性轉換將這些資料轉換，其結果會如同使用顯性轉換下的結果。比如說：設定testVar為NaN，當進入if的條件式中，直譯器就會以Boolean(testVar)來轉換，最後會獲得false進入else來印I'm false。
+
+```
+let testVar = NaN
+if (testVar) {
+    console.log('I\'m true')
+} else {
+    console.log('I'\m false')
+}
+```
 
 ## 參考資料
 1. https://developer.mozilla.org/en-US/docs/Glossary/Type_coercion
