@@ -4,12 +4,12 @@ tags:
 - JavaScript
 ---
 
-在程式語言中，作用域(Scope)是指對應某種實體(entity)的名字(name)所能夠被合法辨識以及使用的範圍，其中實體是指的是某種記憶體區塊，而名字就是變數(variable)名稱，換言之，只要我們透過變數名稱就能操控代表記憶體區塊的實體。
+在程式語言中，作用域(Scope)是指對應某種實體(entity)的名字(name)所能夠被合法辨識以及使用的範圍，其中實體是指的是某種記憶體區塊，而名字就是變數(variable)名稱，換言之，只要我們透過變數名稱就能操控代表記憶體區塊的實體。在這裡皆以let、const這些不違反Scope規則的變數宣告方式，var宣告會另開一個小節做說明
 
 
 ## Scope 有哪些種類？
 
-Scope可以是由{}所構成的範圍以及未被{}所構成的範圍，他們的形式通常分別會是如下：首先是由{}所構成的範圍，這個範圍又被稱之為區塊(Block)
+Scope可以是由{}所構成的範圍以及未被{}所構成的範圍，他們的形式通常分別會是如下：首先是由{}所構成的範圍，這個範圍又被稱之為區塊(Block)，其構成必須藉由開發者自行設定才會產生
 
 ```
 {
@@ -68,13 +68,25 @@ let a = 10
 
 其Scope C會是Scope B的Parent Scope，而Scope C則會是Scope B的Child Scope。
 
+## Root、Parent、Child這三者下的變數存取關係
+
+若我們把這些括號給去除掉的話，實際上還是同一個作用域下的變數，後面變數可以存取前面已宣告的變數值，只是現在我們只是單純按照括號賦予他們特定的作用域，進而告訴變數什麼時候該自己釋放記憶體，否則若不釋放會因為被判定成不屬於它原本的作用域而出錯。在這樣規則下，我們可以得知二件事：1. 變數宣告的先後順序仍沒改變，後面變數可以存取前面已宣告的變數，2. 變數所在的作用域會影響著它們何時釋放，接著我們將利用這兩套被推斷的規則以及例子來得知Root、Parent、Child這三者下的變數存取關係是什麼。
+
+```
+// Scope A: Root Scope
+let a = 10
+
+ // Scope B: Child Scope of Root Scope
+    let b = 20 
+     // Scope C: Child Scope of Scope B
+        let c = 30
+    
+```
 
 
+### 例子：Root、Parent、Child這三者下的變數存取關係
 
-## Root、Parent、Child的變數存取關係
-這三者下變數之間的存取關係是依照下列條件：
-1. 變數宣告的先後順序
-2. 變數所在Scope是哪一種
+繼續沿用上個例子，當想在Root Scope去印出Scope C下的變數或者Scope B的變數時，在只能待在Root Scope的前提下，只能有兩種選擇方式：a. 在Scope B前寫印變數的程式、b. 在Scope B後寫出印變數的程式
 
 ```
 // Scope A: Root Scope
@@ -91,8 +103,7 @@ let a = 10
 
 ```
 
-
-繼續沿用上個例子，當想在Root Scope去印出Scope C下的變數或者 Scope B的變數時，在那Scope範疇下，只能有兩種選擇方式：a. 在Scope B前寫印變數的程式、b. 在Scope B後寫出印變數的程式，這兩種選擇方式分別如下所示：
+這兩種選擇方式分別如下所示：
 
 a. 在Scope B前寫印變數的程式：
 
@@ -133,7 +144,7 @@ console.log(b)
 console.log(c)
 ```
 
-但這兩種方式皆無法正常印出變數b和變數c，a方式是因爲Scope根本還沒被產生，所以本來就印不出來，而b方式則是因爲Scope內的所有變數皆被釋放，所以也就跟著印不出來，同樣的概念也可以放在只考慮Scope B和 Scope C這兩者上，將他們兩者換成Parent Scope和Child Scope，當然最後結果會是沒辦法在Parent Scope存取到Child Scope以及其Scope內部的變數。
+但這兩種方式皆無法正常印出變數b和變數c，a方式是因為變數b和變數c都還沒被宣告定義，所以本來就印不出來，而b方式則是因爲Scope內的所有變數的記憶體皆被釋放，所以也就跟著印不出來，同樣的概念也可以放在只考慮Scope B和 Scope C這兩者上，將他們兩者換成Parent Scope和Child Scope，當然最後結果會是沒辦法在Parent Scope存取到Child Scope下的變數。
 
 
 同等的，若我們想要在Scope B印出Parent Scope的變數 a，我們會因為Parent Scope的變數a還存在而能夠印出來。
