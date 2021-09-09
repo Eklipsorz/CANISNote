@@ -60,6 +60,7 @@ var1/constant1 operator1 var2/constant2
 ```
 
 4. 99 + true + undefined 就會是，其中Number的參數若不是正常數字時就會是NaN
+
 ```
 99 + Number(true) + Number(undefined)  = 99 + 1 + NaN = NaN
 ```
