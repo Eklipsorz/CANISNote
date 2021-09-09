@@ -2,6 +2,7 @@
 title: JavaScript - Scope 簡介
 tags: 
 - JavaScript
+- Scope
 ---
 
 在程式語言中，作用域(Scope)是指對應某種實體(entity)的名字(name)所能夠被合法辨識以及使用的範圍，其中實體是指的是某種記憶體區塊，而名字就是變數(variable)名稱，換言之，只要我們透過變數名稱就能操控代表記憶體區塊的實體。在這裡皆以let、const這些不違反Scope規則的變數宣告方式，var宣告會另開一個小節做說明
