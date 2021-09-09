@@ -64,9 +64,6 @@ var1/constant1 operator1 var2/constant2
 99 + Number(true) + Number(undefined)  = 99 + 1 + NaN = NaN
 ```
 
-檢查是否有NaN或者undefined，若其中一個有，最後結果就是NaN或者undefined，最後都會以數字型別來處理
-
-
 
 ### 避免隱性轉換的開發建議
 
