@@ -4,9 +4,16 @@ tags:
  - JavaScript
 ---
 
+型別強制轉換 (Type coercion)
+
+
+
 # 型別轉換與三個等號
 
-1. Type checking： The process of verifying and enforcing the constraints of types，換言之，確定變數是何種資料型態的階段。
+1. Type checking： 確定該變數的處理是否按照型別
+
+
+The process of verifying and enforcing the constraints of types，換言之，確定變數是何種資料型態的階段。
 
 2. Type checking會發生在編譯期間或者執行期間，若某程式語言發生在編譯期間，其程式語言會是靜態語言(statically typed language)；若發生在執行期間，其程式語言會是動態語言(dynamically typed language)
 
@@ -17,8 +24,13 @@ tags:
 
 5. JavaScript會根據單一值或者表達式來變動型態，單一值的話會根據其值的型態是什麼來決定變數，而表達式則是會利用以下特性來決定型態：
 
-A. 運算子處理的優先權，括號優先權最大，其次是乘除，再來就是加減
-B. 先被處理的資料所擁有的型態以及內容是什麼？ 其內容若能在數值系統表達數字的話，則會被看待為數字型態，否則就依照有沒有字串型態的參數來決定，都沒有的話，會以數字型態來處理，否則就以字串型態
+A. 表達式中的運算子(operator)大多會取離他們較近的1~2個數值或者物件來計算
+
+
+B. 看先被處理的資料所擁有的型態以及內容是什麼？ 若取到的資料擁有字串型態，整體就以字串來做處理，
+C. 數值運算子處理的優先權，括號優先權最大，其次是乘除，再來就是加減
+
+其內容若能在數值系統表達數字的話，則會被看待為數字型態，否則就依照有沒有字串型態的參數來決定，都沒有的話，會以數字型態來處理，否則就以字串型態
 
 note：
 a. 會在boolean系統視為true的內容，有非空內容的字串、非0的數字、非Null物件。
