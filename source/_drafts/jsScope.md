@@ -1,13 +1,38 @@
 ---
 title: JavaScript - Scope 簡介
-date: 2021-07-29 01:29:40
-tags: JavaScript
+tags: 
+- JavaScript
 ---
 
-在程式語言中，作用域(Scope)是指對應某種實體(entity)的名字(name)所能夠被合法辨識以及使用的範圍，其中實體是指的是某種記憶體區塊，而名字就是變數(variable)名稱，換言之，只要我們透過變數名稱就能操控代表記憶體區塊的實體。在這個簡介中，我們會談到作用域分為哪些以及如何宣告變數的作用域。
+在程式語言中，作用域(Scope)是指對應某種實體(entity)的名字(name)所能夠被合法辨識以及使用的範圍，其中實體是指的是某種記憶體區塊，而名字就是變數(variable)名稱，換言之，只要我們透過變數名稱就能操控代表記憶體區塊的實體。
 
 
-根據Scope的區分，我們可以區分為Root Scope、Parent Scope、Child Scope，預設上我們會在Root Scope進行宣告以及定義變數，在這裡所宣告的變數所擁有的作用域會是Root Scope或 Global Scope，而此變數會被稱之為全域變數，若跳脫Scope的範圍或者執行完畢時，其變數所佔用的記憶體會被釋放，若是在Root Scope內部產生另一個Scope並進行變數宣告的話，其額外產生的Scope對於Global Scope而言會是Local Scope，在那裡宣告的變數所擁有的Scope會只有那區塊，而不是Root Scope，而且該變數只要跳脫那Scope，它所佔用的記憶體空間會被釋放掉。
+## Scope 有哪些種類？
+
+Scope可以是由{}所構成的範圍以及未被{}所構成的範圍，他們的形式通常分別會是如下：首先是由{}所構成的範圍，這個範圍又被稱之為區塊(Block)
+
+```
+{
+    statement1 / expression 1
+               .
+               .
+               .
+}
+```
+另一個則是不用括號
+
+```
+statement1 / expression 1
+           .
+           .
+           .
+           .
+
+```
+
+預設上若沒特定添加{}的話，變數所在的作用域會是在不用括號的範圍，在這個範疇中會是全域作用域(Global Scope)，而括號構成的範圍只會出現全域作用域內部，對全域作用域而言，該範圍會是區域作用域(Local Scope)，其中根據全域作用域內包含區域作用域，我們可以將全域作用域成這個區域作用域的Parent Scope，而這區域作用域會是全域作用域的Child Scope，當然我們也可以在區域作用域內建立另一個區塊，形成另一種Parent-Child之間的作用域，若再進一步區分的話其中最根源或者包含所有區域作用域的作用域會是Root Scope，而這個作用域正是全域作用域。
+
+現在我們知道預設上我們會在Root Scope進行宣告以及定義變數，在這裡所宣告的變數所擁有的作用域會是Root Scope或 Global Scope，而此變數會被稱之為全域變數，若跳脫Scope的範圍或者執行完畢時，其變數所佔用的記憶體會被釋放，若是在Root Scope內部產生另一個Scope並進行變數宣告的話，其額外產生的Scope對於Global Scope而言會是Local Scope，在那裡宣告的變數所擁有的Scope會只有那區塊，而不是Root Scope，而且該變數只要跳脫那Scope，它所佔用的記憶體空間會被釋放掉。
 
 
 比如首先我們先替Root Scope取名為Scope A，其內部再產生一個名為Scope B的Scope，括號內部又宣告了一個變數b，其變數b的Scope只有括號內部而已。
@@ -24,7 +49,7 @@ let a = 10
 
 ```
 
-在這情況下的變數會被稱作為區域變數，且該Scope A對於由括號構成的Scope B而言，Scope A會是他的Parent Scope，而Scope B會是Scope A的Child Scope。若我們繼續沿用上面例子中的Scope B內產生另一個名為Scope C的Scope的話，也就是如下所示：
+在這情況下的變數b會被稱作為區域變數，且該Scope A對於由括號構成的Scope B而言，Scope A會是他的Parent Scope，而Scope B會是Scope A的Child Scope。若我們繼續沿用上面例子中的Scope B內產生另一個名為Scope C的Scope的話，也就是如下所示：
 
 ```
 // Scope A: Root Scope
@@ -67,9 +92,9 @@ let a = 10
 ```
 
 
-繼續沿用上個例子，當想在Root Scope去印出Scope C下的變數或者 Scope B的變數時，我們有兩種選擇方式：a. 在Scope B前寫印變數的程式、b. 在Scope B後寫出印變數的程式
+繼續沿用上個例子，當想在Root Scope去印出Scope C下的變數或者 Scope B的變數時，在那Scope範疇下，只能有兩種選擇方式：a. 在Scope B前寫印變數的程式、b. 在Scope B後寫出印變數的程式，這兩種選擇方式分別如下所示：
 
-a. 在Scope B前寫印變數的程式
+a. 在Scope B前寫印變數的程式：
 
 ```
 // Scope A: Root Scope
@@ -88,7 +113,7 @@ console.log(c)
 
 ```
 
-b. 在Scope B後寫出印變數的程式
+b. 在Scope B後寫出印變數的程式：
 
 
 ```
@@ -108,7 +133,7 @@ console.log(b)
 console.log(c)
 ```
 
-但這兩種方式皆無法正常印出變數b和變數c，a方式是因爲Scope根本還沒被產生，所以本來就印不出來，而b方式則是因爲Scope內的所有變數皆被釋放，所以也就跟著印不出來，同樣的概念也可以放在只考慮Scope B和 Scope C這兩者上，換言之，沒辦法再Parent Scope沒存取Child Scope以及其Scope內部的Scope下的變數。
+但這兩種方式皆無法正常印出變數b和變數c，a方式是因爲Scope根本還沒被產生，所以本來就印不出來，而b方式則是因爲Scope內的所有變數皆被釋放，所以也就跟著印不出來，同樣的概念也可以放在只考慮Scope B和 Scope C這兩者上，將他們兩者換成Parent Scope和Child Scope，當然最後結果會是沒辦法在Parent Scope存取到Child Scope以及其Scope內部的變數。
 
 
 同等的，若我們想要在Scope B印出Parent Scope的變數 a，我們會因為Parent Scope的變數a還存在而能夠印出來。
@@ -119,9 +144,9 @@ let a = 10
 
 
 { // Scope B: Child Scope of Root Scope
-    let b = 20 
-    
+    let b = 20  
     console.log(a)
+
     { // Scope C: Child Scope of Scope B
         let c = 30
     }
@@ -183,6 +208,9 @@ let a = 10
 1. 無法在Parent Scope存取Child Scope所定義的變數。
 2. Child Scope能夠因為事先宣告的關係而能夠存取位於Parent Scope的變數。
 3. 多個在同一個Parent Scope下的Child Scope是無法存取彼此間的變數。
+
+
+
 
 
 ## Root Scope
