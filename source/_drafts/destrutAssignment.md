@@ -71,3 +71,4 @@ let var2 = value2;
 
 
 https://javascript.info/destructuring-assignment
+https://pjchender.blogspot.com/2017/01/es6-object-destructuring.html
