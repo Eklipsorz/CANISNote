@@ -1,5 +1,5 @@
 ---
-title: [開發守則] - 函式所用到的參數建議數量
+title: 函式所用到的參數建議數量
 tags:
  - JavaScript
 categories:
