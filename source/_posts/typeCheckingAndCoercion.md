@@ -39,7 +39,16 @@ let value1 = var1/constant1 operator1 var2/constant2 ...... operator(N-1) varN/c
 var1/constant1 operator1 var2/constant2
 ```
 
-並且檢查var1/constant1 和var2/constant2哪一邊是字串，若有字串，整條表達式會以字串形式來進行並以字串來輸出，接著就是按照operator的性質來決定非字串的資料要如何隱性轉換。若是operator是能處理數字的加減乘除的話，那麼就是按照數字型別來隱性轉換，比如：
+並且檢查var1/constant1 和var2/constant2哪一邊是字串，若有字串，整條表達式會以字串形式來進行並以字串來輸出，接著就是按照operator的性質來決定非字串的資料要如何隱性轉換。
+
+
+#### 已知的隱性轉換規則
+
+加法比較特別一點，它會試著將用到的參數轉換成字串來串連或者以數值系統的加法來處理，目前已知的轉換規則是：
+1. 當兩邊皆能夠用數字表示時，會用數值系統的加法
+2. 若其中一邊為物件時，會用字串形式來串連
+
+若是operator是能處理數字的加減乘除的話，那麼就是按照數字型別來隱性轉換，比如：
 
 1. 100 + false 就會是
 
@@ -64,6 +73,8 @@ var1/constant1 operator1 var2/constant2
 ```
 99 + Number(true) + Number(undefined)  = 99 + 1 + NaN = NaN
 ```
+
+
 
 
 ### 避免隱性轉換的開發建議
