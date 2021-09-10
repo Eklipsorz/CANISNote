@@ -1,6 +1,7 @@
 ---
-title: U27note
+title: undefined vs. null
 tags:
+- JavaScript
 ---
 
 
