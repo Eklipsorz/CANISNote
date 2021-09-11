@@ -41,7 +41,7 @@ TCP Flag在這裡又稱之為Control Bit，共八個bit，每一個bit都各用�
 
 
 使用TCP/IP的主機在傳輸層對另一個支援TCP/IP的主機進行封包傳送前，必須先透過三向交握(Three-way Handshake)的過程建立連接(connection)來確保雙方在接下來的傳送是能夠得到保證。
-而這裡的連接根據RFC 793 Transmission Control Protocol 文檔中所定義的，連接是一種資訊綜合體，裡面包含著socket(雙方各自要求的URL和Port)、序號(sequence number)、窗口大小(window size)，而這個綜合體會用來初始化並維護往後傳送封包所需的資料，比如成功建立連接後，雙方會以綜合體所提供的資料來初始化自己封包的序號、窗口大小等相關資料。
+而這裡的連接根據[RFC 793 Transmission Control Protocol](https://datatracker.ietf.org/doc/html/rfc793) 文檔中所定義的，連接是一種資訊綜合體，裡面包含著socket(雙方各自要求的URL和Port)、序號(sequence number)、窗口大小(window size)，而這個綜合體會用來初始化並維護往後傳送封包所需的資料，比如成功建立連接後，雙方會以綜合體所提供的資料來初始化自己封包的序號、窗口大小等相關資料。
 
 
 
