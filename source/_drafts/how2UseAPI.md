@@ -57,17 +57,39 @@ Resqest Method是指Client端想要對目標資源做什麼樣請求，具體請
 檔案路徑：會以特定目錄/資料夾位置來當作根目錄，並且根據網址給定的路徑來從對方主機的根目錄下找指定檔案路徑。
 查詢/參數：這邊會被瀏覽器當作該頁面下的參數來使用，若參數多於1個時會搭配著&符號
 
+### Status Code
 
 
 
-而建立的網頁應用程式上，其API就會是Web API
+
+## Client 發送請求的具體方法
+使用Axios和Ajax
 
 
-而提供API服務的網站會附上文件來說明如何使用它們的API、其參數又是填什麼、會回傳什麼形式的結果，通常會以XML、JSON的形式來回傳結果
+Axios 是JavaScript第三方函式庫，其函式庫主要能幫助開發者透過它提供的方法來以Promise形式來對server端發送HTTP 請求或者 XMLHTTPRequest 請求，前後者會看開發者所處的client端是什麼，若是Node.js來發送請求，則請求會是HTTP請求形式，而若是從瀏覽器本身來發送請求，則請求會是XMLHTTPRequest。
 
+
+當client加入此第三方時，預設上會添增axios這物件，所以只需要對該物件下的方法來發送請求，比如說要對某伺服器發送GET請求，那麼寫法上會是：then、catch是JavaScript promise機制下的語法，當axios.get方法程
+
+```
+axios.get(URL)
+  .then(function (response) {
+    // handle success
+    console.log(response);
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+  .then(function () {
+    // always executed
+  });
+```
 
 
 
 
 Safe method - https://developer.mozilla.org/en-US/docs/Glossary/Safe/HTTP
 Idempotent method - https://tools.ietf.org/html/rfc7231#section-4.2.2
+
+Axios - https://github.com/axios/axios
