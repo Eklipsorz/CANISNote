@@ -11,7 +11,7 @@ tags:
 
 
 
-而通常每一個對外提供的Web API會由提供API的一方來定義能提供多少服務，如何使用API、API參數是什麼、何種形式來回應調用API的一方等規格，並將這些內容以說明文件形式存放在他們的伺服器來告訴使用者怎麼使用，不論形式、如何使用、參數是為何，回應調用API的client的形式會以XML或者JSON來進行
+而通常每一個對外提供的Web API會由提供API的一方來定義能提供多少服務，如何使用API、API參數是什麼、何種形式來回應調用API的一方等規格，並將這些內容以說明文件形式存放在他們的伺服器來告訴使用者怎麼使用，不論形式、如何使用、參數是為何，回應調用API的client的形式會以XML或者JSON來進行，不過由於JSON過於輕量、易於閱讀，使得網頁開發相關語言都支援JSON，主流上會以JSON為主。
 
 
 ## 當client 使用 API時
@@ -98,9 +98,54 @@ axios.get(URL)
 
 而當伺服器回應axios.get方法所發送的請求封包並不是正常接收成功的，那麼就會就會執行第二個，而函式內部的error物件是存放失敗資訊。
 
+### Ajax
 
+
+若出現以下訊息，表示本地端並沒有載入jQuery函式庫或者並沒有載入正確的函式庫，如 slim jQery並不支援$.ajax
+```
+$.ajax is not function
+```
+
+## JSON 
+JSON (JavaScript Object Notation) 是一種基於JavaScript的物件表示法而獨立衍生出的文字標記法，跟JavaScript沒什麼關係，該格式會如同JavaScript物件表示法那樣使用key-value pair來存放每一筆資料，key在這裏是指字串所構成的屬性，而value會是任意型別的值，能支援的型別有：數值、字串、布林值、物件、陣列(有序且只能放多個任意型別的值/物件)、空值(null)，整體JSON形式會是：
+
+```
+{
+  "key1": value1,
+  "key2": value2,
+        .
+        .
+        .
+  "keyN": valueN
+}
+```
+
+也可以存放陣列：使用[]來表示陣列，該陣列只能夠存放多個值或者多個物件
+
+```
+{
+  "key1": value1,
+  "key2": value2,
+        .
+  "keyM: 
+  [
+    valueM1,
+    valueM2,
+       .
+       .
+  ]
+        .
+  "keyN": valueN
+}
+
+}
+
+```
+
+而另外，它的語法形式本身對於JavaScript來說就是一個物件，這個物件存放key1: value1 至 keyN: valueN這幾個key-value pair。
 
 ## 參考資料
 Safe method - https://developer.mozilla.org/en-US/docs/Glossary/Safe/HTTP
 Idempotent method - https://tools.ietf.org/html/rfc7231#section-4.2.2
 Axios - https://github.com/axios/axios
+JSON - https://ithelp.ithome.com.tw/m/articles/10222242
