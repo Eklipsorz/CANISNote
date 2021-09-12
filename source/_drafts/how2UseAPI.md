@@ -71,16 +71,19 @@ Status code則是以數字表示回應client請求的結果/狀態，數字分�
 使用Axios和Ajax
 
 
+
+### Axios
 Axios 是JavaScript第三方函式庫，其函式庫主要能幫助開發者透過它提供的方法來以Promise形式來對server端發送HTTP 請求或者 XMLHTTPRequest 請求，前後者會看開發者所處的client端是什麼，若是Node.js來發送請求，則請求會是HTTP請求形式，而若是從瀏覽器本身來發送請求，則請求會是XMLHTTPRequest。
 
 
-當client加入此第三方時，預設上會添增axios這物件，所以只需要對該物件下的方法來發送請求，比如說要對某伺服器發送GET請求，那麼寫法上會是：then、catch是JavaScript promise機制下的語法，當axios.get方法程
+當client加入此第三方時，預設上會添增axios這物件，所以只需要對該物件下的方法來發送請求，比如說要對某伺服器發送GET請求，那麼寫法上會是如下，then、catch是JavaScript promise機制下的語法，
 
 ```
 axios.get(URL)
   .then(function (response) {
     // handle success
     console.log(response);
+    console.log(response.data)
   })
   .catch(function (error) {
     // handle error
@@ -91,10 +94,13 @@ axios.get(URL)
   });
 ```
 
+當伺服器回應axios.get方法所發送的請求封包的status code是200，就執行第一個then，而函式內的response物件會存放伺服器回應封包的所有內容，其中response物件的data屬性會是Response Body的內容，且內容會以JSON或者XML格式來存放。
+
+而當伺服器回應axios.get方法所發送的請求封包並不是正常接收成功的，那麼就會就會執行第二個，而函式內部的error物件是存放失敗資訊。
 
 
 
+## 參考資料
 Safe method - https://developer.mozilla.org/en-US/docs/Glossary/Safe/HTTP
 Idempotent method - https://tools.ietf.org/html/rfc7231#section-4.2.2
-
 Axios - https://github.com/axios/axios
