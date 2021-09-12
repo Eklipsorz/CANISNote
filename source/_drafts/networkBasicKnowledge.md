@@ -66,9 +66,5 @@ TCP Flag在這裡又稱之為Control Bit，共八個bit，每一個bit都各用�
 
 
 
-### 
 
-
-
-
-
+https://hulitw.medium.com/learning-tcp-ip-http-via-sending-letter-5d3299203660

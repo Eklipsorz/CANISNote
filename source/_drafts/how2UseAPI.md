@@ -13,6 +13,21 @@ tags:
 
 而通常每一個對外提供的Web API會由提供API的一方來定義能提供多少服務，如何使用API、API參數是什麼、何種形式來回應調用API的一方等規格，並將這些內容以說明文件形式存放在他們的伺服器來告訴使用者怎麼使用，不論形式、如何使用、參數是為何，回應調用API的client的形式會以XML或者JSON來進行
 
+
+## 當client 使用 API時
+當client端想透過API去使用server端的某項服務時，client端會跟server端會先於TCP/IP中的三向交握中建立連結，之後client便會正式發送請求的封包給server端，而server端收到請求後便會回傳另一個封包來回應client。
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1631431354/blog/how2useAPI/client2server_rzjbgc.png)
+
+
+這些封包會是以TCP/IP 應用層形式而規劃出的http封包，而client端和server端這兩者的http封包內容皆不一樣，client端所建立的封包內容會有Request Method、Request URL、Request Headers、Message body
+
+
+server端所建立的封包內容會有Status code、Response Headers、Response Body
+
+
+
+
 而建立的網頁應用程式上，其API就會是Web API
 
 
@@ -21,6 +36,8 @@ tags:
 
 
 
+
+https://medium.com/自稱好人大叔/tech-http-https-restful-8a2cc3dbbf92
 
 
 
