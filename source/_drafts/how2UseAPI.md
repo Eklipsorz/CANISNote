@@ -17,7 +17,11 @@ tags:
 ## 當client 使用 API時
 當client端想透過API去使用server端的某項服務時，client端會跟server端會先於TCP/IP中的三向交握中建立連結，之後client便會正式發送請求的封包給server端，而server端收到請求後便會回傳另一個封包來回應client。
 
+未增加封包後的版本：
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1631431354/blog/how2useAPI/client2server_rzjbgc.png)
+
+增加封包後的版本：
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1631433951/blog/how2useAPI/detail_client2server_k7juuv.png)
 
 
 這些封包會是以TCP/IP 應用層形式而規劃出的http封包，而client端和server端這兩者的http封包內容皆不一樣，client端所建立的封包內容會有Request Method、Request URL、Request Headers、Message body，Resqest Method是指想要對目標資源做什麼樣請求，Request URL是具體的目標資源，其URL是用來定義網路資源的位置格式，使用這個格式可以在網路上找到對應的目標資源，Request Headers則是進一步定義請求的設定、格式，最後一個Message body是該請求封包的具體詳細請求內容。
@@ -26,10 +30,18 @@ tags:
 server端所建立的封包內容會有Status code、Response Headers、Response Body，Status code則是以數字表示回應client請求的結果/狀態，Response Headers則是進一步定義回應"請求"的設定、格式，而Response Body則是具體詳細的回應內容。
 
 
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1631433951/blog/how2useAPI/detail_client2server_k7juuv.png)
+### Resquest Method
+Resqest Method是指Client端想要對目標資源做什麼樣請求，具體請求有：
+1. GET: 主要向目標資源請求讀取某些資料
+2. POST: 本質上不屬於Idempotent請求，主要告訴對方我要傳東西給你，請看我在Message body儲存的內容來做更新或者新增。
+3. PATCH: 
+4. PUT: 本質上是屬於Idempotent請求，
+5. DELETE: 本質上是屬於Idempotent請求，會請求對方刪除某些資源。
 
 
+如果一個請求被重複發送好幾次，其最後結果會像是下達一個同種請求後的結果，該請求為Idempotent
 
+https://tools.ietf.org/html/rfc7231#section-4.2.2
 
 而建立的網頁應用程式上，其API就會是Web API
 
