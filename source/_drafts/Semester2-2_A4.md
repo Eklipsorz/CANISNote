@@ -58,9 +58,12 @@ tags:
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1631549632/blog/semester2-2/resultOfPre_acswhb.png)
 
 原文：
-
 The <pre> HTML element represents preformatted text which is to be presented exactly as written in the HTML file. The text is typically rendered using a non-proportional, or "monospaced, font. Whitespace inside this element is displayed as written.
 
+
+
+## trim 可以清掉首尾的空白
+當輸入"   "這字串，內容為3個空白時，可透過trim轉換成""
 
 
 
