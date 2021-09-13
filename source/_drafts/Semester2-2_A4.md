@@ -118,7 +118,7 @@ example1:
 
 
 ## css 變數宣告/使用
-1. 如同字面上的意思，可以透過CSS樣式表來宣告變數和使用變數
+1. 如同字面上的意思，可以透過CSS樣式表來宣告變數和使用變數，同時也允許JavaScript存取，代表其變數會存在CSSOM或者Rendering Tree(質疑？)
 2. 宣告變數的形式如下，selector是選擇器，其形式會放在選擇器內容中，而variableName是變數名稱，名稱前要加--，value是指派給variableName的內容，
 
 ```
@@ -200,6 +200,10 @@ div {
 [var()](https://developer.mozilla.org/en-US/docs/Web/CSS/var())
 [CSS Var](https://blog.logrocket.com/css-variables-scoping/)
 
+## 如何在使用者互動替換偽元素的樣式
+1. 使用var方法
+https://ithelp.ithome.com.tw/articles/10200426
+https://stackoverflow.com/questions/4481485/changing-css-pseudo-element-styles-via-javascript
 
 
 ## 其他資料：
