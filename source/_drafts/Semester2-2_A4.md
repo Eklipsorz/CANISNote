@@ -119,7 +119,7 @@ example1:
 
 ## css 變數宣告/使用
 1. 如同字面上的意思，可以透過CSS樣式表來宣告變數和使用變數
-2. 宣告變數：其中variableName是變數名稱，名稱前要加--，value是指派給variableName的內容，
+2. 宣告變數的形式如下，selector是選擇器，其形式會放在選擇器內容中，而variableName是變數名稱，名稱前要加--，value是指派給variableName的內容，
 
 ```
 selector {
@@ -130,3 +130,79 @@ selector {
 
 ```
 
+3. 使用變數的形式如下，var為css函式，其中variableName為要使用的變數名稱，必須用字串表示，而當變數取得失敗時，便以fallBackValue來表示，最後結果會是從變數那邊取的內容並給予propertyM
+
+```
+selector {
+
+  propertyM: var('--variableName', fallBackValue )
+}
+
+```
+
+4. 這些變數具有scope，和javascript一樣具有global和local，以選擇器對應的元件當作js中由括號
+構成的區塊或者區域，而被該元件包含的元件內容則是另一個被包含著的區塊或者，這是local區方法，而global則是一率是： :root會指向整份網頁檔案，也就是html selector
+```
+:root {
+
+}
+```
+
+區域的例子，分別為html和css檔案，其內容分別為如下
+
+css 檔案內容，其中body和div是選擇器名稱會分別對html檔案中的body和div這兩個標籤
+```
+body {
+    --bgColor: limegreen;
+}
+
+div {
+    background: var(--bgColor);
+}
+```
+
+html 檔案內容
+```
+<body>
+    <div>Div 1</div>
+    <div>Div 2</div>
+</body>
+```
+
+
+在css中我們宣告bgColor在body樣式表中，而使用該變數的元件是div，由於body先包含了div，所以我們可以用js的角度來看他們的scope:
+
+```
+{                               // 代表body元件
+  let bgColor = limegreen
+  {                             // 代表div元件
+      use bgColor
+  }
+
+}
+```
+在div元件中，我們可以如同javascript的scope原則來套用，其結果是可以正常使用body元件下宣告的bgColor變數內容。
+
+而若是兩者反著來呢？ html內容保持不變，但由body包含的div元件來宣告bgColor變數，但body元件無法正常存取其變數內容，因為宣告在該scope內會在body之前被釋放或者本來就不存在這變數。
+
+```
+body {
+    background: var(--bgColor);
+}
+
+div {
+    --bgColor: limegreen;
+}
+```
+
+
+[CSS Variables](https://w3c.hexschool.com/blog/21985acb)
+[var()](https://developer.mozilla.org/en-US/docs/Web/CSS/var())
+[CSS Var](https://blog.logrocket.com/css-variables-scoping/)
+
+
+
+## 其他資料：
+https://ithelp.ithome.com.tw/articles/10209328
+https://ithelp.ithome.com.tw/articles/10244631
+https://vuejs.org/v2/guide/render-function.html
