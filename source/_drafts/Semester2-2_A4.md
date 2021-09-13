@@ -206,6 +206,28 @@ https://ithelp.ithome.com.tw/articles/10200426
 https://stackoverflow.com/questions/4481485/changing-css-pseudo-element-styles-via-javascript
 
 
+## font-awesome圖示需要載入font-family
+awesome最新版本(5.x)使用的內容為"Font Awesome 5 Free"，較舊(4.x)版本得用"FontAwesome"
+
+
+5.x版本：
+```
+  .login::before {
+    font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f007";
+  }
+
+  .tps::before {
+    font-family: "Font Awesome 5 Free"; font-weight: 400; content: "\f1ea";
+  }
+```
+
+4.x版本：
+```
+selector {
+  font-family: "FontAwesome"; 
+}
+```
+
 ## 其他資料：
 https://ithelp.ithome.com.tw/articles/10209328
 https://ithelp.ithome.com.tw/articles/10244631
