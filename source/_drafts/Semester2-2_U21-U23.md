@@ -119,3 +119,35 @@ function onPanelClicked (event) {
 ## Dataset 是種物件
 1. 存放所有data-開頭的屬性和屬性值
 2. 一個 HTML 屬性上可以包含多個 data set 屬性
+
+## form的action屬性和method屬性
+1. form是由標籤(label)、輸入欄(input)、按鈕(button)所組成，
+2. action屬性是指定當form發生提交時，指定提交內容要傳到何處，例子：當提交時，會把資料傳至action_page.php當檔案的參數來處理
+
+```
+<form action="/action_page.php" method="get">
+  <label for="fname">First name:</label>
+  <input type="text" id="fname" name="fname"><br><br>
+  <label for="lname">Last name:</label>
+  <input type="text" id="lname" name="lname"><br><br>
+  <input type="submit" value="Submit">
+</form>
+```
+
+3. method 指定何種形式來傳提交方式，有GET和POST
+4. 提交事件的發生會是由form內部具有type=submit屬性值的元件來決定，而通常只要對那個元件進行點擊，就發生submit事件，而當發生事件時，event object指向的target會是整個表格，而非那實際上被點擊的元件。
+
+
+## 預設事件處理器
+1. 瀏覽器會預設一些事件處理器來對某些元件下的某些事件，其處理器內容也是由瀏覽器來決定
+2. 典型例子1: a元件的click事件，當點擊連結就會自動連向指定頁面
+3. 典型例子2: form元件的submit事件，當按下代表提交事件的元件時，不論內容如何或者能否傳到指定頁面，都會自動換頁，另外form
+
+
+## preventDefault()
+1. 是event object的方法，用來去掉event object對應元件所要做的預設處理器內容
+
+
+
+
+https://www.itread01.com/question/OG0xd3c=.html
