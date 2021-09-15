@@ -75,6 +75,11 @@ console.log(element.dataset.variable1.variable2)
 https://blog.csdn.net/lishimin1012/article/details/54425886
 
 
+## helper class 
+其classname直接對應單一且具體的樣式屬性，比如class=“mt-5”，就是上邊界和其他元素的距離保持5px，藉由這樣特定的classname可以直接在html開發上添加該屬性來調整樣式，而不需要特定從css檔案進行開發和修改
+
+
+
 
 ## Accessible Rich Internet Application (ARIA)
 
@@ -175,7 +180,48 @@ More
 
 ```
 
+## Bootstrap 中的grid system
+1. 以grid system為基礎，將網格區分為13個垂直線，所以最多會有12個直向網格，類似如下，其中x表示著12個網格
 
+```
+| x | x | x | x | x | x | x | x | x | x | x | x |
+```
+
+2. 若要使用grid system，得先宣告bootstrap下的container選擇器名稱，才能宣告grid container
+
+```
+<div class="container">
+
+</div>
+
+```
+
+3. 使用class="row" 和 class="column" 來定義一列和一欄(直向)，數量越多，代表列數或者欄數更多，比如：宣告兩列，第二列有兩欄
+
+```
+<div class="row">
+
+</div>
+
+<div class="row">
+
+      <div class="column">
+
+      </div>
+
+</div>
+
+```
+
+
+4. 使用class="col-*"來定義一個元件佔用多少網格，*為數字，範圍是1~12，若某元素定義col-6，代表其元素佔用6個網格
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1631683864/blog/temp/imageFromAC_c2ctta.png)
+
+5. 延續第四點，若class="col-size-*"，其中size為breakpoint，在視窗寬度滿足breakpoint時，*便是指定目前情況所要佔取的網格
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1631683805/blog/temp/col-size-_feycmx.png)
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1631683822/blog/temp/detail_col-size-_epxl38.png)
 
 
 ## Web Accessiblility 
@@ -185,3 +231,24 @@ More
 - https://developer.mozilla.org/zh-TW/docs/Learn/Accessibility/What_is_accessibility
 - https://blog.techbridge.cc/2019/10/13/web-accessibility-intro/
 - https://getbootstrap.com/docs/4.0/utilities/screenreaders/
+
+
+
+
+## html在vscode的開發簡寫
+
+若以下方形式來寫，首先第一個字串會被當作標籤，之後則以class來表示
+```
+tagname.var1.var2.var3..... 
+```
+比如：
+
+```
+button.btn.btn-primary.btn-show-movie 
+```
+
+這段會轉化成：
+
+```
+<button class=“btn btn-primary btn-show-movie”> </button>
+```
