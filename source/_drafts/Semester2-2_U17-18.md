@@ -73,3 +73,12 @@ console.log(element.dataset.variable1.variable2)
 
 參考資料：
 https://blog.csdn.net/lishimin1012/article/details/54425886
+
+
+
+## Accessible Rich Internet Application (ARIA)
+
+Accessible Rich Internet Application (ARIA) 是一組特定的標籤屬性，可藉由其標籤屬性幫助更多人去存取該網頁，比如説藉由標籤屬性值來為盲人提供語音的服務。
+
+1. 形式上會是aria-開屬性。
+2. 例子：在 aria-label 這個設定中，我們把這個功能的名稱定義為 Toggle navigation，當螢幕閱讀器使用語音閱讀你的網站時，就能告訴使用者「這個 button 的目的是 toggle navigation」。
