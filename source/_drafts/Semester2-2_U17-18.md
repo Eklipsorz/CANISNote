@@ -85,7 +85,15 @@ Accessible Rich Internet Application (ARIA) 是一組特定的標籤屬性，可
 
 
 ## inline forms
-Inline forms 是單行表單
+1. Inline forms 是單行表單
+2. bootstrap提供的樣式之一，其樣式名為form-inline
+
+
+## card
+1. card 是以卡片的形式來呈現
+2. bootstrap提供的樣式之一，其樣式名為card，該樣式下會有card-body和card-footer這兩個子樣式來分別定義卡片的body內容、footer的內容，前者為卡片的主要內容，後者會是卡片的底部內容
+
+
 
 
 ## sr-only
@@ -112,7 +120,7 @@ Inline forms 是單行表單
 
 例子：
 
-
+這邊 data-toggle 我們指定接下來要使用 modal 的形式，而 data-target 則定義了互動的目標元件是 #movie-modal：Modal 指的是互動視窗，當點擊之後便會跑出另一個視窗，視窗內容為#movie-modal對應的元件
 ```
 
 <button
