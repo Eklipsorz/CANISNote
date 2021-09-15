@@ -224,6 +224,9 @@ More
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1631683822/blog/temp/detail_col-size-_epxl38.png)
 
 
+Bootstrap 的 RWD 佈局裡一共有五個分界點，分別用 xs、sm、md、lg、xl 等前綴詞來表示，根據 Mobile First，這些分界點的 media queries 使用 min-width，如果沒有加上前綴詞，就會判定是 xs：在這裡使用.col-sm-*則是代表著在分界下使用多個欄位
+
+
 ## Web Accessiblility 
 1. 中文名叫：網頁親和力
 2. 定義網頁要被設計以及開發成讓更多障礙者(視力不好、耳朵不好、無法點擊、無法判別）能夠使用網頁的特性
