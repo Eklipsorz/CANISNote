@@ -78,7 +78,91 @@ https://blog.csdn.net/lishimin1012/article/details/54425886
 
 ## Accessible Rich Internet Application (ARIA)
 
-Accessible Rich Internet Application (ARIA) 是一組特定的標籤屬性，可藉由其標籤屬性幫助更多人去存取該網頁，比如説藉由標籤屬性值來為盲人提供語音的服務。
+Accessible Rich Internet Application (ARIA) 是一組特定的標籤屬性，可藉由其標籤屬性幫助更多人去存取該網頁，比如説藉由標籤屬性值來為盲人提供語音的服務，或者視力不好的人
 
 1. 形式上會是aria-開屬性。
 2. 例子：在 aria-label 這個設定中，我們把這個功能的名稱定義為 Toggle navigation，當螢幕閱讀器使用語音閱讀你的網站時，就能告訴使用者「這個 button 的目的是 toggle navigation」。
+
+
+## inline forms
+Inline forms 是單行表單
+
+
+## sr-only
+1. 它是class的選擇器之一，由bootstrap所提供。
+2. 用來定義包含的內容只能給screen reader來看，而screen reader是將文字轉化語音的應用程式
+
+
+
+## Pagination
+
+1. 定義：一種將整份內容分散至好幾頁的處理方式
+2. 在html中會被當作分頁器，並提供數字來當作目前顯示的頁數和可以瀏覽的頁數
+3. bootstrap把pagination當作class的樣式之一，class=“pagination”
+4. 它本身就是flexbox，所以可以使用flex的屬性值，比如justify-content-center
+
+
+
+## Modal
+1. 定義為互動視窗，是當觸發某件事件後而跑出來的視窗
+2. 若是使用bootstrap上的modal，則需要定義兩個元件，第一個元件是觸發視窗的元件，第二個元件為視窗
+3. 這兩者使用上，觸發視窗的元件a上必須在標籤內定義data-target屬性值，其值會是視窗的id屬性值，只要觸發元件a便能按照data-target來跑出視窗
+
+ 4. 通常會在元件a上存有data-toggle屬性值，這是bootstrap定義點擊後元件a的外觀是什麼樣
+
+例子：
+
+
+```
+
+<button
+class="btn btn-primary btn-show-movie"
+data-toggle="modal"
+data-target="#movie-modal"
+>
+More
+</button>
+
+
+    <!-- Movie Modal -->
+    <div
+      class="modal fade"
+      id="movie-modal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="movie-modal-title">Modal title</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body" id="movie-modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+```
