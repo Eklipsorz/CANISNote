@@ -174,3 +174,14 @@ More
 
 
 ```
+
+
+
+
+## Web Accessiblility 
+1. 中文名叫：網頁親和力
+2. 定義網頁要被設計以及開發成讓更多障礙者(視力不好、耳朵不好、無法點擊、無法判別）能夠使用網頁的特性
+3. 參考資料：
+- https://developer.mozilla.org/zh-TW/docs/Learn/Accessibility/What_is_accessibility
+- https://blog.techbridge.cc/2019/10/13/web-accessibility-intro/
+- https://getbootstrap.com/docs/4.0/utilities/screenreaders/
