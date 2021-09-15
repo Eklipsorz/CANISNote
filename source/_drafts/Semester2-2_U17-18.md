@@ -1,3 +1,9 @@
+---
+title: Semester2-2_U17-U18
+tags:
+---
+
+
 
 
 ## reduce 方法
@@ -225,6 +231,10 @@ More
 
 
 Bootstrap 的 RWD 佈局裡一共有五個分界點，分別用 xs、sm、md、lg、xl 等前綴詞來表示，根據 Mobile First，這些分界點的 media queries 使用 min-width，如果沒有加上前綴詞，就會判定是 xs：在這裡使用.col-sm-*則是代表著在分界下使用多個欄位
+
+參考資料:
+https://getbootstrap.com/docs/4.3/layout/grid/
+
 
 
 ## Web Accessiblility 
