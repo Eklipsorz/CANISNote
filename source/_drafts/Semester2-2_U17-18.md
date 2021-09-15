@@ -42,13 +42,34 @@ arr.reduce((var1, ...., varN) => do something)
 ## dataset
 1. 屬於html5語法
 2. 用來自訂標籤的屬性
-3. 可添加至html標籤內部當作其標籤的屬性來給js存取，其形式為data-*，而*只能填寫小寫字母、不能填入特殊符號和數字
-4. 
+3. 可添加至html標籤內部當作其標籤的屬性來給js存取，其形式為data-*，而*只能填寫小寫字母、不能填入特殊符號和數字，而屬性值可依照一般屬性值來定義
+4.  標籤自訂屬性的方式以使用方式為：
 
-比如data-id、data-product，
 
-3. 但連字號會被當作.，所以如果是data-id-test，只能在js上使用
-element.data.id.test
+Html標籤自訂屬性：
+```
+<element data-variable=“value”> context </element>
 
-4. 沒有大小寫之分，全都以小寫來看待，存取時注意
+```
+
+在JavaScript，由於該屬性會在DOM Tree出現，所以在JS可以直接得到其值，使用方式為對HTML元素節點使用其擁有的dataset屬性，
+該屬性會存放所有data-*的屬性，使用方式如下：
+
+```
+let element = document.querySelector(‘element’) 
+
+console.log(element.dataset.variable)
+
+```
+
+若*夾雜更多-連字號會在js當作句號的.
+
+```
+<element data-variable1-variable2=“value”> context </element>
+let element = document.querySelector(‘element’) 
+
+console.log(element.dataset.variable1.variable2)
+```
+
+參考資料：
 https://blog.csdn.net/lishimin1012/article/details/54425886
