@@ -61,7 +61,7 @@ https://codertw.com/前端開發/384983/
 
 
 ## 對於localStorage的操作
-1. 由於localStorage本身只能儲存key-value pair形式的字串，所以會利用本身符合key-value且皆以字串來代表的JSON格式來進行JS和localStorage之間的轉換。
+1. 由於localStorage本身只能儲存key-value pair形式的字串，所以會利用本身符合key-value pair形式且皆以字串來表示的JSON格式來進行JS和localStorage之間的轉換。
 2. 從JS的任意型別的資料轉換至JSON格式的字串，語法會是如下，value會是要轉換JSON格式的資料，會回傳JSON格式的字串
 ```
 JSON.stringify(value)
@@ -74,12 +74,24 @@ JSON.parse(text)
 
 4. 對localStorage進行新增/存入一個key-value pair形式的內容，語法為如下，key和value皆要以字串來表示，key代表屬性名稱，value會是代表對應key的屬性值。
 
+若value只是單一值的話，可以直接轉成字串傳入。
 ```
 localStorage.setItem(key, value)
 ```
 
-5.
+但若value使多值的話，就要以JSON格式的字串來傳入。
 
+
+5. 對localStorage進行特定屬性值的存取，其語法為如下，key要存取的屬性名稱，會回傳對應的屬性值，若key不存在會回傳null，另外若屬性值原本就是多值的話，其屬性值肯定是JSON格式的字串，要取出來讓JS正確使用的話，需轉化成JS原生型別/物件
+```
+localStorage.getItem(key)
+```
+
+6. 對localStorage進行特定屬性的移除，其語法為如下，key要移除的屬性名稱
+
+```
+localStorage.removeItem(key) 
+```
 
 ## C = A || B 
 可透過C = A || B 來減少if/else語法的增加，該運算符號會先執行A，若結果能被Boolean的隱性轉換下而成為true，則會停止，並把A內容指派給C，否則就繼續由B當C的指派內容，若兩者原本都是true的話，會優先選擇A來當C的指派內容
