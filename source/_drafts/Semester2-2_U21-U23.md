@@ -14,6 +14,33 @@ const INDEX_URL = BASE_URL + '/api/v1/movies/'
 const POSTER_URL = BASE_URL + '/posters/'
 ```
 
+## arrary.filter 方法
+1. 該方法為陣列所擁有的方法之一，用途是從陣列中的元素中篩選出符合某種條件的元素
+2. 只要開始執行，會先產生另一個空陣列b，形式為如下，function是篩選用的函式，而var1則是array的元素，filter會一次將一個在陣列的元素送至function，只要元素讓function回傳true，該元素就會被放入新陣列b，否則就不放，最後回傳結果新陣列b，也就是最一開始的空陣列b
+
+```
+array.filter(function(var1))
+```
+
+例子：
+
+```
+let numbers = [1, 2, 3, 4, 5, 6]
+function isLessThan3(number) {
+  return number < 3
+}
+console.log(numbers.filter(isLessThan3)) // [1,2] ，小於 3 的項目才會被保留
+```
+
+
+```
+let numbers = [1, 2, 3, 4, 5, 6]
+let newNumbers = numbers.filter(number => number < 3)
+console.log(newNumbers) // [1,2]
+
+```
+
+
 
 ## ...A運算式
 1. ... A為一元運算式，而A是可迭代物件，比如陣列、類陣列，通常這些物件都可以當陣列使用
@@ -119,6 +146,22 @@ function onPanelClicked (event) {
 ## Dataset 是種物件
 1. 存放所有data-開頭的屬性和屬性值
 2. 一個 HTML 屬性上可以包含多個 data set 屬性
+
+
+## modal-size 決定 modal 視窗大小
+1. 這裡提到的modal-size 和 modal皆為 bootstrap 框架的class
+2. modal-size只對modal下的modal-dialog類別有效，而modal-dialog是視窗本身，兩者必須同時在一個class中，比如：
+
+```
+<element class=“modal-size modal-dialog”>
+    context
+</element>
+```
+
+3. modal-size中的-size可填入none(不填)、-sm、-lg、-xl，每個選項都代表該視窗的最大寬度：
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1631765950/blog/temp/Class_jzxqka.png)
+
 
 
 
