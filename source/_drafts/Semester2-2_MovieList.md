@@ -43,10 +43,21 @@ localStorage.setItem('favoriteMovies', JSON.stringify(list))
 ```
 
 ## 當我們進入收藏頁面時，系統會做什麼
+在這邊的時序圖會用使用者、收藏頁面本身Favorite Website、瀏覽器額外提供的儲存空間localStorage，
 
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1631869745/blog/temp/favoriteHTMLLoadEvent_l69suc.png)
 
+當我們讀取該頁面時，該頁面會立刻從localStorage取得收藏清單並轉成JS能讀取的陣列，若取得不到的話，會是空陣列，
 
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1631867989/blog/temp/favoriteHTMLLoadEvent_ryjqw4.png)
+```
+const movies = JSON.parse(localStorage.getItem('favoriteMovies')) || []
+```
+
+接著在以該陣列的內容渲染頁面
+```
+renderMovieList(movies)
+```
+
 
 ## 當我們在收藏頁面按下x時，系統會做些什麼
 
