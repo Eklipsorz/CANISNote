@@ -15,7 +15,7 @@ tags:
 
 
 
-## 當我們在首頁按下+時，系統會做些什麼
+### 當我們在首頁按下+時，系統會做些什麼
 在這邊的時序圖會用使用者、+按鈕、顯示資料的區塊Data-Panel、瀏覽器額外提供的儲存空間localStorage，當我們點擊+按鈕時，便會觸發由button所產生的事件委派，而被委派的元件會是Data-Panel，同時也會傳button本身的節點當作其參數，而該節點上存有對應電影的id。
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1631868189/blog/temp/plusBtnClickedEvent_jadcab.png)
@@ -42,10 +42,10 @@ list.push(movie)
 localStorage.setItem('favoriteMovies', JSON.stringify(list))
 ```
 
-## 當我們進入收藏頁面時，系統會做什麼
+### 當我們進入收藏頁面時，系統會做什麼
 在這邊的時序圖會用使用者、收藏頁面本身Favorite Website、瀏覽器額外提供的儲存空間localStorage，
 
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1631869745/blog/temp/favoriteHTMLLoadEvent_l69suc.png)
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1631880445/blog/temp/favoriteLoadedEvent_oaatb0.png)
 
 當我們讀取該頁面時，該頁面會立刻從localStorage取得收藏清單並轉成JS能讀取的陣列，若取得不到的話，會是空陣列，
 
@@ -59,6 +59,29 @@ renderMovieList(movies)
 ```
 
 
-## 當我們在收藏頁面按下x時，系統會做些什麼
+### 當我們在收藏頁面按下x時，系統會做些什麼
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1631867989/blog/temp/removeBtnClickedEvent_h8dhc0.png)
+
+
+
+## 分頁器功能描述：
+1. 當要顯示的內容太多時，會讓整體的讀取效能變差，因此使用pagination 來將指定顯示項目分割成指定數量的項目之集合，並將這些集合轉化成頁數，第一頁代表著0~N-1個項目，第二頁代表著N ~ 2N-1 個項目，後面依此類推。
+2. 正是使用分頁器之前，會宣告每頁能放多少個項目，比如說以電影分頁來說的話，一頁會放12個電影
+```
+const MOVIES_PER_PAGE = 12
+```
+
+3. 分頁器開發主要有幾個注意要點：
+  - a123
+
+
+
+
+
+
+
+
+
+
+###
