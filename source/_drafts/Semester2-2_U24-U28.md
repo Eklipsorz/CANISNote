@@ -152,3 +152,48 @@ let variable = array.findIndex(function(element))
 ```
 const movie = movies.find(movie => movie.id === id)
 ```
+
+
+
+## 優良命名方式：
+
+1. 函式：藉由頁數來取得對應項目
+
+```
+function getMoviesByPage(page) {
+
+  const startItemIndex = (page - 1) * MOVIES_PER_PAGE
+  return movies.slice(startItemIndex, startItemIndex + MOVIES_PER_PAGE)
+
+}
+
+let items = getMoviesByPage(page)
+```
+
+
+2. 函式：根據資料內容來渲染主畫面
+
+```
+function rendeMovieList(data) {
+  // render something
+}
+
+renderMovieList(movies)  // or renderMovie(filteredMovies)
+```
+
+
+3. 函式：移除指定id的電影
+
+```
+function removieFavoriteMovie(id) {
+  // remove the movie
+}
+```
+
+4. 全域變數的命名方式：可以全部大寫
+
+```
+const MOVIES_PER_PAGE = 12
+```
+
+https://ithelp.ithome.com.tw/articles/10105993
