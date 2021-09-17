@@ -122,6 +122,43 @@ renderMovieList(getMoviesByPage(1))
 
 
 ### 若目前處在搜尋狀態時，顯示要以搜尋結果為主
+在這邊的時序圖會用使用者、搜尋用的輸入欄、搜尋用的提交按鈕、搜尋用的提交表單、分頁器、顯示資料的區塊(Data-Panel)，當我們在輸入欄輸入我們想找的電影名稱並按下提交按鈕時，會直接觸發表單的提交事件，接著該事件處理器內容會從輸入欄獲取值並放入keyword這變數，然後利用keyword來從movies裡找到符合的電影資料放入陣列filteredMovies，若陣列長度為0，就告訴使用者找不到，但若陣列長度大於0，就以filterMovies的資料來重新渲染頁數和當下所應該有的第一頁。
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1631888735/blog/temp/submitClickedEvent_lznhkp.png)
 
 
-![]()
+
+
+### 補充
+
+1. getMoviesByPage(page)，會回傳指定頁數的項目
+
+
+```
+function getMoviesByPage(page) {
+
+	const startPageIndex = (page - 1) * MOVIES_PER_PAGE
+
+	return movies.slice(startPageIndex, startPageIndex + MOVIES_PER_PAGE)
+
+}
+```
+
+
+2. renderPaginator會根據amount大小來渲染多少個頁數
+
+const paginator = document.querySelector(‘#paginator’)
+
+function renderPaginator(amount) {
+	
+	const numberOfPages = Math.ceil(amount / MOVIES_PER_PAGE)
+	let rawHTML = ‘’
+
+	for (let page = 1; page <= numberOfPages; page++) {
+		rawHTML += `
+			<li class="page-item"><a class="page-link" href=“#” data-page=${page}>${page}</a></li>
+		`
+	}
+
+	paginator.innerHTML = rawHTML
+}
