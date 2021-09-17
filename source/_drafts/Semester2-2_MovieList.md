@@ -72,16 +72,43 @@ renderMovieList(movies)
 const MOVIES_PER_PAGE = 12
 ```
 
-3. 分頁器開發主要有幾個注意要點：
-  - a123
+3. 分頁器開發主要有幾個注意要點，並以時序圖來表示
+  - 當前的網頁是否要以分頁來顯示以及其頁數
+  - 當點選分頁器時，會以點選的頁數來選特定項目
+  - 若目前處在搜尋狀態時，顯示要以搜尋結果為主
 
 
+### 當前的網頁是否要以分頁來顯示以及其頁數
+在這邊的時序圖會用使用者、首頁、分頁器、顯示資料的區塊Data-Panel，當我們讀取首頁時，系統會立即利用API來獲取所有電影資料並放入陣列Array中
+
+在這邊的時序圖會用使用者、+按鈕、顯示資料的區塊Data-Panel、瀏覽器額外提供的儲存空間localStorage，當我們點擊+按鈕時，便會觸發由button所產生的事件委派，而被委派的元件會是Data-Panel，同時也會傳button本身的節點當作其參數，而該節點上存有對應電影的id。
 
 
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1631885051/blog/temp/indexLoadedEvent_auohbx.png)
 
 
+，接著利用該陣列的元素數量amount來渲染分頁器的總頁數，
 
+```
+/* 渲染分頁器，根據項目數量amount來決定渲染多少頁 */
+function renderPaginator(amount) {
 
+  const numberOfPages = Math.ceil(amount / MOVIES_PER_PAGE)
+  let rawHTML = ''
 
+  for (let page = 1; page <= numberOfPages; page++) {
+    rawHTML += `
+			<li class="page-item"><a class="page-link" href="#" data-page=${page}>${page}</a></li>
+		`
+  }
 
-###
+  paginator.innerHTML = rawHTML
+
+}
+```
+
+最後在將資料區塊渲染成第一頁的特定項目，其中getMoviesByPage(1)會從movies取得第一頁的項目，然後再以那些項目來渲染
+
+```
+renderMovieList(getMoviesByPage(1))
+```
