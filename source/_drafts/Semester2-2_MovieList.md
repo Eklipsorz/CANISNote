@@ -1,0 +1,53 @@
+---
+title: Semester2-2_MovieList
+tags:
+---
+
+
+
+## 收藏功能描述：
+對某電影按下+之後，便會將該電影加入至收藏清單中，爾後點到收藏清單網頁時，便會以清單內容來渲染頁面，換言之，我們在那頁面上看到我們曾收藏的電影，在這頁面中，+按鈕會由x按鈕所代替，當我們按下x時，就會從收藏清單移除，接著重新渲染整個收藏的頁面。
+
+在這裡我們切分三個部分來畫UML上的時序圖 (Sequence Diagram)：
+1. 當我們在首頁按下+時，系統會做些什麼
+2. 當我們進入收藏頁面時，系統會做什麼
+3. 當我們在收藏頁面按下x時，系統會做些什麼
+
+
+
+## 當我們在首頁按下+時，系統會做些什麼
+在這邊的時序圖會用使用者、+按鈕、顯示資料的區塊Data-Panel、瀏覽器額外提供的儲存空間localStorage，當我們點擊+按鈕時，便會觸發由button所產生的事件委派，而被委派的元件會是Data-Panel，同時也會傳button本身的節點當作其參數，而該節點上存有對應電影的id。
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1631868189/blog/temp/plusBtnClickedEvent_jadcab.png)
+
+
+一開始，Data-Panel會先從localStorage取得最新的收藏資料，該收藏資料原本是以陣列的形式轉換成JSON格式字串存入localStorage，若沒有資料的話，就會拿到空陣列。
+
+```
+const array = JSON.parse(localStorage.getItem('favoriteMovies')) || []
+```
+
+接著會檢查陣列中是否存在button對應的電影ID，若存在的話，就會直接回傳錯誤訊息給使用者，也就是執行紅色部分
+```
+  if (array.some(item => item.id === id)) {
+    return alert('此電影已在收藏清單中')
+  }
+
+```
+但若不存在的話，則會執行藍色部分，內容會將對應ID放進陣列array中，並轉換成JSON格式的字串傳入localStorage
+```
+const movie = movies.find(movie => movie.id === id)
+
+list.push(movie)
+localStorage.setItem('favoriteMovies', JSON.stringify(list))
+```
+
+## 當我們進入收藏頁面時，系統會做什麼
+
+
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1631867989/blog/temp/favoriteHTMLLoadEvent_ryjqw4.png)
+
+## 當我們在收藏頁面按下x時，系統會做些什麼
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1631867989/blog/temp/removeBtnClickedEvent_h8dhc0.png)
