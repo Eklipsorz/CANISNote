@@ -79,15 +79,13 @@ const MOVIES_PER_PAGE = 12
 
 
 ### 當前的網頁是否要以分頁來顯示以及其頁數
-在這邊的時序圖會用使用者、首頁、分頁器、顯示資料的區塊Data-Panel，當我們讀取首頁時，系統會立即利用API來獲取所有電影資料並放入陣列Array中
-
-在這邊的時序圖會用使用者、+按鈕、顯示資料的區塊Data-Panel、瀏覽器額外提供的儲存空間localStorage，當我們點擊+按鈕時，便會觸發由button所產生的事件委派，而被委派的元件會是Data-Panel，同時也會傳button本身的節點當作其參數，而該節點上存有對應電影的id。
+在這邊的時序圖會用使用者、首頁、分頁器、顯示資料的區塊Data-Panel，當我們讀取首頁時，系統會立即利用API來獲取所有電影資料並放入陣列Array中，
 
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1631885051/blog/temp/indexLoadedEvent_auohbx.png)
 
 
-，接著利用該陣列的元素數量amount來渲染分頁器的總頁數，
+接著利用該陣列的元素數量amount來渲染分頁器的總頁數，
 
 ```
 /* 渲染分頁器，根據項目數量amount來決定渲染多少頁 */
@@ -112,3 +110,18 @@ function renderPaginator(amount) {
 ```
 renderMovieList(getMoviesByPage(1))
 ```
+
+
+### 當點選分頁器時，會以點選的頁數來選特定項目
+在這邊的時序圖會用使用者、首頁、分頁器、顯示資料的區塊Data-Panel，當我們點擊分頁器上的頁數時，系統會立刻將被點擊的頁數指派給currentPage這變數，並判斷目前filteredMovies的元素數量來判斷目前是否正處于搜尋狀態，若處於搜尋狀態的話，那麼movies會是fileredMovies，否則就是原本的movies本身。
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1631888199/blog/temp/paginatorClickedEvent_jwrbxt.png)
+
+不論是何種，最後都會依造第一頁來渲染電影。
+
+
+
+### 若目前處在搜尋狀態時，顯示要以搜尋結果為主
+
+
+![]()
