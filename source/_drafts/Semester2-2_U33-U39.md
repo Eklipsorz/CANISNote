@@ -4,6 +4,7 @@ tags:
 mathjax: true
 ---
 
+
 ## MVC (Model-View-Controller)
 1. 是一種軟體開發方法之一，將程式碼依照功能性來區分出三塊，分別為Model、View、Controller
 2. Model負責定義資料以及對資料的處理方法，View負責定義畫面顯示，而Controller則是負責與使用者互動的邏輯，也是應用程式收發 request/response 的核心
@@ -116,6 +117,10 @@ https://codepen.io/KuanLin/pen/QWWZvKY
 flex: flex-grow flex-shrink flex-basis;
 ```
 
+參考資料：
+https://zhuanlan.zhihu.com/p/39052660
+https://cythilya.github.io/2017/04/06/flexbox-advance/
+
 ## align-self
 1. CSS 屬性值，只能在flex元素下的子元素上增加其屬性以及屬性值
 2. 調整flex容器下的特定子元素之排列，如同align-items會以cross axis來調整，只是不一樣的地方在於align-self只會調整被設定的元素
@@ -156,3 +161,62 @@ selector {
 }
 ```
 
+
+## pseudo class
+1. 當元件發生特定狀態時，會產生並依照另一種不存在CSSOM的類別來渲染該狀態下的樣式，而這個類別卻像是一般類別那樣能夠正常發揮作用，換言之
+CSS而言，它並不存在的，但當特定狀態發生時就會產生其選擇器並依照其選擇器的樣式來修改該類別下的元件，這就是為啥稱作為偽類
+
+## :first-child
+1. 是一種偽類(pseudo-class)
+2. 形式上會是如下，它會先找到每一個容器下的第一個元素，接著再看看這些元件是否滿足selector，都滿足才以下面的類別來渲染樣式。
+
+```
+selector:first-child {
+  // some properties and their values
+}
+
+```
+
+
+例子： 
+
+
+CSS內容：
+```
+p:first-child {
+  background-color: yellow;
+}
+```
+
+HTML內容：
+```
+<p>This paragraph is the first child of its parent (body).</p>
+
+<h1>Welcome to My Homepage</h1>
+<p>This paragraph is not the first child of its parent.</p>
+
+<div>
+  <p>This paragraph is the first child of its parent (div).</p>
+  <p>This paragraph is not the first child of its parent.</p>
+</div>
+```
+
+
+它會從HTML檔案內容找到每一個容器下的第一個子元素，分別為body下的第一個子元素以及div容器下的第一個元素，接著再看看他們是否滿足selector所指定的，而selector要求的元件是p，這些子元素剛好也都是p，所以滿足並渲染成黃背景。
+
+```
+<p>This paragraph is the first child of its parent (body).</p>
+<p>This paragraph is the first child of its parent (div).</p>
+```
+
+
+## :last-child
+1. 是一種偽類(pseudo-class)
+2. 形式上會是如下，它會先找到每一個容器下的最後元素，接著再看看這些元件是否滿足selector，都滿足才以下面的類別來渲染樣式。
+
+```
+selector:last-child {
+  // some properties and their values
+}
+
+```
