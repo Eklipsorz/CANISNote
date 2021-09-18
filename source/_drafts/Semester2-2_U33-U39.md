@@ -1,6 +1,7 @@
 ---
 title: Semester2-2_U33-U39
 tags:
+mathjax: true
 ---
 
 ## flex-basis
@@ -17,9 +18,10 @@ flex-basis: number | auto
 
 ## flex-grow 
 1. CSS 屬性值，只能在flex元素下的子元素上增加其屬性以及屬性值，預設值為0
-2. 調整當flex 容器還有空間時，剩下的子元素是否佔滿剩下空間以及比例為何
-3. 其CSS
+2. 當一個flex容器放完子元素之後仍還有空間可以放置其他子元素，該屬性值會告訴系統這些子元素是否佔滿以及佔滿比例為何
+3. 在同一個容器下的子元素會按照以下公式來擴展自己在主軸上的大小：
 
+{% mathjax %}(\frac{\sqrt x}{y^3}){% endmathjax %}
 
 
 
