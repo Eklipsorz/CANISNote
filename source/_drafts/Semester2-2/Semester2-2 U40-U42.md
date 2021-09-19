@@ -97,7 +97,10 @@ let range = {
 
 
 
-
+參考資料：
+https://javascript.info/iterable#array-from
+https://www.geeksforgeeks.org/javascript-iterator/
+https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Iteration_protocols
 
 
 ## 若物件中的key值與函式名相同時

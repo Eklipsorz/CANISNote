@@ -87,23 +87,17 @@ The <pre> HTML element represents preformatted text which is to be presented exa
 ## for 屬性:
 1. 這是html語法，並且是label標籤上的屬性
 2. 功能為擁有該屬性的元件(含其內容)與哪個表單元件(含input元件)進行元件上的(內容)綁定
-3. 形式為如下，value會是某種表單元件，下達後該label元件會與指定表單元件進行綁定
+3. 形式為如下，value會是某種表單元件，下達後該label元件會與指定表單元件(如button、input)進行綁定
 
 ```
 <label for="value">
 ```
 
-example1:
+example1: 當點擊Email address:時，效果會像是點擊了它右邊的輸入欄
 
 ```
-<form>
-  <label for="male">Male</label>
-  <input type="radio" name="sex" id="male" />
-  <br />
-  <label for="female">Female</label>
-  <input type="radio" name="sex" id="female" />
-</form>
-
+<label for="emailadd">Email address: </label>
+<input type="email" name="emailadd" id="emailadd">
 ```
 
 原文：
@@ -118,7 +112,32 @@ example1:
 
 
 ## css 變數宣告/使用
-1. 如同字面上的意思，可以透過CSS樣式表來宣告變數和使用變數，同時也允許JavaScript存取，代表其變數會存在CSSOM或者Rendering Tree(質疑？)
+1. 如同字面上的意思，可以透過CSS樣式表來宣告變數和使用變數，同時也允許JavaScript存取，代表其變數會存在CSSOM或者Rendering Tree
+
+例子：在todolist.css中利用var來設定變數宣告和指派
+```
+.list__header {
+  /*    Variables       */
+  
+  --list__input-field-border-color: #ced4da;
+  --list__add-item-section--error-display: none;
+  --list__add-item-section-error-message-display: none;
+}
+
+
+.list__input-field {
+  
+  /*    Font or other   */
+  border: 1px solid var(--list__input-field-border-color)
+}
+```
+ 
+結果能在CSSOM找到對應的樣式(google DEV)
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1632059931/blog/temp/var1_in_CSSOM_ss4hdu.png)
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1632059931/blog/temp/var2_in_CSSOM_ehvinn.png)
+
+
 2. 宣告變數的形式如下，selector是選擇器，其形式會放在選擇器內容中，而variableName是變數名稱，名稱前要加--，value是指派給variableName的內容，
 
 ```
@@ -140,61 +159,65 @@ selector {
 
 ```
 
-4. 這些變數具有scope，和javascript一樣具有global和local，以選擇器對應的元件當作js中由括號
-構成的區塊或者區域，而被該元件包含的元件內容則是另一個被包含著的區塊或者，這是local區方法，而global則是一率是： :root會指向整份網頁檔案，也就是html selector
+4. 這些變數具有scope，和javascript的變數一樣具有global和local，css 的 global 變數則是一率都是:root選擇器(也稱之為html selector)下設定，該選擇器會指向整份網頁檔案，在這裡你可以將它想像成Global Scope，在這裏所有在同份檔案下的選擇器街能夠存取root選擇器內所定義的變數。
+
 ```
 :root {
 
 }
 ```
 
-區域的例子，分別為html和css檔案，其內容分別為如下
-
-css 檔案內容，其中body和div是選擇器名稱會分別對html檔案中的body和div這兩個標籤
-```
-body {
-    --bgColor: limegreen;
-}
-
-div {
-    background: var(--bgColor);
-}
-```
-
-html 檔案內容
-```
-<body>
-    <div>Div 1</div>
-    <div>Div 2</div>
-</body>
-```
-
-
-在css中我們宣告bgColor在body樣式表中，而使用該變數的元件是div，由於body先包含了div，所以我們可以用js的角度來看他們的scope:
+而local變數，則是看選擇器對應元件所包含或者被包含的狀況，假設有兩個選擇器分別對應element1和element2，而element1包含著element2，
 
 ```
-{                               // 代表body元件
-  let bgColor = limegreen
-  {                             // 代表div元件
-      use bgColor
+<element1>
+  <element2>context</element2>
+</element1>
+```
+系統會根據這兩者父子關係來構成scope，父元素內部會包含子元素構成的scope，子元素會被父元素的scope所包含著，整體會像是：
+
+```
+{                   // element1
+
+
+  {                 // element2
+      
   }
 
 }
-```
-在div元件中，我們可以如同javascript的scope原則來套用，其結果是可以正常使用body元件下宣告的bgColor變數內容。
-
-而若是兩者反著來呢？ html內容保持不變，但由body包含的div元件來宣告bgColor變數，但body元件無法正常存取其變數內容，因為宣告在該scope內會在body之前被釋放或者本來就不存在這變數。
 
 ```
-body {
-    background: var(--bgColor);
+
+每個scope之間都如同JS的scope規則那樣，當對應elemenet1的選擇器有設定變數a，而對應element2的選擇想用變數a，此時這兩者scope會像是JS的scope規則一樣，對應element2的選擇器可以利用scope來成功存取到vara的值，
+
+```
+{                   // element1
+  --bgColor: limegreen;
+
+  {                 // element2
+      background: var(--bgColor);
+  }
+
 }
 
-div {
-    --bgColor: limegreen;
-}
 ```
 
+如果今天換element2去宣告定義，而換element1去使用它宣告過的變數，這種情況element1並不是element2的子元素而不能夠獲取該變數，
+
+```
+{                   // element1
+  
+  background: var(--bgColor);
+  
+  {                 // element2
+      --bgColor: limegreen;
+  }
+
+}
+
+```
+
+總結一下，local變數只能夠讓對應元素下的子元素以及後代元素看到，其餘元素則無法獲取，而global變數相當於一個大範圍的local變數，而使用在同一份檔案下的選擇器皆能存取global變數
 
 [CSS Variables](https://w3c.hexschool.com/blog/21985acb)
 [var()](https://developer.mozilla.org/en-US/docs/Web/CSS/var())
