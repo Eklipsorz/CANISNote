@@ -5,6 +5,19 @@ mathjax: true
 ---
 
 
+## MVP (Minimum Viable Product)
+用最低的(開發)成本來設計和實現產品
+
+
+## 封裝(Encapsulation)
+1. 封裝的目的： 將繁複的處理合併成特定功能的函式並開放給外部使用，隱藏其內部的函式則只能透過該函式才能調用，防止其他程式碼透過存取而變動該實作或者變數，進而跑出預期外的結果
+2. 它可以帶來：
+ - 因為只有幾個函式才能呼叫內部分的函式，這樣子的區分會比較容易理解和維護
+ - 同時因為這點，可以藉由限制外人不得存取內部函式以及讓開放外部的函式不會輕易修改內部，而獲得程式碼的安全性
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1632032433/blog/temp/encapsulation_yv0bvf.png)
+
+
 ## MVC (Model-View-Controller)
 1. 是一種軟體開發方法之一，將程式碼依照功能性來區分出三塊，分別為Model、View、Controller
 2. Model負責定義資料以及對資料的處理方法，View負責定義畫面顯示，而Controller則是負責與使用者互動的邏輯，也是應用程式收發 request/response 的核心
