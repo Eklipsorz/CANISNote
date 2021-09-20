@@ -165,6 +165,32 @@ function getMoviesByPage(page) {
 
 
 
+當使用者在搜尋欄位輸入完畢且按下提交按鈕來觸發提交事件時，會以下面內容來執行，首先瀏覽器預設上有設定提交事件會如何處理，因此必須透過preventDefault將預設的事件內容清掉，接著再從輸入欄取值並從存放所有電影的陣列中尋找符合該值的電影，然後將符合的電影全都放入filteredMovies這個全域陣列，若該陣列長度為0的話，會顯示沒有符合條件的電影並不渲染目前的data-panel；若該陣列長度大於0的話，則以filteredMovies來渲染
+```
+/* 搜尋表單提交事件：內容 */
+function onSearchFormSubmitted(event) {
+
+  event.preventDefault()
+
+  const keyword = searchInput.value.trim().toLowerCase()
+
+
+  filteredMovies = movies.filter(movie => {
+    return movie.title.toLowerCase().includes(keyword)
+  })
+
+
+  if (!filteredMovies.length) {
+    alert('`您輸入的關鍵字：${keyword} 沒有符合條件的電影`')
+  }
+
+  // 渲染目前篩選的項目、分頁器
+  renderPaginator(filteredMovies.length)
+  renderMovieList(getMoviesByPage(1))
+
+}
+
+```
 
 ### 補充
 
