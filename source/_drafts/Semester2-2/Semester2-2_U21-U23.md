@@ -5,7 +5,7 @@ tags:
 
 
 ## 資料清除
-重新整理會由於檔案必須重新載入，載入前動態資料(經由互動產生)會被清掉，但只有rendering的話是不會清掉資料
+重新整理會由於檔案必須重新載入，當重新載入時，先前動態資料(經由互動產生)會被清掉，但只有rendering的話是不會清掉資料
 
 ## 透過JS來調用API的方式
 1. 當使用某個Server提供Web API時，開發時盡量把Server名、不同種類的API、參數以變數的形式來分割開來，會比較好維護
@@ -23,11 +23,11 @@ const POSTER_URL = BASE_URL + '/posters/'
 
 ## 搜尋過程
 1. 首先搜尋一定會具備著輸入欄來給使用者進行輸入，提交按鈕可以選擇不添加或者添加，但在這裡只單獨思考輸入欄就好
-2. 若只用輸入欄來讓使用者輸入搜尋的話，很有可能會是鍵盤按下enter才提交，那麼就對輸入欄設定鍵盤事件，當事件發生時，就便將輸入欄的目前字串拿過來當搜尋的關鍵字，並且對目前資料進行搜尋，將符合的資料放入另一個陣列中，再由這個陣列去重新渲染。
+2. 若只用輸入欄來讓使用者輸入搜尋的話，很有可能會是鍵盤按下enter才提交或者邊輸入邊搜尋，那麼就對輸入欄設定鍵盤事件，當事件發生時，就便將輸入欄的目前字串拿過來當搜尋的關鍵字，並且對目前資料進行搜尋，將符合的資料放入另一個陣列中，再由這個陣列去重新渲染。
 
 ## arrary.filter 方法
 1. 該方法為陣列所擁有的方法之一，用途是從陣列中的元素中篩選出符合某種條件的元素
-2. 只要開始執行，會先產生另一個空陣列b，形式為如下，function是篩選用的函式，而var1則是array的元素，filter會一次將一個在陣列的元素送至function，只要元素讓function回傳true，該元素就會被放入新陣列b，否則就不放，最後回傳結果新陣列b，也就是最一開始的空陣列b
+2. 只要開始執行，會先產生另一個空陣列b，形式為如下，function是篩選用的函式，而var1則是array的元素，filter會一次將一個在陣列的元素送至function，只要元素讓function回傳true，該元素就會被放入新陣列b，否則就不放，最後回傳結果陣列b，也就是最一開始的空陣列b
 
 ```
 array.filter(function(var1))
@@ -53,7 +53,7 @@ console.log(newNumbers) // [1,2]
 
 
 
-## ...A運算式
+## ...A運算式 (spread operator)
 1. ... A為一元運算式，而A是可迭代物件，比如陣列、類陣列，通常這些物件都可以當陣列使用
 2. 假使A存有a1-an這幾個元素，不管A物件存放他們形式如何，都會將他們轉換成(a1, a2, a3, ... ,an)
 
@@ -61,7 +61,8 @@ console.log(newNumbers) // [1,2]
 ```
 let array = [1, 2, 3, 4, 5]
 
-console.log(...array)         // equals to (1, 2, 3, 4, 5) and result is 1 2 3 4 5
+console.log(...array)         
+// equals to (1, 2, 3, 4, 5) and result is 1 2 3 4 5
 ```
 
 例子2:
@@ -92,8 +93,7 @@ movies.push(...numbers); //和方法二同樣意思
 
 
 例子：
-以我們的程式碼來說，雖然可以直接在 renderMovieList 函式中取到 movies 這個變數，但這裡我們選擇用參數的方式傳入來降低renderMovieList和movies之間的耦合性，因此，函式 renderMovieList 就不會被特定一組資料綁死，如果未來有其他地方需要做類似的 DOM 操作，只要改變傳入的參數就能重
-複利用這個函式。簡言之，我們會希望函式盡量不要依賴外部的資料，愈獨立愈好。
+以我們的程式碼來說，雖然可以直接在 renderMovieList 函式中取到 movies 這個變數，但這裡我們選擇用參數的方式傳入來降低renderMovieList和movies之間的耦合性，因此，函式 renderMovieList 就不會被特定一組資料綁死，如果未來有其他地方需要做類似的 DOM 操作，只要改變傳入的參數就能重複利用這個函式。簡言之，我們會希望函式盡量不要依賴外部的資料，愈獨立愈好。
 
 
 方式1：直接使用全域變數，讓renderMovie真的就是為了movies而存在，其他模組難以使用它
@@ -134,10 +134,12 @@ https://www.javatpoint.com/software-engineering-coupling-and-cohesion
 ## 匿名函式的壞處
 1. 除錯會無法顯示發出錯誤訊息的函式名稱
 2. 不好自行指定函式做些特定處理，比如對指定函式做記憶體釋放
-3. 將函式物件分隔開來，以作後續維護開發，
 
 
-接著函式命名方式會是表示panel被點擊時
+
+## 將函式物件分隔開來，以作後續維護開發
+當開發事件處理以及相關綁定時，可將函式物件分隔開來，以作後續維護開發，接著函式命名方式會是表示該元件被什麼東西觸發，比如一個面板被點擊，那麼代表事件處理器的函式將會是onPanelClicked()....。
+
 
 例子： 假設要綁定一個事件處理器至dataPanel上的點擊事件，那麼可以透過函式名來當參數，
 
@@ -192,7 +194,7 @@ function onPanelClicked (event) {
 
 ## form的action屬性和method屬性
 1. form是由標籤(label)、輸入欄(input)、按鈕(button)所組成，
-2. action屬性是指定當form發生提交時，指定提交內容要傳到何處，例子：當提交時，會把資料傳至action_page.php當檔案的參數來處理
+2. action屬性是指定當form發生提交時，指定提交內容要傳到何處，例子：當提交時，可設定action為/action_page.php，這樣它會把資料傳至action_page.php當檔案的參數來處理
 
 ```
 <form action="/action_page.php" method="get">
@@ -207,16 +209,20 @@ function onPanelClicked (event) {
 
 3. method 指定何種形式來傳提交方式，有GET和POST
 
-一、透過 POST 傳遞資料
+一、透過 POST 傳遞資料： 把表單資料放到http要求封包內部並將此封包傳遞至action所指定的地方。
 ```
 <form action="接收資料的 PHP 程式" method="post"></form>
 ```
 
-二、透過 GET 傳遞資料
+二、透過 GET 傳遞資料： 雖然GET本身就是讀取，但在這裡是提交表單的方法之一，會將表單內容以key/value pair這個形式放置URL，好讓action能夠透過URL收到資料
+
 ```
 <form action="接收資料的 PHP 程式" method="get"></form>
 ```
-4. 提交事件的發生會是由form內部具有type=submit屬性值的元件來決定，而通常只要對那個元件進行點擊，就發生submit事件，而當發生事件時，event object指向的target會是整個表格，而非那實際上被點擊的元件。
+參考資料：
+https://www.w3schools.com/tags/att_form_method.asp
+
+4. 提交事件的發生會是由form內部具有type=submit屬性值的元件來決定，而通常只要對那個元件進行點擊，就發生submit事件，而當發生事件時，event object指向的target會是整個表單，而非那實際上被點擊的元件。
 5. 若都正確設定action和method這兩個屬性，會將內容傳遞給指定位置，也就是action所指定的地方，若沒有設定action時，會自動導向回當前頁面
 
 ## preventDefault()
