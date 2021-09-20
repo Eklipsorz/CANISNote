@@ -3,19 +3,8 @@ title: Semester2-2_U24-U28
 tags:
 ---
 
-
-
-## 收藏：
-對某電影按下+之後，便將該電影添加至一個陣列中，接著再以該陣列內容重新渲染一次，讓使用者只看到事件後的渲染結果
-但若按下+的頁面和顯示最愛電影的頁面是不同的話，那麼陣列就必須多存在localstorage，來讓這兩個頁面都能存取該陣列來顯示，這裡會有幾種結果：
-
-
-
-
-
 ## 生存期(Lifetime)
 1. 通常會用來描述變數、函式、儲存空間還留在記憶體的時間
-
 
 
 ## 作用域(Scope)：
@@ -23,12 +12,12 @@ tags:
 
 
 ## localStorage
-1. 由瀏覽器額外提供的儲存空間，每個瀏覽器所提供的空間大一都不一，但都是至少5MB的儲存空間
+1. 由瀏覽器額外提供的儲存空間，每個瀏覽器所提供的空間都不同，但都是至少5MB的儲存空間
 2. local指的是該快取只能讓client端瀏覽器本身存取到，不會讓其他主機存取到
 3. 其空間用來存放key-value pair種類的內容，其中key代表著屬性的字串，而value則是代表著屬性值的字串
-4. 利用瀏覽器會先於網頁檔案而執行，其提供的儲存空間只要能被允許存許，每個檔案皆能存取該儲存空間下的屬性和屬性值，所以只要某個檔案A對這空間增加屬性和屬性值，另一個檔案B就能存取A替localStorage新增的屬性和屬性值。
+4. 利用瀏覽器會先於網頁檔案而執行，其提供的儲存空間只要能被允許存許，每個檔案皆能存取該儲存空間下的屬性和屬性值，所以只要某個檔案A對這空間增加屬性和屬性值，另一個檔案B就能存取A對localStorage所新增的屬性和屬性值。
 5. lifetime：理論性該儲存空間會一直存在記憶體一段時間，除非人為的記憶體釋放，否則會一直允許程式碼放資料進去，但放不下會報錯
-6. scope：只要在相同的協議、相同的主機名、相同的埠下，就能讀取/修改到同一份localStorage資料
+6. scope：只要在相同的網路協議(http/https)、相同的主機名、相同的埠下，就能讀取/修改到同一份localStorage資料
 7. 應用：應用於購物車、選定語言
 8. 可從chrome DEV : application->local storage   來讀取local storage的內容  
 
@@ -42,9 +31,6 @@ Web storage is per origin (per domain and protocol). All pages, from one origin,
 1. 是瀏覽器額外提供的儲存空間，該空間可存放資料
 2. lifetime: session 表示某種特定活動的時期，在這裡只要關掉視窗或者瀏覽器，就會直接釋放掉該視窗或者瀏覽器下的sessionStorage
 3. scope: 只要在相同的協議、相同的主機名、相同的埠下、同一個標籤(視窗)下，就能讀取/修改到同一份sessionStorage資料
-
-
-
 
 其他描述：
 生存期
@@ -80,11 +66,20 @@ localStorage.setItem(key, value)
 ```
 
 但若value使多值的話，就要以JSON格式的字串來傳入。
-
+```
+localStorage.setItem(key, JSON.stringify(value))
+```
 
 5. 對localStorage進行特定屬性值的存取，其語法為如下，key要存取的屬性名稱，會回傳對應的屬性值，若key不存在會回傳null，另外若屬性值原本就是多值的話，其屬性值肯定是JSON格式的字串，要取出來讓JS正確使用的話，需轉化成JS原生型別/物件
+
+若key對應的值是單一值：
 ```
 localStorage.getItem(key)
+```
+
+若key對應的值是JSON格式的字串：
+```
+JSON.parse(localStorage.getItem(key))
 ```
 
 6. 對localStorage進行特定屬性的移除，其語法為如下，key要移除的屬性名稱
@@ -108,7 +103,7 @@ const list = JSON.parse(localStorage.getItem('favoriteMovies')) || []
 
 ## find 方法
 1. 陣列的方法之一，會從陣列中尋找符合條件的第一個元素，找到會回傳該元素
-2. 形式為以下，function是用來判定陣列中的每個元素element，當元素element能在function成立就會立刻回傳並指派內容給variable
+2. 形式為以下，function是用來檢查陣列中的每個元素element是否為為想找的元素，當元素element能在function成立就會立刻回傳並指派內容給variable
 
 ```
 let array = [var1, var2, ..... , varN]
@@ -125,7 +120,7 @@ console.log(newNumber)                                    //3
 
 ## some 方法
 1. 陣列的方法之一，會從陣列中尋找符合條件的第一個元素，找到會回傳true，否則為false。
-2. 形式為以下，function是用來判定陣列中的每個元素element，當元素element能在function成立就會立刻回傳true(找到符合function/條件的元素)，否則就是false（找不到符合function/條件的元素)
+2. 形式為以下，function是用來檢查陣列中的每個元素element是否為為想找的元素，當元素element能在function成立就會立刻回傳true(找到符合function/條件的元素)，否則就是false（找不到符合function/條件的元素)
 
 ```
 let array = [var1, var2, ..... , varN]
@@ -138,7 +133,7 @@ let variable = array.some(function(element))
 
 ## findIndex 方法
 1. 陣列的方法之一，會從陣列中尋找符合條件的第一個元素，找到會回傳該元素所在的索引值，否則為-1
-2. 形式為以下，function是用來判定陣列中的每個元素element，當元素element能在function成立就會立刻回傳該元素所在的索引值。
+2. 形式為以下，function是用來檢查陣列中的每個元素element是否為為想找的元素，當元素element能在function成立就會立刻回傳該元素所在的索引值。
 
 ```
 let array = [var1, var2, ..... , varN]
@@ -190,7 +185,7 @@ function removieFavoriteMovie(id) {
 }
 ```
 
-4. 全域變數的命名方式：可以全部大寫
+4. 全域變數的命名方式：可以全部大寫，方便認出該變數是否為全域
 
 ```
 const MOVIES_PER_PAGE = 12
