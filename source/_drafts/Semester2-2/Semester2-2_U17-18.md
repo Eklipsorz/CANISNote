@@ -26,8 +26,9 @@ function 是指夾雜2-3個參數的函式物件，常見都為兩個，第一�
 ，第三次會是total = function(total, var3)，後面依此類推
 
 
-使用上有個小細節，若函式物件是箭頭函式，那麼若函式中沒有括號的話，可省略return，有加上括號的話，要添加return。
-使用括號的話：
+使用上有個小細節，若函式物件是箭頭函式且內部只有一行程式碼，可省略{}括號和return，否則就得全部增加
+
+內部程式碼多於一行：
 ```
 let arr = []
 
@@ -38,7 +39,7 @@ arr.reduce((var1, ...., varN) => {
 ```
 
 
-沒使用括號的例子：
+內部程式碼只有一行
 ```
 let arr = []
 
@@ -93,6 +94,20 @@ Accessible Rich Internet Application (ARIA) 是一組特定的標籤屬性，可
 
 1. 形式上會是aria-開屬性。
 2. 例子：在 aria-label 這個設定中，我們把這個功能的名稱定義為 Toggle navigation，當螢幕閱讀器使用語音閱讀你的網站時，就能告訴使用者「這個 button 的目的是 toggle navigation」。
+
+```  
+<button
+ class="navbar-toggler"
+ type="button"
+ data-toggle="collapse"
+ data-target="#navbarSupportedContent"
+ aria-controls="navbarSupportedContent"
+ aria-expanded="false"
+ aria-label="Toggle navigation"
+>
+
+
+```
 
 
 ## inline forms
@@ -214,6 +229,10 @@ More
       <div class="column">
 
       </div>
+      
+      <div class="column">
+
+      </div>
 
 </div>
 
@@ -230,7 +249,7 @@ More
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1631683822/blog/temp/detail_col-size-_epxl38.png)
 
 
-Bootstrap 的 RWD 佈局裡一共有五個分界點，分別用 xs、sm、md、lg、xl 等前綴詞來表示，根據 Mobile First，這些分界點的 media queries 使用 min-width，如果沒有加上前綴詞，就會判定是 xs：在這裡使用.col-sm-*則是代表著在分界下使用多個欄位
+Bootstrap 的 RWD 佈局裡一共有五個分界點，分別用 xs、sm、md、lg、xl 等前綴詞來表示，根據 Mobile First，這些分界點的 media queries 使用 max-width，如果沒有加上前綴詞，就會判定是 xs：在這裡使用.col-sm-*則是代表著在分界下使用多個欄位
 
 參考資料:
 https://getbootstrap.com/docs/4.3/layout/grid/
