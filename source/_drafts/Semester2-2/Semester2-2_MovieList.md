@@ -120,6 +120,43 @@ renderMovieList(getMoviesByPage(1))
 不論是何種，最後都會依造第一頁來渲染電影。
 
 
+當使用者點擊分頁器時，會觸發以下事件內容，由於是採用由父元素來接受頁數的點擊事件委派，因此該內容實際上會是包含頁數的父元素，在這裏會先判定目前點擊的元件是否為a標籤，若不是就不做後續處理，若是的話就擷取目前頁數，並以該頁數重新渲染目前data-panel內容
+```
+
+/* 分頁器點擊事件：當使用點選指定頁數時，就會依照指定頁數來印出對應項目 */
+function onPaginatorClicked(event) {
+
+  let currentPage = 0
+  const target = event.target
+
+  if (target.tagName !== 'A') {
+    return
+  }
+
+  currentPage = target.dataset.page
+  renderMovieList(getMoviesByPage(currentPage))
+
+
+}
+```
+
+判斷目前filteredMovies的元素數量來判斷目前是否正處于搜尋狀態是以下程式碼作為實作，首先會先將filteredMovies當成全域變數來使用，並且在渲染前一定會調用的函式
+getMoviesByPage中插入判定filteredMovies的長度是否大於0，若是的話，代表處理搜尋狀態接著就以filteredMovies來顯示data-panel，若不是的話，則用原本的未篩選的movies來顯示。
+
+```
+let filteredMovies = []
+
+/* 取得對應頁面的項目，並判定根據是否正在搜尋而變動(要渲染的)資料的來源處 */
+function getMoviesByPage(page) {
+
+  /* 當filteredMovie.length 等於0時就表示沒在進行搜尋，否則就代表正在搜尋 */
+  const data = filteredMovies.length ? filteredMovies : movies
+  const startPageIndex = (page - 1) * MOVIES_PER_PAGE
+  return data.slice(startPageIndex, startPageIndex + MOVIES_PER_PAGE)
+
+}
+```
+
 
 ### 若目前處在搜尋狀態時，顯示要以搜尋結果為主
 在這邊的時序圖會用使用者、搜尋用的輸入欄、搜尋用的提交按鈕、搜尋用的提交表單、分頁器、顯示資料的區塊(Data-Panel)，當我們在輸入欄輸入我們想找的電影名稱並按下提交按鈕時，會直接觸發表單的提交事件，接著該事件處理器內容會從輸入欄獲取值並放入keyword這變數，然後利用keyword來從movies裡找到符合的電影資料放入陣列filteredMovies，若陣列長度為0，就告訴使用者找不到，但若陣列長度大於0，就以filterMovies的資料來重新渲染頁數和當下所應該有的第一頁。
