@@ -92,4 +92,37 @@ element:diabled {
 
 
 
-##
+## CSS: attr方法
+1. 是CSS函式之一，其回傳值會被指定給CSS屬性。
+2. 可以從指定(HTML)標籤下所擁有的屬性獲取對應屬性值，並將其值代入至CSS屬性，當HTML的屬性變動時，其相關的CSS屬性值會跟著變動，形式為：attribute of tag on html是指html下標籤的屬性
+```
+selector {
+
+  property: attr(attribute of tag on html)
+
+}
+```
+3. 例子：
+
+首先我們可以先在某個標籤下指定一個屬性值，在這裏指定result-text屬性給HTML檔案，然後在CSS檔案中添加attr(result-text)，告訴系統它要從HTML檔案內容取出#808080，並將此值給予content這css屬性，另外可以在JS調用setAttribute來修改HTML檔案內容下的result-text屬性值，藉由這樣來連同更動CSS檔案的content屬性
+
+HTML檔案內容
+```
+<div class="col-12 d-flex justify-content-center show-hex-partition" id="result-textarea" result-text="#808080">
+```
+
+CSS檔案內容
+```
+selector {
+  content: attr(result-text);
+}
+```
+
+JS檔案內容：
+```
+resultTextArea.setAttribute('result-text', colorHex)
+```
+
+https://www.oxxostudio.tw/articles/201706/pseudo-element-3.html
+
+https://developer.mozilla.org/zh-TW/docs/Web/CSS/attr()
