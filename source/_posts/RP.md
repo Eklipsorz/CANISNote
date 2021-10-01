@@ -153,15 +153,9 @@ document.getElementsByTagName("h3")[0].innerHTML = "a123"
 在這個階段中會利用前面階段獲取的樹狀結構來計算網頁元件實際會在頁面上擺放的位置、大小以及如何擺放，計算完之後便會開始執行繪製，而繪製過程會開始依據渲染樹指定的樣式來對頁面上的pixel來呈現每個元件的真實面貌，比如背景顏色、背景圖片、邊框、輪廓等等，過程中會遍歷著渲染樹並對著指定元件在特定螢幕位置進行無數次(由render/瀏覽器所提供)paint的呼叫來實際達成元件的呈現。
 
 
-## 註解：
-1. DOM (Document Object Model)，一種讓程式語言方便操作網頁元素的介面，其形式是將每一個標籤和內容都轉化為一個物件，最後再根據網頁結構的parent-child關係來重新將這些元件以樹狀形式來結合成一個DOM Tree，樹狀的每一個節點皆為前面所述的物件。
-
-
-
-
 
 
 ## Reference
-
-1. 瀏覽器如何處理解析URL，https://dev.to/deepika_banoth/what-happens-when-i-type-a-url-in-browser-3i5o
-2. 什麼是Critical Rendering Path，https://www.geeksforgeeks.org/critical-rendering-path-flow/
+1. [瀏覽器如何處理解析URL](https://dev.to/deepika_banoth/what-happens-when-i-type-a-url-in-browser-3i5o)
+2. [什麼是Critical Rendering Path](https://www.geeksforgeeks.org/critical-rendering-path-flow/)
+3. [瀏覽器如何處理網頁](https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/#Painting)
