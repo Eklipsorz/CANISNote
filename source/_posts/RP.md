@@ -29,16 +29,28 @@ Rendering Path 是瀏覽器如何將網頁檔案轉化成網頁的處理路徑�
 
 不論流程會如何處理，最後結果只會有對應的IP和不存在對應IP的訊息，在這裡只探討前者，當瀏覽器已經得知對應IP是什麼，那麼使用者(瀏覽器)會再重新對該IP來要求伺服器回傳網頁的對應檔(包含了HTML檔案、CSS檔案、JavaScript檔案)給使用者的瀏覽器，而回傳檔案的形式並不會一口氣以一個完整檔案傳過去，而是以固定大小的封包(Packet)形式將原檔案切分成好幾等分傳給使用者的瀏覽器來處理。
 
-## When the browser receive 
-這個小節將會以HTML、CSS來獨立描述它們在被接收時，瀏覽器會有什麼樣的表現，主要會有HTML FILE、CSS FILE這個部份。
+## HTML 轉化成 DOM Tree
+當瀏覽器收到HTML檔案被切分出來的封包時，瀏覽器不會直接等待完整檔案被拼湊出來，而是邊收邊將收到的內容按照DOM形式來建立一個DOM節點，每一個節點都各代表一個獨立的內容或者對應標籤，當一個節點A對應原HTML檔案的標籤是在另一個節點B對應的標籤內部的話，那麼這個節點A會根據內部的深度來決定是否為節點B的子節點(Child Node)？還是為節點B的後代節點(Descendant Node)，比如說節點A對應的標籤是elementA，而節點B的標籤是elementB，若elementA還被其他元素包含著，那麼節點A就會是節點B的後代節點
+```
+<elementB>
+  <otherElement>
+      <elementA></elementA>
+  </otherElement>
+</elementB>
+```
 
-### HTML FILE to DOM Tree
-當瀏覽器收到HTML檔案被切分出來的封包時，瀏覽器不會直接等待完整檔案被拼湊出來，而是邊收邊將收到的內容按照DOM形式來建立一個DOM節點(註1)，每一個節點都各代表一個獨立的內容或者對應標籤，最後由這些節點按照HTML檔案所指示的巢狀結構來構成對應的樹狀結構，該樹狀結構被稱之為DOM Tree，拿下面的HTML程式碼來當例子的話：
+但若elementA沒被其他元素包含著，那麼節點A就會是節點B的子節點
+```
+<elementB>
+  <elementA></elementA>
+</elementB>
+```
+最後由這些節點的生成以及如何連接來構成一個樹狀結構，該樹狀結構被稱之為DOM Tree，拿下面的HTML程式碼來當例子的話：
 
 ```
 <html>
   <head>
- 	<link rel="stylesheet" href="style.css">
+ 	  <link rel="stylesheet" href="style.css">
   </head>
   
   <body>
@@ -48,11 +60,11 @@ Rendering Path 是瀏覽器如何將網頁檔案轉化成網頁的處理路徑�
   </body>
 </html>
 ```
-
-在解析的過程中，會被轉化為以下樹狀結構：
+在解析的過程中，會被轉化為以下樹狀結構，首先html標籤會先被瀏覽器擷取來建立一個獨立的DOM節點，接著再讀取到head標籤時，由於它是位於html標籤內部且沒其他標籤包含著，所以它會被設定成html標籤對應節點的子節點並且被html對應節點連接著，而link對應節點會因為這樣被設定成head標籤對應節點的子節點，而後body、h1、p、label也皆因為這樣而與其他節點進行連接，最後形成以下結果：
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629973153/blog/RenderingPath/domTreeExample_ep0cvp.png)
 
-### CSS FILE to CSSOM
+
+## CSS 轉化成 CSSOM Tree
 
 當瀏覽器收到CSS檔案被切分出來的封包時，瀏覽器會直接等待整個CSS檔案拼湊出來才開始解析，這是因為CSS屬性很容易被後續接收到的內容給覆蓋掉，甚至造成結構性的改變。當開始解析時，也會依據DOM的形式將CSS的標籤和內容獨立成節點來拼湊一個樹狀結構，而這個樹狀結構被稱之為CSSOM。
 
