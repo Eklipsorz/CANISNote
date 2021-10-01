@@ -9,12 +9,12 @@ date: 2021-08-27 00:01:22
 
 ---
 
-
-Rendering Path 是瀏覽器如何將網頁檔案轉化成網頁的處理路徑，其路徑包含了網路(Network)、HTML、CSS檔案轉化成兩顆獨立樹狀結構、兩顆樹狀結構合併成渲染樹(Render Tree)、版面配置(Layout)、繪製(Paint)，每個路徑之間關係會如同下圖所示那樣，首先會先從網路找到提供網頁的伺服器獲取對應網頁(由HTML、CSS)、當客戶端的瀏覽器一拿到這些檔案，便會將他們轉化為名為 DOM Tree 和 CSSOM Tree，接著再將兩顆樹合併成渲染樹，接著根據渲染樹和DOM Tree來配置網頁的每個元件的擺放位置，最後再用瀏覽器的繪製功能來對螢幕上的pixel進行處理，比如上色之類的。
+## 渲染路徑簡介
+Rendering Path 是瀏覽器如何將網頁檔案轉化成網頁的處理路徑，其路徑包含了網路(Network)、HTML、CSS檔案轉化成兩顆獨立樹狀結構、兩顆樹狀結構合併成渲染樹(Render Tree)、版面配置(Layout)、繪製(Paint)，每個路徑之間關係會如同下圖所示那樣，首先會先從網路找到提供網頁的伺服器獲取對應網頁(由HTML、CSS)、當客戶端的瀏覽器一拿到這些檔案，便會將他們轉化為名為 DOM Tree 和 CSSOM Tree，接著再將兩顆樹合併成渲染樹，接著根據渲染樹和DOM Tree來計算網頁上的每個元件的實際擺放位置以及大小，最後再用瀏覽器的繪製方法來完整呈現每一個元件的真實面貌，比如輪廓、顏色之類的。在本文會談論到路徑上會包含到的東西，但比較偏重於Network至Layout之間的東西，剩下將由後續的文章進行補充，因此而將本文歸類為(一)。
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629987931/blog/RenderingPath/Critical_Rendering_Path_ntcjvi.png)
 
-## Network
+## 網路
 
 當使用者開始透過URL來瀏覽網頁時，瀏覽器會先試著解析URL對應的IP是誰，唯有知道IP是哪個伺服器負責提供對應的網頁服務才能進行網頁的相關處理以及向誰發送"要求網頁檔案回傳過來"的請求。
 
@@ -95,7 +95,7 @@ label {
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629982746/blog/RenderingPath/cssomTreeExample_lbkboi.png)
 
 
-### JavaScript 可以在合併前進行元素的內容變更 
+### 產生DOM之後的JavaScript 
 
 在產生DOM和CSSOM之後，我們還可以透過JavaScript在Render Tree產生之前來變更DOM或者CSSOM的內容，假設一個HTML檔案內容為以下內容，後頭有個script包覆著的內容，其內容會是JavaScript的語法。
 
@@ -132,8 +132,8 @@ document.getElementsByTagName("h3")[0].innerHTML = "a123"
 
 若script部分程式碼是擺在h3元素定義之前的話，其script執行的結果會是無法改變h3元素內容。
 
-## Render Tree
-在經過解析而獲得DOM以及CSSOM之後，接著會根據兩者對應的標籤、類別、ID是否一樣來尋找同一個網頁元素進行合併，合併後的節點會以DOM節點的形式多增加一個子節點(如同下圖紅框中的節點)來表示父節點(網頁元素)要調整的樣式是為何。
+## 渲染樹
+在經過解析後從而獲得DOM以及CSSOM之後，接著會根據兩者對應的元件是否一樣來進行同元件在DOM和CSSOM的節點合併，合併後的節點會以DOM節點的形式多增加一個子節點(如同下圖紅框中的節點)來表示父節點(網頁元素)要調整的樣式是為何。
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629991053/blog/RenderingPath/newNode_renderTree_otmzal.png)
 
@@ -148,11 +148,9 @@ document.getElementsByTagName("h3")[0].innerHTML = "a123"
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1629992416/blog/RenderingPath/finalRenderTreeExample_sf7ylt.png)
 
-## Layout 
-在這個階段中會利用Render Tree的結果會根據實際畫面大小來決定每個元素要放在哪裡以及大小為何以此來構造出網頁上的基本架構。
 
-## Paint
-在這個階段中會基於Layout的架構，根據Render Tree的指示來對畫面上的pixel進行繪製，過程中會有無數次Draw 呼叫以及Rasterisation流程
+## 版面配置和繪製
+在這個階段中會利用前面階段獲取的樹狀結構來計算網頁元件實際會在頁面上擺放的位置、大小以及如何擺放，計算完之後便會開始執行繪製，而繪製過程會開始依據渲染樹指定的樣式來對頁面上的pixel來呈現每個元件的真實面貌，比如背景顏色、背景圖片、邊框、輪廓等等，過程中會遍歷著渲染樹並對著指定元件在特定螢幕位置進行無數次(由render/瀏覽器所提供)paint的呼叫來實際達成元件的呈現。
 
 
 ## 註解：
