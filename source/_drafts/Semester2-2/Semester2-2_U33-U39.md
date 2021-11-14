@@ -53,7 +53,7 @@ https://railsbook.tw/chapters/10-mvc.html
 4. 形式上會是以下，number可以填入比例或者數字，而auto則是依據對應元素上的box model來決定
 
 ```
-flex-basis: number | auto
+flex-basis: number | percent |auto 
 ```
 
 
