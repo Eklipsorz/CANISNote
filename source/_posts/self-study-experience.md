@@ -22,7 +22,8 @@ tags:
 </form>
 ```
 
-而伺服器當接收到該路由的請求，便會根據路由清單找尋合適的路由來做處理，而這個路由處理的內容如下，主要是根據使用者按下的刪除按鈕之ID來刪除對應的餐廳資料以及重新導向瀏覽所有餐廳的首頁，所以在不做任何處理的情況下，只要刪除按鈕被按下，就會被刪除並重新渲染，而提示視窗的發生必須發生在點擊刪除時才發生，且不能在按下確定之前就刪除餐廳
+而伺服器當接收到該路由的請求，便會根據路由清單找尋合適的路由來做處理，而這個路由處理的內容如下，主要是根據使用者按下的刪除按鈕之ID來刪除對應的餐廳資料以及重新導向瀏覽所有餐廳的首頁，所以在不做任何處理的情況下，只要刪除按鈕被按下，就會被刪除並重新渲染。
+
 
 ```
 // define route for deleting a restaurant
@@ -38,13 +39,88 @@ router.delete('/:id', (req, res) => {
 })
 ```
 
+而**提示視窗的發生必須發生在點擊刪除時才發生，且不能在使用者按下確定之前或者按下取消就刪除餐廳，必須等到使用者按下確定刪除才可刪除**，所以在這裡必須先取消掉表單的預設提交事件處理，讓它在發生提交事件的時候能夠在出現提示視窗的時候能夠不刪除，且等著使用者按下確定，在這裏我使用著sweetalert 2所提供的API來實現著提示視窗和能夠等著使用者按下確定的機制，並放置在表單的提交事件內部。
+
+```
+// fire a event to swal for showing alert model
+    Swal.fire({
+      title: `確定移除${restaurantName}嗎？`,
+      showDenyButton: true,
+      confirmButtonText: '確定移除',
+      denyButtonText: '取消移除',
+    }).then((result) => {
+
+      // If user click a button for confirming, it just send a request for deleting it
+      if (result.isConfirmed) {
+        Swal.fire('已移除', '', 'success')
+      } else if (result.isDenied) {
+        // If user click a button for cancelling, it just cancel execution of deleting it
+        Swal.fire('別擔心，我沒移除喔 :>', '', 'info')
+      }
+    })
+```
+
+而整體的表單事件會是如下：
+```
+ deleteForm.addEventListener('submit', (event) => {
+
+
+    const restaurantName = deleteForm.dataset.name
+
+    // fire a event to swal for showing alert model
+    Swal.fire({
+      title: `確定移除${restaurantName}嗎？`,
+      showDenyButton: true,
+      confirmButtonText: '確定移除',
+      denyButtonText: '取消移除',
+    }).then((result) => {
+
+      // If user click a button for confirming, it just send a request for deleting it
+      if (result.isConfirmed) {
+        Swal.fire('已移除', '', 'success')
+        // send a data to /restaurants/:id/delete via post method and redirect to /
+        deleteForm.submit()
+
+      } else if (result.isDenied) {
+        // If user click a button for cancelling, it just cancel execution of deleting it
+        Swal.fire('別擔心，我沒移除喔 :>', '', 'info')
+      }
+    })
+
+  })
+
+```
+
 ## 第一次出手與失敗
+在這裡為了解決以下問題，
 
+>提示視窗的發生必須發生在點擊刪除時才發生，且不能在使用者按下確定之前或者按下取消就刪除餐廳，必須等到使用者按下確定刪除才可刪除
 
+首先我從preventDefault和stopPropagation的角度來取消瀏覽器給予的預設提交事件處理，並將語法放在sweetalert的API之前，想先取消掉，結果真的如預期般的，當使用者按下刪除按鈕跑出視窗時，瀏覽器再也不會隨意
+提交資料和導向頁面，只是**問題轉變成我要如何透過語法自行提交資料**，好觸發伺服器對應路由。
+
+過程中，我是有做出一些傻事，比如將上述語法放入至swal的特定區塊(下面程式碼的最後兩行)，而這特定區塊是負責定義"被按下取消所要做的處理"，想說按下確定就按照原有預設的事件處理，而按下取消就取消掉好避免額外的刪除，但由於preventDefault這語法本身必須要在第一時間告知瀏覽器取消原有事件處理，若拖到告知的時間，就會使該語法的功用失效，而我是放在swal所建立的promise後的then，而這樣的放置勢必會拖到第一時間告知的時間，進而讓表單正常使用預設的事件處理
+
+```
+ Swal.fire({
+      title: `確定移除${restaurantName}嗎？`,
+      showDenyButton: true,
+      confirmButtonText: '確定移除',
+      denyButtonText: '取消移除',
+    }).then((result) => {
+
+      // If user click a button for confirming, it just send a request for deleting it
+      if (result.isConfirmed) {
+        Swal.fire('已移除', '', 'success')
+      } else if (result.isDenied) {
+        // If user click a button for cancelling, it just cancel execution of deleting it
+        Swal.fire('別擔心，我沒移除喔 :>', '', 'info')
+        event.preventDefault()  //  <- 放在這喔
+        event.stopPropagation() //  <- 放在這喔
+      }
+    })
+```
 ## 尋找與嘗試
-
-
-## 努力成果
 
 
 ## 回顧與發現
