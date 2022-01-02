@@ -11,9 +11,16 @@ tags:
 ## JavaScript 的執行緒
 JavaScript的出生是因應想要讓使用者對網頁內容進行某些互動來執行某些任務，甚至可以透過改變DOM來進一步改變網頁，其中透過DOM來改變網頁是它的最大特點，但DOM的節點本身在多個執行緒下的執行環境是一個很容易被改變且會發生預期外的結果或者使網頁無法正常，比如說有多個執行緒，每一個執行緒都想對同一個DOM節點做寫入、刪除、讀取的動作，若讓負責刪除的執行緒先執行，那麼剩餘做讀取、寫入的執行緒會因為找不到該節點而出錯。
 
-為了避免這樣子的問題發生，JavaScript 本身就被設定成只會有一個執行緒來執行任務且必須是個直譯語言，而在瀏覽器執行它的時候，其負責解析語言的元件只會建立執行一個主執行緒來負責執行JavaScript，同一個時間點只會有一個任務被執行。
+為了避免這樣子的問題發生，JavaScript 本身就被設定成只會有一個執行緒來執行任務，而在瀏覽器執行它的時候，其負責解析語言的元件只會建立執行一個主執行緒來負責解析並執行JavaScript本身，並從這個主執行緒來生成單一的執行緒來給予CPU執行，同一個時間點只會有一個任務被執行。
 
 當然這只是建立在JavaScript本身的限制，實際上來說執行環境(如瀏覽器、Node.js)會因應HTML5所提出的Web Worker標準而開放額外的API來讓JavaScript去調用並在執行環境上建立除了主執行緒以外的執行緒，而這些執行緒會受到主執行緒來控制，並且不能夠操作DOM節點，這樣子的提供不僅增加效能，也保證DOM節點會是單個執行緒(也就是主執行緒)來執行。
+
+* JavaScript之所以為直譯語言，是原本就為了盡可能讓開發者快速進行網頁上開發好拓展網景瀏覽器的市場，同時也盡可能減少編譯時所帶來的額外成本，但缺點就是語言會是弱型別且每一次執行都要重新解析並執行。
+
+* Main Thread 是瀏覽器底下的Renderer Process底下的Thread，該Process主要負責處理同一個網頁下的HTML、CSS、JavaScript，而Main Thread是主要包攬這些工程的thread，而其數量本身會是單個執行緒。
+
+* Web Worker 標準是為了盡可能減緩單執行緒所引發的blocking問題 - 前面的任務會因為等待或者執行關係而拖延到後面的任務，進而讓後面任務無法正常執行，解法就是允許JavaScript去額外產生Worker Thread去分擔這些任務，好讓Main Thread順利執行，同時間只允許Main Thread操作DOM節點，其他Worker Thread不得執行，這是為了滿足JavaScript的設計初衷 - 同時間不得有多個執行緒去對DOM節點做處理，甚至是同一個節點的處理。
+
 
 ## 電腦處理任務的方式
 
@@ -38,10 +45,11 @@ JavaScript的出生是因應想要讓使用者對網頁內容進行某些互動�
 ## JavaScript 如何處理任務
 首先電腦本身只能看懂由0和1所構成的機械碼，它不會明白JavaScript的語法在講些什麼，而當時設計者為了讓開發者能夠快速開發來強占瀏覽器的市場而捨棄較嚴謹的編譯語言，改由直譯語言，其中編譯語言是一種事先將程式的語法(偏易於人類看懂的語法)轉譯成機械能看懂的形式，並直接讓執行環境去執行的，但由於可以事先轉譯，基本會要求開發者寫出的程式碼語法要先滿足一定程度的規則才能成功轉譯成機械能看懂的形式，比如要求開發者告知每個資料和變數的資料型別是什麼。而直譯語言則是不用事先編譯成機械碼，而是透過一個程式X來一行一行邊讀取程式碼邊轉譯成機械碼來執行，而這個程式X會是解釋器，通常執行成本會比編譯語言來得高，但透過不煩瑣的規則來讓開發者能夠快速開發。
 
-實際上來說，JavaScript本身就實現著同步處理，瀏覽器會提供JavaScript解釋器(常以一個專門解析的JavaScript引擎來代表)以及讓它在瀏覽器建立一個Main Thread來滿足JavaScript的直譯和單一執行緒這兩個先決條件，當瀏覽器讀取JavaScript程式碼的時候，瀏覽器會先丟給JavaScript引擎去解析當前程式碼並轉譯成機械碼至Main Thread來執行，而執行方式就是將機械碼以另一個thread形式去丟給Scheduler給實體CPU執行。
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1636724367/blog/event/eventloop/simpleBrowserSystem_kt2jov.png)
+實際上來說，JavaScript本身就實現著同步處理，瀏覽器會提供一個Main Thread來負責解析並以JavaScript解釋器(常以一個專門解析的JavaScript引擎來代表)來生一個執行緒給予CPU的Scheduler來分配實際CPU去執行，進而滿足JavaScript的直譯和單一執行緒這兩個先決條件，而該Main Thread會是源自於主要負責同一個網頁的渲染和事件處理的Renderer Process，如解析畫面上的Render Tree、處理Layout、執行Paint等等
 
-在這裏由於瀏覽器本身就只有Main Thread這一個能夠執行JavaScript，而JavaScript本身是依照一行一行來讀取並轉譯執行，也就是說同一個時間內只會有一個任務(夾帶著轉譯後的JavaScript)能夠被Main Thread執行，而後一個任務(夾帶著轉譯後的另一個JavaScript)必須等它被Main Thread完成才能被執行，從這樣子來看，就是個典型的同步處理，只是Main Thread儼然對他們而言就是個實體CPU
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1641137948/blog/event/eventloop/simpleBrowserSystem_l1y2px.png)
+
+在這裏由於瀏覽器的Main Thread只會生成一個執行緒去執行，而JavaScript本身是依照一行一行來讀取並轉譯執行，也就是說同一個時間內只會有一個任務(夾帶著轉譯後的JavaScript)能夠被Main Thread執行，而後面的任務(夾帶著轉譯後的另一個JavaScript)則必須等前面的任務被CPU執行完成才能被執行，從這樣子來看，就是個典型的同步處理，而在這裡由Main Thread所生成出來的單個執行緒儼然對他們而言就是個實體CPU。
 
 ### 同步處理的常見問題 - Blocking
 根據同步處理的特性：
@@ -62,14 +70,18 @@ console.log(qux)
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1636733654/blog/event/eventloop/BlockingExample_z4gh1m.gif)
 
 ## Call Stack
-當遇到函式呼叫時，會先將目前呼叫的函式X紀錄下來並放進(Push)一個呼叫堆疊(Call Stack)，而當在目前函式X中遇到了return 或者 沒東西可讓函式X執行，就表示該函式X要回傳或者結束執行，此時就會從堆疊移出(Pop)最上面的函式X(也就是目前函式X)，而通常檔案本身也可以視作為一個大函式-main function，當瀏覽器執行這個檔案時就便是呼叫了大函式，
+當執行JavaScript檔案時，系統會根據Scope規則來建立較為抽象的執行環境(Execution Context)來概括並辨別該環境能有的變數、函式、狀態等資訊，而整份檔案會是個一個全域執行環境(Global Execution Context)，若遇到函式或者由括號建立的執行環境時，會是在全域執行環境下建立一個區域性執行環境(Local Execution Context)或者函式執行環境(Function Execution Context)，所有在這個區域性執行環境的變數和函式都只會在這個環境下存活並能夠被辨別以及執行。
 
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1636727784/blog/event/eventloop/CallStackDiagram_akoh7f.png)
+在這裡為了要清楚辨別全域執行環境和哪些區域執行環境先被執行，每當一執行JavaScript檔案，就先建立全域執行環境並推入(Push)Stack中，接著當這環境下有段會呼叫函式X時，會建立以函式X為主的區域性執行環境X來記錄，並且推入至Stack的最上面，而當在目前區域環境X中遇到了return語法 或者 沒東西可讓環境X繼續執行(存在)，就表示該環境X要回傳並釋放記憶體，此時就會從Stack移出(Pop)最上面的環境X(也就是目前執行環境X)。
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1641141910/blog/event/eventloop/CallStackDiagram_znytvk.png)
 
 
-而當大函式/main function執行完畢時，便也會從Call Stack移出它。
+而當該全域環境執行完畢時，便也會從Stack移出它。
 
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1636727969/blog/event/eventloop/popMainFunction_op58q2.png)
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1641142253/blog/event/eventloop/popGlobalExecutionContext_vzsf1o.png)
+
+* 在這裡，可
 
 ### Call Stack 例子
 在這裏我們建立三個函式分別為funct1()、funct2()、funct3()，然後在定義他們之後呼叫他們去執行來觀察他們與Call Stack之間發生什麼事情，範例程式碼如下：
@@ -117,20 +129,27 @@ funct1()
 
 ### 如何實現事件？
 
-在這裏會有三種方式來實現：
+在這裏的軟體Y和被監聽的元件之間會有二種方式來實現：
 1. pull (polling)：由軟體Y在固定時間內產生任務去詢問對應元件是否要產生事件/信號，若詢問結果是要產生，便直接執行對應的特定任務X，但詢問一直失敗很容易造成不必要的效能損益，尤其是關心的元件可能不止於1種，可能總加起來的數量會是N個，那麼負責詢問的任務數量在固定時間內也是N個。
-2. push：當事件發生時，由負責發送信號來源的元件主動通知軟體Y，要軟體Y處理事件，而在事件發生前，系統可以做自己的事情，而發生的當下就會以執行特定任務X來處理事件，隨後處理完系統便再回到當時處理前的工作狀態，但實際上來說這樣會把所有特定任務X的處理集中在軟體Y的主要執行緒上，而非由元件產生執行緒處理，這會使主要執行緒的效能逐漸變差。
-3. 軟體Y以同步去處理：軟體Y會保持等待，直到對應元件產生事件，便會執行對應的特定任務X，但這個方法很有可能把大部分的時間都耗在等待事件發生，而實際上那段時間若用上的話，卻能夠處理完後續任務。
+2. push：由發送信號的元件來通知軟體Y處理，在事件發生前，軟體Y可以做自己的事情，在這裡軟體Y可以事先告知元件當事件發生時該如何處理，或者一律選擇由軟體Y來處理事件。
 
-一般來說，軟體Y為了效率而可能會採用push這個異步處理來實現事件，甚至在當元件上的特定事件發生時，就會產生特定的執行緒來執行每個事件的特定任務，雖然效率上，可以藉由這樣而不把事件處理全給軟體Y的主要執行緒上，但實際上來說，若這些執行緒使用某些共用資源時，會產生一種名為Critical-Section Problem 或者 Race Condition，且由於事件對應的特定任務會因為事件的不可預知性而使這個問題更難解決，另外事件就算給予軟體Y主執行緒來執行，還是因爲共享資料的關係而不能保證這些執行緒不會有這些問題。
 
+一般來說，軟體Y為了效率而可能會採用push這個異步處理來實現事件，甚至在當元件上的特定事件發生時，就會產生特定的執行緒來執行每個事件的特定任務，雖然效率上，可以藉由這樣而不把事件處理全給軟體Y的主要執行緒上，但實際上來說，若這些執行緒彼此間共用相同資源時，會產生一種名為Critical-Section Problem 或者 Race Condition，且由於事件對應的特定任務會因為事件的不可預知性而使這個問題更難解決，另外事件就算給予軟體Y主執行緒來執行，還是因爲共享資料的關係而不能保證這些執行緒不會有這些問題。
+
+* push：原意為在不通知對方的情況下，先透過網路發送資訊至對方，在這裡是指特殊元件發送通知資訊至軟體或者某個特殊程式模組
+> to send information over the internet without receiving a request for it first
+
+* pull：透過主動的詢問或者搜尋來從網路上獲取資訊，在這裡是指軟體或者某個程式模組去從發送信號的元件詢問他是否發生事件或者發射信號
+> to get information from the internet, after asking or searching for it
 
 ## 事件會發生什麼問題
 
-不論是否為Critical-Section Problem 或者 Race Condition，執行緒本身是著共享同一份程序(Process)的資源並從中分出一個子功能來執行，所以共享資源是難以避免，而每一個要使用共用資源的執行緒肯定存在著存取共用資源的程式碼區塊，而這些區塊被稱之為Critical-Section，當有多個執行緒在這個區塊是存取(Access)同一個資源時，而存取可以是修改、刪除、讀取、寫入等一系列操作，這些執行緒很有可能因為彼此都想要存取同一個資源而使每個執行緒的最後執行結果變得不如預期，有些可能因為讀取到其他執行緒修改的值、也有些則是因為讀取到的資源被刪除了，而這種彼此競相存取/修改同一個資源的行為就叫做競爭情況(Race Condition)，此時發生該情況的Critical Section就稱之為Critical-Section Problem。
+不論是否為Critical-Section Problem 或者 Race Condition，執行緒本身是共享著同一份程序(Process)的資源並從中分出一個子功能來執行，所以共享資源是難以避免，而每一個要使用共用資源的執行緒肯定存在著存取共用資源的程式碼區塊，而這些區塊被稱之為Critical-Section，當有多個執行緒在這個區塊是存取(Access)同一個資源時，而存取可以是修改、刪除、讀取、寫入等一系列操作，這些執行緒很有可能因為彼此都想要存取同一個資源而使每個執行緒的最後執行結果變得不如預期，有些可能因為讀取到其他執行緒修改的值、也有些則是因為讀取到的資源被刪除了，而這種彼此競相存取/修改同一個資源的行為就叫做競爭情況(Race Condition)，此時發生該情況的Critical Section就稱之為Critical-Section Problem。
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1636791025/blog/event/eventloop/raceConditionDiag_vp78kk.png)
 
+* Critical section：程式碼中負責存取與其他任務共享的資源之程式碼區塊，而section正是指區塊
+* Race condition：源自於電路上兩個信號源彼此競爭誰出佔用唯一的輸出管道來進行輸出，在電腦科學裡，是指著多個執行緒彼此競爭誰先存取到同個共享資源。
 
 ### 問題例子
 假設說有一個任務1想要存取某個資源Y下的X值來處理自己的任務內容，而資源Y本身對於系統而言是可以共享存取的，所以任務1的Critical Section會是存取資源Y的X值之程式碼(如下)，首先會透過id來取得資源Y這個物件，然後透過其資源Y的getXValue來取得X值，預期這個任務1會拿到X=1來做處理，
@@ -190,7 +209,7 @@ while (lock) {}
 
 
 ### simple event loop
-event loop 是指著負責分發適當任務執行的流程迴圈，也就是會重複做相同分發任務執行，只是任務會隨著分發而有所不同，本身會運用一個佇列(Queue)、從佇列中挑出一個最前面的元素、挑出的元素只給一個執行緒來執行這三個因素來將原本設定為異步處理的任務轉換成以同步處理的任務，從而解決Critical Section Problem 以及 鎖帶來的Blocking問題，具體方式如下，每一次由事件觸發而衍生出事件處理任務皆放入任務佇列(Task Queue)，而負責轉交給Scheduler或者執行任務的執行緒只會有一個，當中會從佇列的最前面任務挑出來放入至執行緒去做執行或者分派給Scheduler去執行，當執行完之後便會挑選下一個在佇列的任務，直到清空。
+event loop 是指著負責分發適當任務執行的流程迴圈，也就是會重複做相同分發任務執行，只是任務會隨著分發而有所不同，本身會運用一個佇列(Queue)、從佇列中挑出一個最前面的元素、挑出的元素只給主執行緒來執行這三個因素來將原本設定為異步處理的任務轉換成以同步處理的任務，從而解決Critical Section Problem 以及 鎖帶來的阻塞問題，具體方式如下，每一次由事件觸發而衍生出事件處理任務皆放入任務佇列(Task Queue)，而負責轉交給Scheduler或者執行任務的執行緒只會有一個，當中會從佇列的最前面任務挑出來放入至主執行緒去做執行，接著分派給Scheduler去執行，當執行完之後便會挑選下一個在佇列的任務，直到清空。
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1636798774/blog/event/eventloop/simpleEventLoop_jdc87i.png)
 
@@ -254,8 +273,8 @@ elementX.addEventListener('click', function onElementXClicked(event) {
 
 
 ### JavaScript 的 Event Loop
-當瀏覽器按照event flow傳遞事件/信號的時候，若單純由JavaScript負責接收事件/信號與事件處理的話，會因爲只有執行環境(瀏覽器)為它提供的Main Thread只有一個而容易發生Blocking的現象，讓後續的任務無法繼續做。
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1636816028/blog/event/eventloop/baseBrowserModel_akh3kj.png)
+當瀏覽器按照event flow傳遞事件/信號的時候，若單純由JavaScript負責接收事件/信號與事件處理的話，會因爲在執行環境(瀏覽器)中的主執行緒只會產生一個執行緒執行而容易發生阻塞現象，讓後續的任務無法繼續做。
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1641050838/blog/event/eventloop/baseBrowserModel_dakiuw.png)
 
 因此瀏覽器為了補足這塊而提供一些Web API讓JavaScript能夠額外建立thread去處理接收事件/信號與事件處理，但這些thread本身並不夠直接執行這些事件處理，因為若由它處理就有可能違背JavaScript的設計初衷，比如只允許單個執行緒來對DOM節點做操作，必須讓這些thread將事件處理轉交給Main thread，由JavaScript引擎親自執行，但直接轉交又會打亂Main thread對於其他任務的執行，因此在這裏會引用event loop的分發概念來試著將事件處理轉交給Main thread，在這裏所採用的event loop架構會是上述提到的simple event loop，會建立一個Task Queue或者CallBack Queue(由於事件綁定的函式是屬於callback類型函式，而該Queue又是專門存放這類型，所以得名)來接收所有被觸發的事件處理，若Task Queue不為空的話，event loop會一直檢測Call Stack是否為空，接著等Call Stack為空時，便從Queue分發事件處理至Stack來執行。
 

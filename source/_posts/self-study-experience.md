@@ -64,7 +64,6 @@ router.delete('/:id', (req, res) => {
 ```
  deleteForm.addEventListener('submit', (event) => {
 
-
     const restaurantName = deleteForm.dataset.name
 
     // fire a event to swal for showing alert model
@@ -96,10 +95,9 @@ router.delete('/:id', (req, res) => {
 
 >提示視窗的發生必須發生在點擊刪除時才發生，且不能在使用者按下確定之前或者按下取消就刪除餐廳，必須等到使用者按下確定刪除才可刪除
 
-首先我從preventDefault和stopPropagation的角度來取消瀏覽器給予的預設提交事件處理，並將語法放在sweetalert的API之前，想先取消掉，結果真的如預期般的，當使用者按下刪除按鈕跑出視窗時，瀏覽器再也不會隨意
-提交資料和導向頁面，只是**問題轉變成我要如何透過語法自行提交資料**，好觸發伺服器對應路由。
+首先我從preventDefault和stopPropagation的角度來取消瀏覽器給予的預設提交事件處理，並將語法放在sweetalert的API之前，想先取消掉，結果真的如預期般的，當使用者按下刪除按鈕跑出視窗時，瀏覽器再也不會隨意提交資料和導向頁面，只是**問題轉變成我要如何透過語法自行提交資料**，好觸發伺服器對應路由。
 
-過程中，我是有做出一些傻事，比如將上述語法放入至swal的特定區塊(下面程式碼的最後兩行)，而這特定區塊是負責定義"被按下取消所要做的處理"，想說按下確定就按照原有預設的事件處理，而按下取消就取消掉好避免額外的刪除，但由於preventDefault這語法本身必須要在第一時間告知瀏覽器取消原有事件處理，若拖到告知的時間，就會使該語法的功用失效，而我是放在swal所建立的promise後的then，而這樣的放置勢必會拖到第一時間告知的時間，進而讓表單正常使用預設的事件處理
+過程中，我是有做出一些傻事，比如將上述語法放入至sweetalert的特定區塊(下面程式碼的最後兩行)，而這特定區塊是負責定義"被按下取消所要做的處理"，想說按下確定就按照原有預設的事件處理，而按下取消就取消掉好避免額外的刪除，但由於preventDefault這語法本身必須要在第一時間告知瀏覽器取消原有事件處理，若拖到告知的時間，就會使該語法的功用失效，而我是放在swal所建立的promise後的then，而這樣的放置勢必會拖到第一時間告知的時間，進而讓表單正常使用預設的事件處理
 
 ```
  Swal.fire({
@@ -121,6 +119,56 @@ router.delete('/:id', (req, res) => {
     })
 ```
 ## 尋找與嘗試
+後來想到表單在接受瀏覽器的解析後勢必會像物件那樣擁有屬性和方法，那時我就在想或許表單擁有著類似可以自己提交的功能，後來查閱了MDN和w3school，果不其然，表單的確有名為submit的方法可以讓使用者決定何時提交表單資料，
+```
+form.submit()
+```
+我將取消預設事件處理的程式碼放到sweetalert 2的API之前，然後在sweetalert的另一塊負責定義使用者按下確定的處理內容添加上述語法，整體表單提交事件處理的程式碼會是如下：
+
+```
+  deleteForm.addEventListener('submit', (event) => {
+
+    event.preventDefault()
+    event.stopPropagation()
+    const restaurantName = deleteForm.dataset.name
+
+    // fire a event to swal for showing alert model
+    Swal.fire({
+      title: `確定移除${restaurantName}嗎？`,
+      showDenyButton: true,
+      confirmButtonText: '確定移除',
+      denyButtonText: '取消移除',
+    }).then((result) => {
+
+      // If user click a button for confirming, it just send a request for deleting it
+      if (result.isConfirmed) {
+        Swal.fire('已移除', '', 'success')
+        // send a data to /restaurants/:id/delete via post method and redirect to /
+        deleteForm.submit()
+
+      } else if (result.isDenied) {
+        // If user click a button for cancelling, it just cancel execution of deleting it
+        Swal.fire('別擔心，我沒移除喔 :>', '', 'info')
+
+      }
+    })
+```
+
+修改後並做了測試來確定以下的事情是否成功，結果是成功的。
+
+> 提示視窗的發生必須發生在點擊刪除時才發生，且不能在使用者按下確定之前或者按下取消就刪除餐廳，必須等到使用者按下確定刪除才可刪除
+
+不過由於刪除表單不只一個，所以用上了以下語法來包覆著上面的語法，來讓每個餐廳的刪除按鈕都擁有相同的事件處理內容
+```
+const deleteForms = document.querySelectorAll('.delete-form')
 
 
+// add sumbit event to each form (button) for deleting
+// when occuring submit event, it just showing another alert model 
+// to remind user to make sure that each user really want to delete
+deleteForms.forEach(deleteForm => {
+    ///.... 
+})
+```
 ## 回顧與發現
+從結果來回顧過去所做的事情，雖然看似很簡單，但其實我花了不少時間去研究表單提交的機制以及有什麼樣的方法，只是在這裡不會太探討那些細節，我還去研究form在html語法下會有的屬性(attribute)，如onsubmit要放置return false，但不管如何，這些過程也幫助我理解表單這物件會有什麼方法能夠使用以及如何搭配著類似sweetalert2這樣子提示視窗來解決我原有的問題。
