@@ -17,7 +17,7 @@ JavaScript的出生是因應想要讓使用者對網頁內容進行某些互動�
 
 * JavaScript之所以為直譯語言，是原本就為了盡可能讓開發者快速進行網頁上開發好拓展網景瀏覽器的市場，同時也盡可能減少編譯時所帶來的額外成本，但缺點就是語言會是弱型別且每一次執行都要重新解析並執行。
 
-* Main Thread 是瀏覽器底下的Renderer Process底下的Thread，該Process主要負責處理同一個網頁下的HTML、CSS、JavaScript，而Main Thread是主要包攬這些工程的thread，而其數量本身會是單個執行緒。
+* Main Thread 是瀏覽器底下的Renderer Process底下的Thread，而Renderer Process主要是渲染引擎的執行實體，負責解析同一個網頁下的HTML、CSS並計算每個網頁元素的位置以及實際上的繪製、執行JavaScript程式碼，而Main Thread是主要是負責包攬這些工程的thread，主要是解析同一個網頁下的HTML、CSS並計算每個網頁元素的位置並生成對應的繪製指令給其他同為Process下的Thread進行繪製、執行JavaScript程式碼，而Main Thread的數量本身會是單個執行緒。
 
 * Web Worker 標準是為了盡可能減緩單執行緒所引發的blocking問題 - 前面的任務會因為等待或者執行關係而拖延到後面的任務，進而讓後面任務無法正常執行，解法就是允許JavaScript去額外產生Worker Thread去分擔這些任務，好讓Main Thread順利執行，同時間只允許Main Thread操作DOM節點，其他Worker Thread不得執行，這是為了滿足JavaScript的設計初衷 - 同時間不得有多個執行緒去對DOM節點做處理，甚至是同一個節點的處理。
 
@@ -45,7 +45,7 @@ JavaScript的出生是因應想要讓使用者對網頁內容進行某些互動�
 ## JavaScript 如何處理任務
 首先電腦本身只能看懂由0和1所構成的機械碼，它不會明白JavaScript的語法在講些什麼，而當時設計者為了讓開發者能夠快速開發來強占瀏覽器的市場而捨棄較嚴謹的編譯語言，改由直譯語言，其中編譯語言是一種事先將程式的語法(偏易於人類看懂的語法)轉譯成機械能看懂的形式，並直接讓執行環境去執行的，但由於可以事先轉譯，基本會要求開發者寫出的程式碼語法要先滿足一定程度的規則才能成功轉譯成機械能看懂的形式，比如要求開發者告知每個資料和變數的資料型別是什麼。而直譯語言則是不用事先編譯成機械碼，而是透過一個程式X來一行一行邊讀取程式碼邊轉譯成機械碼來執行，而這個程式X會是解釋器，通常執行成本會比編譯語言來得高，但透過不煩瑣的規則來讓開發者能夠快速開發。
 
-實際上來說，JavaScript本身就實現著同步處理，瀏覽器會提供一個Main Thread來負責解析並以JavaScript解釋器(常以一個專門解析的JavaScript引擎來代表)來生一個執行緒給予CPU的Scheduler來分配實際CPU去執行，進而滿足JavaScript的直譯和單一執行緒這兩個先決條件，而該Main Thread會是源自於主要負責同一個網頁的渲染和事件處理的Renderer Process，如解析畫面上的Render Tree、處理Layout、執行Paint等等
+實際上來說，JavaScript本身就實現著同步處理，瀏覽器會提供一個Main Thread來負責解析並以JavaScript解釋器(常以一個專門解析的JavaScript引擎來代表)來建立一個執行緒給予CPU的Scheduler來分配實際CPU去執行，進而滿足JavaScript的直譯和單一執行緒這兩個先決條件，而該Main Thread會是源自於主要負責同一個網頁的渲染和事件處理的Renderer Process，如將網頁解析成Render Tree、處理Layout、執行Paint等等
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1641137948/blog/event/eventloop/simpleBrowserSystem_l1y2px.png)
 
@@ -81,7 +81,7 @@ console.log(qux)
 
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1641142253/blog/event/eventloop/popGlobalExecutionContext_vzsf1o.png)
 
-* 在這裡，可
+* 在這裡，若要先執行JavaScript程式碼的話，都會先被系統放入JavaScript引擎所給予的call stack環境來給予引擎解析JS、執行、呼叫額外API。
 
 ### Call Stack 例子
 在這裏我們建立三個函式分別為funct1()、funct2()、funct3()，然後在定義他們之後呼叫他們去執行來觀察他們與Call Stack之間發生什麼事情，範例程式碼如下：
@@ -218,6 +218,8 @@ event loop 是指著負責分發適當任務執行的流程迴圈，也就是會
 
 而這樣子的處理也避免使用鎖以及鎖帶來的阻塞現象，當然也得要考量每一個被執行的任務是否本身就是個阻塞其他任務的任務。這方法本身效能會因受限於只有單執行緒能執行以及像鎖那樣無法完全避免Critical Section Problem帶來的不可預期之執行結果。
 
+* 這裡提到的主執行緒或者main thread並不是指Renderer Process下的Main Thread
+
 ### complex event loop
 為了進一步提升效能和緩解Critical Section Problem帶來的不可預期之執行結果，就額外添加多執行緒以及額外Queue來延遲真正造成不可預期的任務，在這裏由一個主要執行緒根據哪些任務是真正容易對共用資源造成不可預期的任務來分發至不同地方來執行：擁有多個執行緒的空間(Thread Pool)、暫緩執行用的空間，通常會是對某些內容進行寫入、刪除、變更的功能會被歸納成容易對共用資源造成不可預期的任務，讀取、修改某副本內容、沒涉及共用資源的功能則是歸納成較安全的任務(Thread-safe)。
 
@@ -235,6 +237,8 @@ Thread Pool本身是由固定數量的執行緒組成，平時會保持著可幫
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1636804544/blog/event/eventloop/queueOnEventLoop_ilrszi.png)
 
 整體來說，這個event loop架構會盡可能透過開放多執行緒讓任務們的執行效率提高以及藉由佇列來分離出一些很容易對共用資源造成不必要且不可預期的任務並放進另一個佇列等待時機在主執行緒執行。
+
+* 這裡提到的主執行緒或者main thread並不是指Renderer Process下的Main Thread
 
 ## JavaScript 的事件
 
@@ -272,32 +276,60 @@ elementX.addEventListener('click', function onElementXClicked(event) {
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1636879992/blog/event/currentPropagationPath_rj9x5j.png)
 
 
-### JavaScript 的 Event Loop
-當瀏覽器按照event flow傳遞事件/信號的時候，若單純由JavaScript負責接收事件/信號與事件處理的話，會因爲在執行環境(瀏覽器)中的主執行緒只會產生一個執行緒執行而容易發生阻塞現象，讓後續的任務無法繼續做。
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1641050838/blog/event/eventloop/baseBrowserModel_dakiuw.png)
+## JavaScript 上的 Event Loop
+當瀏覽器按照event flow傳遞事件/信號的時候，若單純由JavaScript負責接收事件/信號與事件處理的話，會因爲在(瀏覽器)Renderer Process中的主執行緒只會產生一個執行緒執行而容易發生阻塞現象，讓後續的任務無法繼續做，因此瀏覽器或者執行環境為了補足這塊而提供Web API讓JavaScript能夠額外建立worker thread去處理接收事件/信號與事件處理，隨後為了要讓主執行緒處理後續的處理結果，會將這些結果以及主執行緒事先給定好的處理方式封裝成任務至對應的任務佇列，主要的任務佇列有以下幾種，主要會按照使用的語法、是否較快執行、佔比是否較小、是否為渲染來分配。
+  - Mircotask Queue：如同其名，主要存放執行較快且資源佔比較小的任務，如Promise，主要會從Web API那邊接收任務
+  - Render Queue：如同其名，主要存放負責畫面渲染的任務，如計算每個網頁元素的佈置方式、大小等等，主要會從Web API那邊接收任務或者由其他任務或者自身負責的渲染業務。
+  - Marcotask Queue：如同其名，對比於Mircotask，主要會存放執行較慢且資源佔比較重的任務，如event、DOM，主要會從Web API那邊接收任務
 
-因此瀏覽器為了補足這塊而提供一些Web API讓JavaScript能夠額外建立thread去處理接收事件/信號與事件處理，但這些thread本身並不夠直接執行這些事件處理，因為若由它處理就有可能違背JavaScript的設計初衷，比如只允許單個執行緒來對DOM節點做操作，必須讓這些thread將事件處理轉交給Main thread，由JavaScript引擎親自執行，但直接轉交又會打亂Main thread對於其他任務的執行，因此在這裏會引用event loop的分發概念來試著將事件處理轉交給Main thread，在這裏所採用的event loop架構會是上述提到的simple event loop，會建立一個Task Queue或者CallBack Queue(由於事件綁定的函式是屬於callback類型函式，而該Queue又是專門存放這類型，所以得名)來接收所有被觸發的事件處理，若Task Queue不為空的話，event loop會一直檢測Call Stack是否為空，接著等Call Stack為空時，便從Queue分發事件處理至Stack來執行。
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1641308751/blog/event/eventloop/baseBrowserModel_valbif.png)
+
+除了這三個佇列以外，Call Stack會是JavaScript引擎所提供的堆疊，主要放著目前主執行緒在執行的JavaScript程式碼，當Call Stack為空時，就會透過event loop的機制-從佇列中取出任務分配至適合的地方來執行，接著睡眠等待下一個取出任務的週期發生，但在這裡會有三個佇列，考量到Marcotask和Mircotask本身會影響Render Task所處理的畫面以及他們的執行快慢，所以為了 **盡可能讓Render Task能夠先以最新畫面來渲染，會先讓最快執行的任務-Mircotask優先執行，接著Render Task在隨後執行，最後執行較慢的Marcotask 就放到後面** ，順序會是：
+  - 先挑Mircotask Queue的最前面任務並移出至Call Stack來給JavaScript引擎執行，當Mircotask Queue清空就挑下一個Queue
+  - 挑Render Queue的最前面任務並移出和轉換成對應的繪製指令給同種Process下的其他負責GUI渲染的執行緒來負責實際畫面渲染，當Render Queue清空就挑下一個Queue
+  - 挑Marcotask Queue的最前面任務並移出至Call Stack來給JavaScript引擎執行。
+
+* 除了Mircotask Queue、Render Queue、Marcotask Queue以外的佇列，其實還有比Mircotask更快更輕量的任務，該任務會放在名為nextTick Queue，在該佇列中的任務被稱之為tick task(tick 原文意旨時間極短的)，但在這裡為了展現主要會有的任務種類而只提出三種佇列。
+
+* 關於佇列被event loop挑宣的優先權會是：nextTick Queue 為第一，Mircotask Queue為第二，Render Queue為第三，Marcotask Queue為第四。
+
+* Micro vs. Marco ：前者形容輕量且小，後者形容較重且大，形容任務的話，Microtask 是指執行較快且資源佔比較小的任務，Marcotask 是指執行較慢且資源佔比較大的任務
+
+* JavaScript 程式碼主要區分為tick task、microtask、marcotask，不會因為事先放在call stack或者先執行就改變他們所具有的任務種類，比如原本為marcotask 的console.log先放在call stack執行，而不是以callback形式來執行，該任務還是因爲本身執行較慢且相較於其他任務，資源佔比較重，所以還是仍為marcotask
+
+* Macrotask 總是在 JS 代碼執行完成並且 Microtask Queue 清空之後執行
 
 
-在這裏我們從上述描述建構瀏覽器所提供的WebAPI、Task Queue以及JS本身的Call Stack、Main thread，首先當還沒有任何事件綁定和沒有事件的話，瀏覽器會繼續按照JavaScript的特性來一行又一行轉譯並放入Main Thread來執行，其中Call Stack也塞滿了一些函式以及目前所讀取的檔案本身-Main Function。
+### Event Loop 例子
 
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1636820736/blog/event/eventloop/eventLoopinJS_eftuh5.png)
+假設負責讀取內容的執行緒讀取到一個夾雜JavaScript的HTML檔案，若其JavaScript程式碼先於其他HTML元素出現，這時主執行緒就會將這些JavaScript程式碼包裝成任務或者環境在call stack執行，此時負責讀取內容的執行緒仍繼續讀取JavaScript之後的HTML程式碼，當它便把這些程式碼也包裝成任務放進主執行緒內部的Render Queue，這時call stack和Queue會是如下狀況：
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1641311954/blog/event/eventloop/EventLoopSimpleExampleStep1_gpndcm.png)
 
+當call stack一清空時，主執行緒就會按照佇列優先權來挑一個佇列清空，這時只有Render Queue是還有任務的，所以主執行緒就會透過event來挑該佇列的第一個任務並移出轉換成對應的繪製指令給其他負責實際渲染的執行緒去做渲染，第一個被移出之後，隨後再挑第二個渲染任務，一直到佇列為空：
 
-若JavaScript檔案中的程式碼包含以下並且讓瀏覽器讀取到時，這段程式碼會間接呼叫WebAPI中的DOM來將onElementXClicked當作是特定元件X的點擊事件所要做的處理，並建立額外Thread去負責管理每個元件的事件接收和事件處理。
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1641311955/blog/event/eventloop/EventLoopSimpleExampleStep2_uxukin.png)
+
+接著之後，若負責讀取內容的JavaScript檔案中的程式碼包含以下程式碼，這段程式碼會間接呼叫WebAPI中的DOM來將onElementXClicked當作是特定元件X的點擊事件所要做的處理，並建立額外Thread去負責監聽該特定元件的點擊事件和儲存對應的處理-onElementXClicked
 ```
 elementX.addEventListener('click', function onElementXClicked() {
   // do something
 })
 ```
 
-當特定元件X被點擊一次的時候，會將對應點擊事件的函式-onElementXClicked放到Task Queue，接著點第二次，就放入第二個相同函式，最後點第三次，就放第三個相同函式，
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1636821626/blog/event/eventloop/generateEventHandler_npw18g.png)
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1641312606/blog/event/eventloop/EventLoopSimpleExampleStep3_zcxjfz.png)
 
-這時會觸發event loop本身的檢測，它會檢查Call Stack是否為空，但Task Queue為空的時候，就不會特意檢查Call Stack，當Call Stack為空時，就便從Task Queue抽出第一個函式-onElementXClicked，執行完就換下一個任務，直到清空Task Queue
-![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1636821626/blog/event/eventloop/dispatchEventHandler_uibmen.png)
 
-### Event Loop 例子
+當特定元件X被點擊一次的時候，由於DOM的事件處理皆為Marcotask，所以負責監聽的Thread接收信號時就按照任務種類將對應的處理放在Marcotask Queue。
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1641312606/blog/event/eventloop/EventLoopSimpleExampleStep4_ogag3a.png)
+
+此時由於call stack仍為空的且只有Marcotask Queue，主執行緒就透過event loop來將放在Marcotask Queue的第一個任務移出至call stack來執行。
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1641312606/blog/event/eventloop/EventLoopSimpleExampleStep5_c11qvu.png)
+
+
+![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1641312977/blog/event/eventloop/EventLoopSimpleExampleStep6_lnsoiw.png)
+### 事件下的Event Loop 例子
 
 在這裏以HTML形式設定兩個按鈕元件，它們的id分別為testbtn1、testbtn2，而JavaScript則是為這兩個按鈕添加點擊事件，而對應的事件處理皆為onClick，接著我輪流點testbtn1、testbtn2，一直到點擊第五次，也就是點擊完testbtn1就停下了。
 
@@ -322,12 +354,14 @@ $.on('#testbtn2', 'click', function onClick() {
 
 
 ### setTimeout
-setTimeout 本身是瀏覽器的WebAPI所提供的定時器，當瀏覽器在JavaScript檔案讀取到以下格式時，便會呼叫WebAPI下的setTimeout來執行，此時瀏覽器會建立一個thread去按照secs秒數來等待，等到時間到的時候會把指定函式-funct 放入至Task Queue或者CallBack Queue，而指定函式會跟其他上述提到的事件處理函式一樣，等到Call Stack為空才會將Queue的funct移到Main Thread來執行，而Call Stack會放上funct。 
+setTimeout 本身是瀏覽器的WebAPI所提供的定時器，當瀏覽器在JavaScript檔案讀取到以下格式時，便會呼叫WebAPI下的setTimeout來執行，此時瀏覽器會建立一個thread去按照secs秒數來等待，等到時間到的時候會把指定函式-funct 放入至Marcotask Queue或者CallBack Queue，而指定函式會跟其他上述提到的事件處理函式一樣，等到Call Stack為空才會將Queue的funct移到Main Thread來執行，而Call Stack會放上funct。 
 ```
 setTimeout(function funct() {
     // do something
 }, secs)
 ```
+
+* 在這裡的CallBack Queue會是Marcotask Queue
 
 ### setTimeout 例子1
 設定一個等待1秒才執行的計時器，首先當瀏覽器的JavaScript引擎讀取到setTimeout和1000時，就便呼叫瀏覽器的WebAPI-setTimeout來建立一個thread來實現計時器，一開始會按照1000ms來等待，接著時間一到就把對應的函式-timeout放入至Callback Queue，然後等到Call Stack為空時，就把Queue中的timeout函式放到Main Thread來執行。
@@ -341,7 +375,7 @@ console.log('Hello!');
 ![](https://res.cloudinary.com/dqfxgtyoi/image/upload/v1636826224/blog/event/eventloop/setTimeout1sec_s5m432.gif)
 
 ### setTimeout 例子2
-設定一個等待0秒才執行的計時器，雖然看形式上會是先於顯示Hello，但實際上還得瀏覽器還得呼叫、對應函式放入Queue、等待Call Stack為空才能正式執行，所以基本上會慢於顯示Hello。 
+設定一個等待0秒才執行的計時器，雖然看形式上會是先於顯示Hello，但實際上瀏覽器還得呼叫API來建立worker thread執行定時器、並按照時間將對應函式放入Callback Queue、等待Call Stack為空才能正式執行，所以基本上會慢於顯示Hello。 
 ```
 setTimeout(function timeout() {
     console.log('delay 0 sec');
